@@ -20,7 +20,11 @@ const SearchResult = () => {
             setLoader(true);
             const res = await apiConnecter("POST","tracks/getTrack",formdata);
             console.log(res,"this is result");
-            setResult(res.data.tracks);
+            const songlist = res.data.tracks;
+            const Songs = songlist.filter((song, index, self) =>
+              index === self.findIndex((s) => s.Name === song.Name)
+            );
+            setResult(Songs);
             setLoader(false);
         }
         catch(e){
@@ -40,18 +44,21 @@ const SearchResult = () => {
           ))}
       </div>:<div className='text-white w-full h-[60%]'>
    {
-    result.length > 0 &&    <div className="flex flex-row items-center justify-between p-2 bg-black opacity-90 text-gray-400  w-full ">
-          <div className="font-bold text-lg w-full lg:w-[25%] mb-2 lg:mb-0  ">
-            Title
+    result.length > 0 &&   
+    <div className='flex flex-row items-center justify-between  p-2  text-gray-300 border-b border-b-white   w-full'>
+            <div className="font-bold text-lg w-full lg:w-[22%] mb-2 lg:mb-0">
+              Title
+            </div>
+            <div className="font-bold text-lg lg:w-[20%] hidden lg:block mb-2 lg:mb-0">
+              Album
+            </div>
+            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0 hidden lg:block md:block">
+             Favorite
+            </div>
+            <div className="font-bold text-lg lg:w-[25%] md:block">
+              Download
+            </div>
           </div>
-          <div className="font-bold text-lg  lg:w-[25%] mb-2 lg:mb-0">
-            Album
-          </div>
-          <div className="font-bold text-lg  lg:w-[25%] mb-2 lg:mb-0  hidden lg:block md:block">
-            Download
-          </div>
-          <div className="font-bold text-lg  lg:w-[25%] hidden lg:block md:block">Duration</div>
-        </div>
    }
         {
             result.length == 0 ?<div className=' shining-text text-lg font-bold text-white w-full h-full  flex items-center justify-center'>

@@ -116,7 +116,7 @@ const Favoritesongs = () => {
       {/* <div className="absolute inset-0 backdrop-blur-3xl"></div> */}
 
 
-      <div className="flex gap-3  flex-col   lg:flex-row  h-[400px] border-b  self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative z-10  w-full "
+      <div className="flex gap-3  flex-col   lg:flex-row  h-[400px]  self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-2xl p-4 relative z-10  w-full "
       >
         <img
           src="https://aioptimistic.com/wp-content/uploads/2023/07/Child-Wearing-Umbrella.jpg"
@@ -129,7 +129,7 @@ const Favoritesongs = () => {
             Playlist
           </span>
           <span className="bg-clip-text text-[30px] mt-4 md:text-[50px] lg:text-[50px] lg:my-6 text-white font-extrabold  ">
-            My Favorite Songs
+            {userdata.Name ?`${ userdata.Name.split(' ')[0]}'s` :"My"} Favorite Songs
           </span>
           <span className="bg-clip-text  mt-4 lg:text-sm text-xs  text-white font-extrabold  ">
             Total Track : {FavoriteSongs && FavoriteSongs.length}
@@ -141,7 +141,7 @@ const Favoritesongs = () => {
 
       </div>
 
-      <div className="flex flex-col items-center justify-between w-full backdrop-blur-3xl bg-transparent-gradient   relative z-10  object-cover  ">
+      <div className="flex flex-col items-center justify-between w-full backdrop-blur-2xl bg-transparent-gradient   relative z-10  object-cover  ">
         <div className="flex flex-col  items-center justify-between p-2 h-[150px]  text-blue-400     w-full">
           <div className=' self-start  flex items-center  ' >
             <button
@@ -192,7 +192,6 @@ const Favoritesongs = () => {
               <SongList song={song} index={index} />
             ))}
         </div>
-      
        }
       </div>
     </div>

@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  z-index: 1;
 }
 .bg-transparent-gradient {
   /* background: linear-gradient(0deg, rgba(18,18,18,1) 93%, rgba(79,183,211,0) 100%); */

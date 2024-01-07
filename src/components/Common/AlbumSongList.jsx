@@ -79,7 +79,7 @@ const AlbumSongList = () => {
 
   return (
     <div
-      className={`flex flex-col  items-center mb-4 bg-cover bg-no-repeat relative overflow-x-hidden bg-[#838996]  `}
+      className={`flex flex-col z-10  items-center mb-4 bg-cover bg-no-repeat relative overflow-x-hidden bg-[#838996]  `}
       style={{ backgroundImage: `url(${albumimg})` }}
     >
       {/* White background overlay */}
@@ -89,7 +89,7 @@ const AlbumSongList = () => {
       {/* <div className="absolute inset-0 backdrop-blur-3xl"></div> */}
 
 
-      <div className="flex gap-3  flex-col   lg:flex-row  h-[400px] border-b  self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative z-10  w-full "
+      <div className="flex gap-3 flex-col   lg:flex-row   h-[400px]   self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative z-40  w-full "
       >
         <img
           src={albumimg}
@@ -114,7 +114,7 @@ const AlbumSongList = () => {
 
       </div>
 
-      <div className="flex flex-col items-center justify-between w-full backdrop-blur-3xl bg-transparent-gradient   relative z-10  object-cover  ">
+      <div className="flex flex-col items-center bg-transparent-gradient justify-between w-full backdrop-blur-3xl   relative z-10  object-cover  ">
         <div className="flex flex-col  items-center justify-between p-2 h-[150px]  text-blue-400     w-full">
           <div className=' self-start  flex items-center  ' >
             <button
@@ -139,17 +139,17 @@ const AlbumSongList = () => {
           </button>
           </div>
           <div className='flex flex-row items-center justify-between pt-5 p-2 h-[150px]  text-gray-300 border-b border-b-white   w-full'>
-            <div className="font-bold text-lg w-full lg:w-[25%] mb-2 lg:mb-0">
+            <div className="font-bold text-lg w-full lg:w-[22%] mb-2 lg:mb-0">
               Title
             </div>
-            <div className="font-bold text-lg lg:w-[25%] hidden lg:block mb-2 lg:mb-0">
+            <div className="font-bold text-lg lg:w-[20%] hidden lg:block mb-2 lg:mb-0">
               Album
             </div>
-            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0 hidden lg:block md:block">
-              Download
+            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+             Favorite
             </div>
-            <div className="font-bold text-lg lg:w-[25%] md:block">
-              Duration
+            <div className="font-bold text-lg hidden lg:w-[25%] md:block">
+              Download
             </div>
           </div>
 
