@@ -13,13 +13,14 @@ import Album from './slices/album';
 import Artists from './components/Artists';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import SearchResult from './components/Common/SearchResult';
-import AddAlbum from './components/Common/AddAlbum';
+import AddAlbum from './components/Auth/AddAlbum';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import VerifyOtp from './components/Auth/VerifyOtp';
 import UserDetails from './components/user/UserDetails';
 import EditUserDetailsForm from './components/user/EditUserDetailsForm';
 import Favoritesongs from './components/user/Favoritesongs';
+import RandomAudioPlayer from './components/AudioPlayer/RandomAudioPlayer';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
        <Route path='/VerifyOTP' element = {<VerifyOtp></VerifyOtp>}></Route>
        <Route path='/UserDetails' element = {<UserDetails></UserDetails>}></Route>
        <Route path='/FavoriteSongs' element = {<Favoritesongs></Favoritesongs>}></Route>
+       <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
 
        <Route path='/UserDetails/edit' element = {<EditUserDetailsForm></EditUserDetailsForm>}></Route>
        </Routes>

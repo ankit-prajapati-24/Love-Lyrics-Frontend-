@@ -107,7 +107,7 @@ const Favoritesongs = () => {
   return (
     <div
       className={`flex flex-col  items-center mb-4 bg-cover bg-no-repeat relative overflow-x-hidden bg-[#838996]  `}
-      style={{ backgroundImage: `url(${"https://i.ytimg.com/vi/9rCbCvwegSk/maxresdefault.jpg"})` }}
+      style={{ backgroundImage: `url(${"https://aioptimistic.com/wp-content/uploads/2023/07/Child-Wearing-Umbrella.jpg"})` }}
     >
       {/* White background overlay */}
       {/* <div className="absolute inset-0  opacity-75"></div> */}
@@ -119,7 +119,7 @@ const Favoritesongs = () => {
       <div className="flex gap-3  flex-col   lg:flex-row  h-[400px] border-b  self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative z-10  w-full "
       >
         <img
-          src="https://i.ytimg.com/vi/9rCbCvwegSk/maxresdefault.jpg"
+          src="https://aioptimistic.com/wp-content/uploads/2023/07/Child-Wearing-Umbrella.jpg"
           alt="album"
           className="w-full h-full max-w-[200px] ali self-start lg:self-end max-h-[150px] lg:max-w-[250px]  lg:max-h-[230px]  shadow-2xl drop-shadow-3xl shadow-black hover:scale-105 transition-all duration-200  lg: lg:mb-0 rounded-md"
         />
