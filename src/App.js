@@ -11,6 +11,7 @@ import AlbumRoot from './components/Common/AlbumRoot';
 import AlbumSongList from './components/Common/AlbumSongList';
 import Album from './slices/album';
 import Artists from './components/Artists';
+import Footer from './components/Common/Footer';
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import SearchResult from './components/Common/SearchResult';
 import AddAlbum from './components/Auth/AddAlbum';
@@ -26,11 +27,11 @@ function App() {
   return (
     <div className='flex flex-col w-screen  bg-transparent mx-auto items-center justify-center '>
     <Navbar></Navbar>
-    <div className='flex w-full relative'>
+    <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
       <LeftSideBar/>
     
-    <div className='rounded-md w-[100%]  overflow-x-hidden z-10 relative  md:w-[85%] lg:[85%]'>
-  
+    <div className='rounded-md w-[100%]  overflow-x-hidden z-10 relative  mb-20  md:ml-[250px] lg:ml-[230px]  '>
+   
        <Routes>
        <Route path='*' element = {<Home></Home>}></Route>
        <Route path='/Artist' element = {<Artists></Artists>}></Route>
@@ -46,6 +47,7 @@ function App() {
 
        <Route path='/UserDetails/edit' element = {<EditUserDetailsForm></EditUserDetailsForm>}></Route>
        </Routes>
+{/* <Footer/> */}
       </div>
     </div>
     {/* <PlayTrack></PlayTrack> */}

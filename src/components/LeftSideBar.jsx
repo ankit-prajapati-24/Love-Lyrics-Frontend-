@@ -39,7 +39,7 @@ const LeftSideBar = () => {
   }, [window.innerWidth,window.location.pathname])
   
   return (
-    <div className={` flex-col gap-5   items-baseline  transition-all duration-200 bg-black w-[50%] md:w-[20%] lg:w-[15%] h-screen  border-t border-t-gray-400  p-5  text-white z-30    absolute md:relative lg:relative lg:flex md:flex
+    <div className={` flex-col gap-5   items-baseline  transition-all fixed duration-200 bg-black w-[50%] md:w-[20%] lg:w-[15%] h-screen  border-t border-t-gray-400  p-5  text-white z-30     lg:flex md:flex
      ${menu&&windowWidth < 500 ?"-translate-x-52  ":""}
      
      `}>

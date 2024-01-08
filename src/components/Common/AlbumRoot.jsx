@@ -25,7 +25,7 @@ const AlbumRoot = () => {
   }, []);
 
   return (
-    <div className='h-full w-full overflow-x-scroll lg:overflow-hidden md:overflow-hidden bg-black relative rounded-md text-white flex flex-col  gap-3 mb-[500px] '>
+    <div className='h-full w-full overflow-x-scroll lg:overflow-hidden md:overflow-hidden bg-black relative rounded-md text-white flex flex-col  gap-3 '>
     <h1 className='text-2xl font-bold  '>Albums</h1>
      <div className='flex flex-wrap p-3  rounded   items-center justify-center self-baseline gap-4    '>
      {loader? 

@@ -47,17 +47,19 @@ const Navbar = () => {
 
 
     return (
-        <div className=' flex justify-between flex-col items-center bg-black p-3 text-white  overflow-x-hidden w-full'>
+        <div className=' flex justify-between flex-col items-center bg-black p-3 text-white fixed top-0 z-50  overflow-x-hidden w-full'>
 
 
             <div className='flex  items-center justify-between w-full self-baseline'>
-                <div className='w-full max-w-[50px] flex lg:hidden md:hidden' onClick={() => dispatch(setMenu(!menu))}>
+                <div className='flex'>
+                <div className='w-full max-w-[50px] flex  md:hidden lg:hidden' onClick={() => dispatch(setMenu(!menu))}>
                     {
                         menu ? <GiHamburgerMenu style={{ height: 30, width: 30 }} /> : <ImCross style={{ height: 25, width: 25 }} />
                     }
                 </div>
                 <div className='w-full max-w-[100px]'>
                     <img src={logo} className='rounded-md mix-blend-normal  mix-blend-exclusion'></img>
+                </div>
                 </div>
 
                 {
@@ -69,7 +71,7 @@ const Navbar = () => {
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </div>
-                            <input onChange={(e) => dispatch(setquery(e.target.value))} type="search" id="default-search" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
+                            <input onChange={(e) => dispatch(setquery(e.target.value))} type="search" id="default-search" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Music,Artist.." required />
                             {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
                         </div>
                     </form>
@@ -79,7 +81,6 @@ const Navbar = () => {
                     token ? <div className='flex items-center justify-center p-2  max-w-[400px] gap-3'>
 
 
-                        <button onClick={logout} className=" max-w-[400px] p-2 border border-white rounded-md flex items-center justify-center hover:scale-95 transition-all duration-200 text-sm min-w-[60px]"  >Log out</button>
 
                       <Link to={"/UserDetails"}>
                       {
@@ -112,7 +113,7 @@ const Navbar = () => {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input onChange={(e) => dispatch(setquery(e.target.value))} type="search" id="default-search" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
+                        <input onChange={(e) => dispatch(setquery(e.target.value))} type="search" id="default-search" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Music,Artist.." required />
                         {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
                     </div>
                 </form>

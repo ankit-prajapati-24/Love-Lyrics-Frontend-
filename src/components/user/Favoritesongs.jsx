@@ -166,17 +166,17 @@ const Favoritesongs = () => {
           </button>
           </div>
           <div className='flex flex-row items-center justify-between pt-5 p-2 h-[150px]  text-gray-300 border-b border-b-white   w-full'>
-            <div className="font-bold text-lg w-full lg:w-[25%] mb-2 lg:mb-0">
+            <div className="font-bold text-lg w-full lg:w-[22%] mb-2 lg:mb-0">
               Title
             </div>
             <div className="font-bold text-lg lg:w-[25%] hidden lg:block mb-2 lg:mb-0">
               Album
             </div>
             <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0 hidden lg:block md:block">
-              Download
+              Favorite
             </div>
             <div className="font-bold text-lg lg:w-[25%] md:block">
-              Duration
+            Download
             </div>
           </div>
 

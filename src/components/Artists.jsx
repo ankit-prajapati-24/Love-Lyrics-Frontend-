@@ -44,9 +44,9 @@ const Artists = () => {
           ))}
       </div>
       ) : (
-        <div className='flex p-2 lg:gap-3 flex-wrap  '>
+        <div className='flex p-2 lg:gap-3 mx-auto  items-center justify-center flex-wrap  '>
           {artists.map((artist) => (
-            <div key={artist._id} className='flex flex-col gap-2 group relative  lg:gap-4 lg:bg-gray-900  items-center justify-center  min-h-[100px] lg:w-[150px]    lg:h-[150px]  sm:max-h-[125px] p-2 rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
+            <div key={artist._id} className=' flex flex-col gap-2 group relative p-2  lg:gap-4 lg:bg-gray-900  items-center justify-center  min-h-[100px] lg:w-[150px]    lg:h-[150px]  sm:max-h-[125px]  rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
             
                 console.log("clicled");
                 dispatch(setAlbumName(artist.Name));
