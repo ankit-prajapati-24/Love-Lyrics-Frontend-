@@ -34,15 +34,15 @@ const ProgressBar = ({
     };
   
     return (
-      <div className="flex  items-center justify-center text-white gap-2">
-        <span className="time current">{formatTime(timeProgress)}</span>
+      <div className="flex  w-full max-w-[550px] items-center justify-center text-white gap-2">
+        <span className="text-xs opacity-80">{formatTime(timeProgress)}</span>
         <input
           type="range"
           ref={progressBarRef}
           defaultValue="0"
           onChange={handleProgressChange}
         />
-        <span className="time">{formatTime(duration)}</span>
+        <span className="text-xs  opacity-80">{formatTime(duration)}</span>
       </div>
     );
   };

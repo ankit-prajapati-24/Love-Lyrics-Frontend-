@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { setNextIndex,setPrevIndex } from '../../slices/album';
+import { apiConnecter } from '../../services/apiconnecter';
+import toast from 'react-hot-toast';
+import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import {
   setName,
   setSinger,
@@ -39,6 +42,9 @@ const Controls = ({
   const [muteVolume, setMuteVolume] = useState(false);
   const trackIndex = useSelector((state)=> state.Album.trackIndex);
   const song = useSelector((state)=> state.Album.Songs);
+  const [fav,setFav] = useState(true);
+  const trackId = useSelector((state) => state.Player.trackId);
+  const userdata = useSelector((state) => state.User.userdata);
   
   const title = useSelector((state) => state.Player.name);
   
@@ -47,15 +53,20 @@ const Controls = ({
     setIsPlaying((prev) => !prev);
   };
 
-  // const handleNext = () => {
-  //   if (trackIndex >= tracks.length - 1) {
-  //     setTrackIndex(0);
-  //     setCurrentTrack(tracks[0]);
-  //   } else {
-  //     setTrackIndex((prev) => prev + 1);
-  //     setCurrentTrack(tracks[trackIndex + 1]);
-  //   }
-  // };
+  async function checkFavorite() {
+    const dataform = {
+      SongId: trackId,
+      UserId: userdata._id
+    }
+    try {
+      const res = await apiConnecter("POST", "Album/checkFavorite", dataform);
+      console.log(res.data.check);
+      setFav(res.data.check);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
 
 
   const playAnimationRef = useRef();
@@ -73,6 +84,7 @@ const Controls = ({
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
+    checkFavorite();
     if (isPlaying) {
       audioRef.current.play();
     } else {
@@ -100,6 +112,28 @@ const Controls = ({
     }
   };
 
+  
+  async function favHandler() {
+
+    const dataform = {
+      SongId: trackId,
+      UserId: userdata._id
+    }
+
+    if (!fav) {
+      const res = await apiConnecter("POST", "Album/AddFavorite", dataform);
+      console.log(res);
+      setFav(!fav);
+      toast.success('Song Added to Favorite')
+    }
+    else {
+      toast.success('Song remove From Favorite')
+      const res = await apiConnecter("POST", "Album/RemoveFavorite", dataform);
+      console.log(res);
+      setFav(!fav);
+    }
+  }
+
   useEffect(() => {
     if (audioRef) {
       audioRef.current.volume = volume / 100;
@@ -118,7 +152,7 @@ const Controls = ({
   }, [volume, audioRef, muteVolume,trackIndex]);
 
   return (
-    <div className="controls-wrapper text-white flex  border border-black  items-center ">
+    <div className="controls-wrapper text-white flex      items-center ">
       <div className="flex px-4 gap-3 ">
         <button onClick={()=> dispatch(setPrevIndex(1))}>
           <IoPlaySkipBackSharp style={{ height: 20, width: 20 }} />
@@ -127,8 +161,8 @@ const Controls = ({
           <IoPlayBackSharp style={{ height: 20, width: 20 }} />
         </button>
 
-        <button className='bg-sky-500 rounded-full p-4 hover:scale-95' onClick={togglePlayPause}>
-          {isPlaying ? <IoPauseSharp style={{ height: 20, width: 20 }}/> : <IoPlaySharp style={{ height: 20, width: 20 }}/>}
+        <button className='bg-sky-500 rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
+          {isPlaying ? <IoPauseSharp style={{ height: 15, width: 15 }}/> : <IoPlaySharp style={{ height: 15, width: 15 }}/>}
         </button>
         <button onClick={skipForward}>
           <IoPlayForwardSharp style={{ height: 20, width: 20 }}/>
@@ -137,7 +171,18 @@ const Controls = ({
           <IoPlaySkipForwardSharp style={{ height: 20, width: 20 }}/>
         </button>
       </div>
-      <div className="flex items-center justify-center">
+      <button
+                className='rounded-full p-4 hover:scale-95'
+                onClick={() => favHandler()}
+              >
+                {fav ? (
+                  <FaHeart style={{ color: 'pink', height: 20, width: 20 }} />
+                ) : (
+                  <FaRegHeart style={{ color: 'pink', height: 20, width: 20 }} />
+                )}
+              </button>
+
+      {/* <div className="flex items-center justify-center">
         <button onClick={() => setMuteVolume((prev) => !prev)}>
           {muteVolume || volume < 5 ? (
             <IoMdVolumeOff style={{ height: 20, width: 20 }}/>
@@ -157,7 +202,7 @@ const Controls = ({
             background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

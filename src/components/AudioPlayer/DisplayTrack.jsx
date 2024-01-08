@@ -35,7 +35,7 @@ const DisplayTrack = ({
       <div className=" flex items-center justify-center gap-2 ">
         <div className="audio-image">
           {currentTrack.thumbnail ? (
-            <img src={thumbnail} alt="audio avatar" className='w-[100px] h-[70px]' />
+            <img src={thumbnail} alt="audio avatar" className='w-[60px] h-[50px]' />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">
@@ -44,9 +44,9 @@ const DisplayTrack = ({
             </div>
           )}
         </div>
-        <div className="text-white font-bold">
-          <p className="title">Song : {title}</p>
-          <p>Artist : {author}</p>
+        <div className="text-white ml-3">
+          <p className="text-sm  font-medium"> {title}</p>
+          <p className='text-xs opacity-80'>{author}</p>
         </div>
       </div>
     </div>

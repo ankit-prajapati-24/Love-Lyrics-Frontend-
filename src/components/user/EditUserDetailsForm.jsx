@@ -5,12 +5,16 @@ import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaCamera } from "react-icons/fa";
 import { setuserdata } from '../../slices/UserDataSlice';
+import { update } from 'react-spring';
+import toast from 'react-hot-toast';
+import { apiConnecter } from '../../services/apiconnecter';
 
 const EditUserDetailsForm = () => {
   const userdata = useSelector((state) => state.User.userdata);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [Gender ,setGender] = useState(userdata.Gender);
+  const [Image ,SetImage] = useState(null);
 
   const { handleSubmit, register, setValue, formState: { errors }, watch } = useForm({
     defaultValues: {
@@ -21,15 +25,39 @@ const EditUserDetailsForm = () => {
     },
   });
 
+  async function update(data){
+
+     const loadeid = toast.loading("laoding...");
+        try{
+           const res = await apiConnecter("post","Auth/updateInformation",data);
+           console.log(res);
+           toast.dismiss(loadeid);
+           dispatch(setuserdata(res.data.user));
+           toast.success("Profile Update successfully")
+           navigate("/UserDetails");
+          }
+          catch(err){
+          toast.dismiss(loadeid);
+          
+          toast.error("Try again later")
+          console.log(err);
+        }
+  }
+
   const fileInputRef = useRef(null);
 
   const watchedGender = watch('Gender');
 
+  const formdata =new  FormData();
   const onSubmit = (data) => {
-    const formdata = {
-        ...data,
-        Gender
-    }
+
+    formdata.append("Gender", Gender)
+    formdata.append("Name", data.Name);
+    formdata.append("Country", data.Country);
+    formdata.append("Birthday", data.Birthday);
+    formdata.append("Image", Image);
+    formdata.append("Email",data.Email);
+    update(formdata);
     console.log(formdata,"this is data");
     // Dispatch an action to update the user details in the Redux store
     // dispatch(setuserdata({  ...data, }));
@@ -48,6 +76,8 @@ const EditUserDetailsForm = () => {
   const handleFileChange = (event) => {
     // Handle the selected file
     const selectedFile = event.target.files[0];
+    formdata.append("Image",event.target.files[0]);
+    SetImage(selectedFile);
     // Dispatch an action to update the user's image in the Redux store
     // dispatch(setUserImage(selectedFile));
 
@@ -62,7 +92,7 @@ const EditUserDetailsForm = () => {
           <FaCamera style={{ height: 40, width: 40, color: "black" }} />
         </div>
       </div>
-      <input type='file' ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
+      <input type='file' {...register("Image")} ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
 
       <div className='mb-4 flex items-center justify-start gap-2 border max-w-[500px] w-full rounded-md p-2 bg-gray-700'>
         <h1 className='text-xl font-bold '>Name:</h1>

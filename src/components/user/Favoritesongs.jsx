@@ -172,10 +172,10 @@ const Favoritesongs = () => {
             <div className="font-bold text-lg lg:w-[25%] hidden lg:block mb-2 lg:mb-0">
               Album
             </div>
-            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0 hidden lg:block md:block">
+            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
               Favorite
             </div>
-            <div className="font-bold text-lg lg:w-[25%] md:block">
+            <div className="font-bold text-lg lg:w-[25%] hidden md:block">
             Download
             </div>
           </div>

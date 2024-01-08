@@ -30,7 +30,7 @@ function App() {
     <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
       <LeftSideBar/>
     
-    <div className='rounded-md w-[100%]  overflow-x-hidden z-10 relative  mb-20  md:ml-[250px] lg:ml-[230px]  '>
+    <div className='rounded-md scroll-smooth overflow-y-hidden overflow-x-hidden z-10 w-full  mb-20  md:ml-[250px] lg:ml-[230px]  '>
    
        <Routes>
        <Route path='*' element = {<Home></Home>}></Route>
