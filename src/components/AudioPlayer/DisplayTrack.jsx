@@ -26,12 +26,12 @@ const DisplayTrack = ({
 
   return (
     <div className='hidden lg:block md:block'>
-      <audio
+      {/* <audio
         src={src}
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
         onEnded={()=> dispatch(setNextIndex(1))}
-      />
+      /> */}
       <div className=" flex items-center justify-center gap-2 ">
         <div className="audio-image">
           {currentTrack.thumbnail ? (

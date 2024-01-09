@@ -104,11 +104,21 @@ const AudioPlayer = () => {
       setFav(!fav);
     }
   }
+  
+  const onLoadedMetadata = () => {
+    const seconds = audioRef.current.duration;
+    setDuration(seconds);
+    progressBarRef.current.max = seconds;
+  };
   return (
     <>
       <div className=" bg-[#121212] w-full p-2 fixed z-50 bottom-0  rounded-md ">
         <div className="flex  w-full items-center justify-between ">
-
+        <audio
+        src={src}
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+      />
             <DisplayTrack
               {...{
                 currentTrack,
