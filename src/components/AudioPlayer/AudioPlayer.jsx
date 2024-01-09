@@ -19,7 +19,12 @@ import ProgressBar from './ProgressBar';
 import src from '../assets/Dil_Jhoom(128k) (1).m4a'
 import { apiConnecter } from '../../services/apiconnecter';
 // import components
-const AudioPlayer = () => {
+const AudioPlayer = ({
+  audioRef,
+  progressBarRef,
+  duration,
+  setDuration
+}) => {
   // states
 
   const title = useSelector((state) => state.Player.name);
@@ -47,11 +52,11 @@ const AudioPlayer = () => {
     tracks[trackIndex]
   );
   const [timeProgress, setTimeProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
+  // const [duration, setDuration] = useState(0);
 
   // reference
-  const audioRef = useRef();
-  const progressBarRef = useRef();
+  // const audioRef = useRef();
+  // const progressBarRef = useRef();
 
   const handleNext = () => {
     if (trackIndex >= tracks.length - 1) {
@@ -105,20 +110,12 @@ const AudioPlayer = () => {
     }
   }
   
-  const onLoadedMetadata = () => {
-    const seconds = audioRef.current.duration;
-    setDuration(seconds);
-    progressBarRef.current.max = seconds;
-  };
+
   return (
     <>
       <div className=" bg-[#121212] w-full p-2 fixed z-50 bottom-0  rounded-md ">
         <div className="flex  w-full items-center justify-between ">
-        <audio
-        src={src}
-        ref={audioRef}
-        onLoadedMetadata={onLoadedMetadata}
-      />
+    
             <DisplayTrack
               {...{
                 currentTrack,

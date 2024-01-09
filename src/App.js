@@ -22,10 +22,31 @@ import UserDetails from './components/user/UserDetails';
 import EditUserDetailsForm from './components/user/EditUserDetailsForm';
 import Favoritesongs from './components/user/Favoritesongs';
 import RandomAudioPlayer from './components/AudioPlayer/RandomAudioPlayer';
-
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useRef } from 'react';
 function App() {
+  const audioRef = useRef();
+  const progressBarRef = useRef();
+
+  const title = useSelector((state) => state.Player.name);
+  const author = useSelector((state) => state.Player.singer);
+  const src = useSelector((state) => state.Player.songurl);
+  const thumbnail = useSelector((state) => state.Player.img);
+  const [duration,setDuration] =useState(0);
+  
+  const onLoadedMetadata = () => {
+    const seconds = audioRef.current.duration;
+    setDuration(seconds);
+    progressBarRef.current.max = seconds;
+  };
   return (
     <div className='flex flex-col w-screen  bg-transparent mx-auto items-center justify-center '>
+        <audio
+        src={src}
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+      />
     <Navbar></Navbar>
     <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
       <LeftSideBar/>
@@ -51,7 +72,7 @@ function App() {
       </div>
     </div>
     {/* <PlayTrack></PlayTrack> */}
-    <AudioPlayer></AudioPlayer>
+    <AudioPlayer {...{audioRef,progressBarRef,duration,setDuration}}></AudioPlayer>
     </div>
   );
 }
