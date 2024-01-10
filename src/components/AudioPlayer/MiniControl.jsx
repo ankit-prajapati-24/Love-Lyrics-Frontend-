@@ -27,16 +27,15 @@ import {
 } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Controls = ({
+const MiniControl = ({
   audioRef,
   progressBarRef,
   duration,
   setTimeProgress,
   tracks,
   setTrackIndex,
+  isPlaying,setIsPlaying,
   setCurrentTrack,
-  isPlaying,
-  setIsPlaying
 }) => {
   const dispatch = useDispatch();
   const [volume, setVolume] = useState(60);
@@ -46,7 +45,6 @@ const Controls = ({
   const [fav,setFav] = useState(true);
   const trackId = useSelector((state) => state.Player.trackId);
   const userdata = useSelector((state) => state.User.userdata);
-  const [windowwidth,setwindowidth] = useState(0);
   
   const title = useSelector((state) => state.Player.name);
   
@@ -103,6 +101,18 @@ const Controls = ({
     audioRef.current.currentTime -= 15;
   };
 
+  const handlePrevious = () => {
+    if (trackIndex === 0) {
+      let lastTrackIndex = tracks.length - 1;
+      setTrackIndex(lastTrackIndex);
+      setCurrentTrack(tracks[lastTrackIndex]);
+    } else {
+      setTrackIndex((prev) => prev - 1);
+      setCurrentTrack(tracks[trackIndex - 1]);
+    }
+  };
+
+  
   async function favHandler() {
 
     const dataform = {
@@ -138,38 +148,30 @@ const Controls = ({
       dispatch(settrackId(song[trackIndex]._id));
     }
     // setPlay(true);
-    setwindowidth(window.innerWidth);
     console.log("this is index",trackIndex);
-  }, [volume, audioRef, muteVolume,trackIndex,window.innerWidth]);
+  }, [volume, audioRef, muteVolume,trackIndex]);
 
   return (
     <div className="controls-wrapper text-white flex      items-center ">
-      <div className="flex px-4 gap-3 items-center">
-        <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setPrevIndex(1))}>
-          <IoPlaySkipBackSharp style={{ height: 20, width: 20 }} />
+      <div className="flex px-4 gap-3 ">
+        <button  onClick={()=> dispatch(setPrevIndex(1))}>
+          <IoPlaySkipBackSharp style={{ height: 30, width: 30 }} />
         </button>
-        <button className='hidden lg:flex md:flex' onClick={skipBackward}>
-          <IoPlayBackSharp style={{ height: 20, width: 20 }} />
+        <button  onClick={skipBackward}>
+          <IoPlayBackSharp style={{ height: 30, width: 30 }} />
         </button>
 
-      {
-        windowwidth < 500 ?
-        <button className='rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
+        <button className='bg-sky-500 rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
           {isPlaying ? <IoPauseSharp style={{ height: 30, width: 30 }}/> : <IoPlaySharp style={{ height: 30, width: 30 }}/>}
         </button>
-        
-        :  <button className='bg-sky-500 rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
-          {isPlaying ? <IoPauseSharp style={{ height: 15, width: 15 }}/> : <IoPlaySharp style={{ height: 15, width: 15 }}/>}
+        <button onClick={skipForward}>
+          <IoPlayForwardSharp style={{ height: 30, width: 30 }}/>
         </button>
-      }
-        <button className='hidden lg:flex md:flex'  onClick={skipForward}>
-          <IoPlayForwardSharp style={{ height: 20, width: 20 }}/>
-        </button>
-        <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setNextIndex(1))}>
-          <IoPlaySkipForwardSharp style={{ height: 20, width: 20 }}/>
+        <button onClick={()=> dispatch(setNextIndex(1))}>
+          <IoPlaySkipForwardSharp style={{ height: 30, width: 30 }}/>
         </button>
       </div>
-      <button
+      {/* <button
                 className='rounded-full p-4 hover:scale-95'
                 onClick={() => favHandler()}
               >
@@ -178,7 +180,7 @@ const Controls = ({
                 ) : (
                   <FaRegHeart style={{ color: 'pink', height: 20, width: 20 }} />
                 )}
-              </button>
+      </button> */}
 
       {/* <div className="flex items-center justify-center">
         <button onClick={() => setMuteVolume((prev) => !prev)}>
@@ -205,4 +207,4 @@ const Controls = ({
   );
 };
 
-export default Controls;
+export default MiniControl;

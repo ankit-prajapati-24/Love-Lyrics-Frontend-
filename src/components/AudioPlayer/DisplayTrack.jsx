@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsMusicNoteBeamed } from 'react-icons/bs';
-
+import { setmobilePlayer } from '../../slices/Control';
 import { setNextIndex,setPrevIndex } from '../../slices/album';
 
 const DisplayTrack = ({
@@ -25,7 +25,7 @@ const DisplayTrack = ({
   useEffect(()=>{},currentTrack,title);
 
   return (
-    <div className='hidden lg:block md:block'>
+    <div className=' w-full items-start flex justify-start    ' onClick={() => dispatch(setmobilePlayer(true))}>
       {/* <audio
         src={src}
         ref={audioRef}
@@ -35,7 +35,7 @@ const DisplayTrack = ({
       <div className=" flex items-center justify-center gap-2 ">
         <div className="audio-image">
           {currentTrack.thumbnail ? (
-            <img src={thumbnail} alt="audio avatar" className='w-[60px] h-[50px]' />
+            <img src={thumbnail} alt="audio avatar" className='w-[45px] h-[40px]  md:w-[60px] md:h-[50px] lg:w-[60px] lg:h-[50px]' />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">
@@ -45,7 +45,7 @@ const DisplayTrack = ({
           )}
         </div>
         <div className="text-white ml-3">
-          <p className="text-sm  font-medium"> {title}</p>
+          <p className="text-sm  font-medium max-w-[140px] w-full overflow-hidden"> {title}</p>
           <p className='text-xs opacity-80'>{author}</p>
         </div>
       </div>

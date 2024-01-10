@@ -13,7 +13,7 @@ import { setMenu } from '../slices/Navbar';
 const links = [
   { to: '/Home', icon: <IoHomeSharp  />, text: 'Home' },
   { to: '/Artist', icon: <CgUserlane />, text: 'Artist' },
-  { to: '/Trending', icon: <FaGripfire />, text: 'Trending' },
+  { to: '/miniPlayer', icon: <FaGripfire />, text: 'Trending' },
   { to: '/mixSongs', icon: <IoMusicalNotes />, text: 'mix Songs' },
   { to: '', icon: " ", text: 'Library' },
   { to: '/NewPlaylist', icon: <MdFormatListBulletedAdd />, text: 'New Playlist' },

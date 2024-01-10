@@ -25,7 +25,7 @@ const MobilePlayer = ({
   useEffect(()=>{},currentTrack,title);
 
   return (
-    <div className='  bg-cover bg-no-repeat   ' 
+    <div className='  bg-cover bg-no-repeat  rounde rounded-xl shadow-2xl mx-2  ' 
      style={{ backgroundImage: `url(${thumbnail})` }}
     >
       <audio
@@ -34,10 +34,12 @@ const MobilePlayer = ({
         onLoadedMetadata={onLoadedMetadata}
         onEnded={()=> dispatch(setNextIndex(1))}
       />
-      <div className=" flex items-center flex-col justify-center gap-2 w-full h-[400px]  backdrop-blur-sm ">
+      <div className=" flex items-center flex-col justify-center gap-2 w-full h-[400px]  backdrop-blur-sm " 
+      
+      >
         <div className="audio-image">
           {currentTrack.thumbnail ? (
-            <img src={thumbnail} alt="audio avatar" className='w-[200px] h-[200px]' />
+            <img src={thumbnail} alt="audio avatar" className='max-w-[300px] w-full h-full max-h-[300px]' />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">
@@ -45,10 +47,6 @@ const MobilePlayer = ({
               </span>
             </div>
           )}
-        </div>
-        <div className="text-white font-bold">
-          <p className="title">Song : {title}</p>
-          <p>Artist : {author}</p>
         </div>
       </div>
     </div>

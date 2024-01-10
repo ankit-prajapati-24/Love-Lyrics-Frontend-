@@ -13,119 +13,184 @@ import ProgressBar from './ProgressBar';
 import { useDispatch } from 'react-redux';
 import { setNextIndex } from '../../slices/album';
 import { FaChevronDown } from "react-icons/fa";
+import { useCallback } from 'react';
 import src  from '../assets/Dil_Jhoom(128k) (1).m4a'
-import Minicontrol from './MiniControl';
-import { setminiPlayer } from '../../slices/Control';
+// import Minicontrol from './MiniControl';
+
+import { setmobilePlayer } from '../../slices/Control';
+// import Control, { setminiPlayer } from '../../slices/Control';
 import { useNavigate } from 'react-router-dom';
+import MiniControl from './MiniControl';
 // import components
 const MiniPlayer = ({ 
-  audioRef,
-        progressBarRef,
+        audioRef,
         duration,
-        setTimeProgress,
-        tracks,
-        trackIndex,
-        setTrackIndex,
-        setCurrentTrack,
-        handleNext,
-        isPlaying,
-        setIsPlaying,
-        volume,
-        setVolume,
-        muteVolume,
-        setMuteVolume,
-        title,   // pass title to AudioPlayer
-        author,  // pass author to AudioPlayer
-        src,     // pass src to AudioPlayer
-        thumbnail, // pass thumbnail to AudioPlayer
-        // fav,     // pass fav to AudioPlayer
-        // change,
         setDuration,
-        timeProgress, 
-        currentTrack,
-        handleProgressChange
-        // title
+        isPlaying,setIsPlaying
+      
       }) => {
   // states
   
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [volume, setVolume] = useState(60);
-  // const [muteVolume, setMuteVolume] = useState(false);
+  const [volume, setVolume] = useState(60);
+  const [muteVolume, setMuteVolume] = useState(false);
   const nevigation= useNavigate();
-  
+  const progressBarRef = useRef();
   const dispatch = useDispatch();
-  // const title = useSelector((state) => state.Player.name);
-  // const author = useSelector((state) => state.Player.singer);
-  // const src = useSelector((state) => state.Player.songurl);
-  // const thumbnail = useSelector((state) => state.Player.img);
+  const title = useSelector((state) => state.Player.name);
+  const author = useSelector((state) => state.Player.singer);
+  const src = useSelector((state) => state.Player.songurl);
+  const thumbnail = useSelector((state) => state.Player.img);
   const [fav, setFav] = useState(false);
+  const mobilePlayer = useSelector((state) => state.Controls.mobilePlayer);
   const [change,setchange] = useState(false);
   
-  // const tracks = [
-  //     {
-  //         title,
-  //         src ,
-  //         author,
-  //         thumbnail,
-  //       },
-  //       // ...
-  //   ];
-  // const [trackIndex, setTrackIndex] = useState(0);
-  // const [currentTrack, setCurrentTrack] = useState(
-  //   tracks[trackIndex]
-  // );
-  // const [timeProgress, setTimeProgress] = useState(0);
-  // const [duration, setDuration] = useState(0);
+  const tracks = [
+      {
+          title,
+          src ,
+          author,
+          thumbnail,
+        },
+        // ...
+    ];
+  const [trackIndex, setTrackIndex] = useState(0);
+  const [currentTrack, setCurrentTrack] = useState(
+    tracks[trackIndex]
+  );
+  const [timeProgress, setTimeProgress] = useState(0);
+ 
+  var startX, startY, endX, endY;
 
-  // reference
-  // const onLoadedMetadata = () => {
-  //   const seconds = audioRef.current.duration;
-  //   setDuration(seconds);
-  //   progressBarRef.current.max = seconds;
-  // };
-  // const audioRef = useRef();
-  // const progressBarRef = useRef();
+  document.addEventListener("touchstart", function(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  });
+  
+  document.addEventListener("touchend", function(event) {
+    endX = event.changedTouches[0].clientX;
+    endY = event.changedTouches[0].clientY;
+  
+    var deltaX = endX - startX;
+    var deltaY = endY - startY;
+  
+    // Check if it's a vertical swipe
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      // Swipe down
+      if (deltaY > 0) {
+        dispatch(setmobilePlayer(false))
+        console.log("Swiped down!");
+        // Your code for handling swipe down
+      }
+    }
+  });
+  
+  const playAnimationRef = useRef();
+ 
+  const repeat = useCallback(() => {
+    const currentTime = audioRef.current.currentTime;
+    setTimeProgress(currentTime);
+    progressBarRef.current.value = currentTime;
+    // progressBarRef.current.style.setProperty(
+    //   '--range-progress',
+    //   `${(progressBarRef.current.value / duration) * 100}%`
+    // );
 
-  // const handleNext = () => {
-  //   if (trackIndex >= tracks.length - 1) {
-  //     setTrackIndex(0);
-  //     setCurrentTrack(tracks[0]);
-  //   } else {
-  //     setTrackIndex((prev) => prev + 1);
-  //     setCurrentTrack(tracks[trackIndex + 1]);
-  //   }
-  // };
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
-  useEffect(()=>{},[title]);
+  useEffect(() => {
+    
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [isPlaying, audioRef, repeat,trackIndex,title]);
+
+
+  useEffect(()=>{
+    const mobileElement = document.querySelector(".mobile");
+    if(!mobilePlayer){
+      
+      document.body.style.overflow = "auto";
+      if (mobileElement) {
+        // mobileElement.style.display = "block";
+      }
+    }
+    else{
+      window.scrollTo(0, 0);
+      document.body.style.overflow = "hidden";
+    
+    }
+    if(timeProgress == duration){
+      dispatch(setNextIndex(1));
+      console.log("gana khatm ho gya");
+    }
+  },[title,mobilePlayer,timeProgress]);
+
+
+  
+  // const dispatch  = useDispatch();
+  const handleProgressChange = () => {
+    audioRef.current.currentTime = progressBarRef.current.value;
+  };
+
+  
+
+  const formatTime = (time) => {
+    if (time && !isNaN(time)) {
+      const minutes = Math.floor(time / 60);
+      const formatMinutes =
+        minutes < 10 ? `0${minutes}` : `${minutes}`;
+      const seconds = Math.floor(time % 60);
+      const formatSeconds =
+        seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${formatMinutes}:${formatSeconds}`;
+    }
+    return '00:00';
+  };
+
   return (
     
-    <div className={`realative ${change?"translate-y-[700px]":"top-0"} mt-2 overflow-hidden h-screen border border-blue-700  bg-yellow-700  z-50  flex flex-col w-full  transition-all duration-800 `}>
+    <div 
+      style={{ backgroundImage: `url(${thumbnail})` }}
+    className={`mobile  bg-cover bg-no-repeat  absolute ${mobilePlayer?"top-0 z-50":" translate-y-28 absolute z-0 opacity-0  "} bg-gradient-to-b from-sky-400  to-pink-500   mt-2 overflow-hidden  bg-black   flex flex-col w-full  h-screen transition-all  duration-100 `}>
   
-      <div className="  w-full px-2    flex flex-col gap-4  rounded-md ">
-    <div className=' ' onClick={(prev) => {
+      <div className="  w-full px-2  h-screen   flex flex-col gap-4  rounded-md  backdrop-blur-3xl">
+    <div className='mb-2 py-2 mx-auto ' onClick={(prev) => {
         setchange(!change);
-        dispatch(setminiPlayer(true));
-        nevigation(-1);
-
+        dispatch(setmobilePlayer(false));
+        // nevigation(-1);
     }}>
     <FaChevronDown style={{color:"white",height:25,width:25}}/>
     </div>
+
       <MobilePlayer
             {...{
               currentTrack,
               audioRef,
               setDuration,
               progressBarRef,
-              handleNext,
+              
             }}
           />
-        <div className='flex bg-yellow-700 flex-col w-full items-center justify-center gap-6 '>
-        <ProgressBar
-            {...{ progressBarRef, audioRef, timeProgress, duration }}
-          />
+          <div className="text-white ml-3 mt-5">
+          <p className="text-lg  font-medium"> {title}</p>
+          <p className='text-sm opacity-80'>{author}</p>
+        </div>
+        <div className='flex  flex-col w-full items-center justify-center gap-6 '>
+        <div className=' w-full '>
+             <input
+          type="range"
+          ref={progressBarRef}
+          defaultValue="0"
+          onChange={handleProgressChange}
+        />
+          <div className='flex  items-center  justify-between'>
+            
+        <span className="text-xs opacity-80">{formatTime(timeProgress)}</span>
         
-       
-          <Minicontrol
+        <span className="text-xs   opacity-80">{formatTime(duration)}</span>
+          </div>
+        </div>
+
+          <MiniControl
             {...{
               audioRef,
               progressBarRef,
@@ -135,7 +200,6 @@ const MiniPlayer = ({
               trackIndex,
               setTrackIndex,
               setCurrentTrack,
-              handleNext,
               isPlaying,
               setIsPlaying,
               volume,
@@ -144,9 +208,10 @@ const MiniPlayer = ({
               setMuteVolume
             }}
           />
-        <div className='bg-[#000] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
+        <div className='  p-3  flex  items-center justify-between w-full  lg:flex md:flex'>
+          <MdFormatListBulletedAdd style={{ color: 'white', height: 30, width: 30 }} />
           <button
-            className='rounded-full p-4 hover:scale-95'
+            className='rounded-full  hover:scale-95'
             onClick={() => setFav(!fav)}
           >
             {fav ? (
@@ -155,7 +220,6 @@ const MiniPlayer = ({
               <FaHeart style={{ color: 'pink', height: 30, width: 30 }} />
             )}
           </button>
-          <MdFormatListBulletedAdd style={{ color: 'skyblue', height: 30, width: 30 }} />
         </div>
         </div>
          

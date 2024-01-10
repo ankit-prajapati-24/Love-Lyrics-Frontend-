@@ -15,7 +15,6 @@ const ProgressBar = ({
     useEffect(() => {
       if(timeProgress == duration){
         dispatch(setNextIndex(1));
-        console.log("gana khatm ho gya");
       }
     }, [timeProgress])
     
@@ -34,15 +33,15 @@ const ProgressBar = ({
     };
   
     return (
-      <div className="flex  w-full max-w-[550px] items-center justify-center text-white gap-2">
-        <span className="text-xs opacity-80">{formatTime(timeProgress)}</span>
+      <div className=" hidden lg:flex md:flex  w-full max-w-[550px] items-center justify-center text-white gap-2">
+        <span className="text-xs md:block lg:block hidden opacity-80">{formatTime(timeProgress)}</span>
         <input
           type="range"
           ref={progressBarRef}
           defaultValue="0"
           onChange={handleProgressChange}
         />
-        <span className="text-xs  opacity-80">{formatTime(duration)}</span>
+        <span className="text-xs md:block lg:block hidden  opacity-80">{formatTime(duration)}</span>
       </div>
     );
   };

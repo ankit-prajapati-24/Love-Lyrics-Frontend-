@@ -23,12 +23,15 @@ import EditUserDetailsForm from './components/user/EditUserDetailsForm';
 import Favoritesongs from './components/user/Favoritesongs';
 import RandomAudioPlayer from './components/AudioPlayer/RandomAudioPlayer';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRef } from 'react';
+import MiniPlayer from './components/AudioPlayer/MiniPlayer';
 function App() {
+
   const audioRef = useRef();
   const progressBarRef = useRef();
 
+  const [isPlaying, setIsPlaying] = useState(false);
   const title = useSelector((state) => state.Player.name);
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
@@ -40,8 +43,24 @@ function App() {
     setDuration(seconds);
     progressBarRef.current.max = seconds;
   };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    // Add event listener to update window width on resize
+    window.addEventListener('resize', updateWindowWidth);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    };
+  }, []); // Empty dependency array ensures the effect runs only once on mount
+
   return (
-    <div className='flex flex-col w-screen  bg-transparent mx-auto items-center justify-center '>
+    <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '>
         <audio
         src={src}
         ref={audioRef}
@@ -65,6 +84,9 @@ function App() {
        <Route path='/UserDetails' element = {<UserDetails></UserDetails>}></Route>
        <Route path='/FavoriteSongs' element = {<Favoritesongs></Favoritesongs>}></Route>
        <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
+       {/* <Route path='/miniPlayer' element = {
+       <MiniPlayer {...{audioRef,progressBarRef,duration,setDuration}}></MiniPlayer>
+       }></Route> */}
 
        <Route path='/UserDetails/edit' element = {<EditUserDetailsForm></EditUserDetailsForm>}></Route>
        </Routes>
@@ -72,7 +94,14 @@ function App() {
       </div>
     </div>
     {/* <PlayTrack></PlayTrack> */}
-    <AudioPlayer {...{audioRef,progressBarRef,duration,setDuration}}></AudioPlayer>
+    {/* <div className='absolute z-50 top-0 border border-red-600  w-full '>
+     
+    </div>   */}
+    
+    <AudioPlayer {...{audioRef,progressBarRef,duration,setDuration,isPlaying,setIsPlaying}}></AudioPlayer>
+  {
+    windowWidth < 500 &&   <MiniPlayer {...{audioRef,duration,setDuration,setIsPlaying,isPlaying}}></MiniPlayer>
+  }
     </div>
   );
 }

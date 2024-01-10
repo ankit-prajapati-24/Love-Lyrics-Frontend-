@@ -89,16 +89,16 @@ const AlbumSongList = () => {
       {/* <div className="absolute inset-0 backdrop-blur-3xl"></div> */}
 
 
-      <div className="flex gap-3 flex-col   lg:flex-row   h-[400px]   self-baseline max-h-[350px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative z-40  w-full "
+      <div className="flex gap-3 flex-col   lg:flex-row   h-[400px]    self-baseline max-h-[40♣0px] lg:h-[300px]  items-center gap-y-9  backdrop-blur-3xl p-4 relative   w-full "
       >
         <img
           src={albumimg}
           alt="album"
-          className="w-full h-full max-w-[200px] ali self-start lg:self-end max-h-[150px] lg:max-w-[250px]  lg:max-h-[230px]  shadow-2xl drop-shadow-3xl shadow-black hover:scale-105 transition-all duration-200  lg: lg:mb-0 rounded-md"
+          className="w-full h-full max-w-[200px] ali self-start lg:self-end  max-h-[200px] lg:max-w-[250px]  lg:max-h-[230px]  shadow-2xl drop-shadow-3xl shadow-black hover:scale-105 transition-all duration-200  lg: lg:mb-0 rounded-md"
         />
         <div className="flex self-start lg:self-end flex-col text-3xl lg:text-3xl font-bold flex-wrap lg:mx-4  mb-4 -mt-3 lg:mb-0 ">
 
-          <span className="bg-clip-text  text-[30px] mt-4 lg:text-sm text-xs  text-white font-extrabold  ">
+          <span className="bg-clip-text  mt-4 lg:text-sm text-xs  text-white font-extrabold  ">
             Album
           </span>
           <span className="bg-clip-text text-[30px] mt-4 md:text-[50px] lg:text-[50px] lg:my-6 text-white font-extrabold  ">

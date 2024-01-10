@@ -5,9 +5,9 @@ import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { BiSolidSkipNextCircle } from 'react-icons/bi';
 import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-
+import { setmobilePlayer } from '../../slices/Control';
 import {
   IoMdVolumeHigh,
   IoMdVolumeOff,
@@ -23,7 +23,8 @@ const AudioPlayer = ({
   audioRef,
   progressBarRef,
   duration,
-  setDuration
+  setDuration,
+  isPlaying,setIsPlaying
 }) => {
   // states
 
@@ -35,8 +36,9 @@ const AudioPlayer = ({
   const userdata = useSelector((state) => state.User.userdata);
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
-
+  const mobilePlayer = useSelector((state) => state.Controls.mobilePlayer);
   const [fav, setFav] = useState(null);
+  const dispatch = useDispatch();
 
   const tracks = [
     {
@@ -87,7 +89,7 @@ const AudioPlayer = ({
       audioRef.current.muted = muteVolume;
     }
     checkFavorite();
-  }, [title,volume,muteVolume]);
+  }, [title, volume, muteVolume]);
 
   async function favHandler() {
 
@@ -109,68 +111,132 @@ const AudioPlayer = ({
       setFav(!fav);
     }
   }
-  
+  const windowwidth = window.innerWidth;
+
 
   return (
     <>
-      <div className=" bg-[#121212] w-full p-2 fixed z-50 bottom-0  rounded-md ">
-        <div className="flex  w-full items-center justify-between ">
-    
-            <DisplayTrack
-              {...{
-                currentTrack,
-                audioRef,
-                setDuration,
-                progressBarRef,
-                handleNext,
-              }}
-            />
-            <div className='flex flex-col w-full md:w-[60%] lg:w-[60%]  items-center justify-center '>
-           
-              <Controls
-                {...{
-                  audioRef,
-                  progressBarRef,
-                  duration,
-                  setTimeProgress,
-                  tracks,
-                  trackIndex,
-                  setTrackIndex,
-                  setCurrentTrack,
-                  handleNext,
-                }}
-              />
+      <div className=" bg-[#121212] mx-2  w-[380px] md:w-full lg:w-full mb-[4px]  lg:p-2 md:p-2 fixed z-50 bottom-0  rounded-md " >
+        {
+          windowwidth < 500 ?
+            <div className="flex flex-col w-full items-center justify-between ">
+              <div className='flex justify-between items-center w-full p-1 '>
+                <DisplayTrack
+                  {...{
+                    currentTrack,
+                    audioRef,
+                    setDuration,
+                    progressBarRef,
+                    handleNext,
+                  }}
+
+                />
+                <Controls
+                  {...{
+                    audioRef,
+                    progressBarRef,
+                    duration,
+                    setTimeProgress,
+                    tracks,
+                    trackIndex,
+                    setTrackIndex,
+                    setCurrentTrack,
+                    handleNext,
+                    isPlaying,
+                    setIsPlaying
+                  }}
+                />
+              </div>
+
               <ProgressBar
                 {...{ progressBarRef, audioRef, timeProgress, duration }}
               />
+              <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
+
+                <MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
+                <div className="flex items-center justify-center text-white">
+                  <button onClick={() => setMuteVolume((prev) => !prev)}>
+                    {muteVolume || volume < 5 ? (
+                      <IoMdVolumeOff style={{ height: 20, width: 20, color: "white" }} />
+                    ) : volume < 40 ? (
+                      <IoMdVolumeLow style={{ height: 20, width: 20 }} />
+                    ) : (
+                      <IoMdVolumeHigh style={{ height: 20, width: 20 }} />
+                    )}
+                  </button>
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={volume}
+                    onChange={(e) => setVolume(e.target.value)}
+                    style={{
+                      background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
+                    }}
+                  />
+                </div>
+              </div>
+            </div> : <div className="flex  w-full items-center justify-between ">
+
+              <DisplayTrack
+                {...{
+                  currentTrack,
+                  audioRef,
+                  setDuration,
+                  progressBarRef,
+                  handleNext,
+                }}
+              />
+              <div className='flex flex-col w-full md:w-[60%] lg:w-[60%]  items-center justify-center '>
+
+                <Controls
+                  {...{
+                    audioRef,
+                    progressBarRef,
+                    duration,
+                    setTimeProgress,
+                    tracks,
+                    trackIndex,
+                    setTrackIndex,
+                    setCurrentTrack,
+                    handleNext,
+                    isPlaying,
+                    setIsPlaying
+                  }}
+                />
+                <ProgressBar
+                  {...{ progressBarRef, audioRef, timeProgress, duration }}
+                />
+              </div>
+              <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
+
+                <MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
+                <div className="flex items-center justify-center text-white">
+                  <button onClick={() => setMuteVolume((prev) => !prev)}>
+                    {muteVolume || volume < 5 ? (
+                      <IoMdVolumeOff style={{ height: 20, width: 20, color: "white" }} />
+                    ) : volume < 40 ? (
+                      <IoMdVolumeLow style={{ height: 20, width: 20 }} />
+                    ) : (
+                      <IoMdVolumeHigh style={{ height: 20, width: 20 }} />
+                    )}
+                  </button>
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={volume}
+                    onChange={(e) => setVolume(e.target.value)}
+                    style={{
+                      background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
-           
-              <MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
-              <div className="flex items-center justify-center text-white">
-        <button onClick={() => setMuteVolume((prev) => !prev)}>
-          {muteVolume || volume < 5 ? (
-            <IoMdVolumeOff style={{ height: 20, width: 20 ,color:"white"}}/>
-          ) : volume < 40 ? (
-            <IoMdVolumeLow style={{ height: 20, width: 20 }}/>
-          ) : (
-            <IoMdVolumeHigh style={{ height: 20, width: 20 }}/>
-          )}
-        </button>
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={volume}
-          onChange={(e) => setVolume(e.target.value)}
-          style={{
-            background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
-          }}
-        />
+        }
+
       </div>
-            </div>
-          </div>
-        </div>
     </>
   );
 };
