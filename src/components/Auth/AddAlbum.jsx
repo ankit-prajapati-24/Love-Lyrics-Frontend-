@@ -15,11 +15,12 @@ const AddAlbum = () => {
     const formData = new FormData();
     formData.append('Name', data.Name);
     formData.append('Url', data.Url);
-    formData.append('Image', data.Image[0]); // Assuming 'Image' is the file input
+    formData.append('Image', data.Image); // Assuming 'Image' is the file input
     formData.append('AlbumName', data.AlbumName);
-    formData.append('AlbumImg', data.AlbumImg[0]); // Assuming 'AlbumImg' is the file input
+    formData.append('AlbumImg', data.AlbumImg); // Assuming 'AlbumImg' is the file input
     formData.append('ArtistName', data.ArtistName);
-    formData.append('ArtistImage', data.ArtistImage[0]); // Assuming 'ArtistImage' is the file input
+    formData.append('ArtistImage', data.ArtistImage); // Assuming 'ArtistImage' is the file input
+    formData.append('music', data.music[0]); // Assuming 'ArtistImage' is the file input
 
     const loaderId = toast.loading('Loading...');
     try {
@@ -52,8 +53,8 @@ const AddAlbum = () => {
       <div className="mb-4">
         <label className="block text-gray-700">Song URL:</label>
         <input
-          type="text"
-          {...register('Url', { required: 'Song URL is required' })}
+          type="file"
+          {...register('music', { required: 'Song URL is required' })}
           className="w-full px-3 py-2 border rounded-md"
         />
         {errors.Url && <p className="text-red-500">{errors.Url.message}</p>}
@@ -61,7 +62,7 @@ const AddAlbum = () => {
       <div className="mb-4">
         <label className="block text-gray-700">Song Image:</label>
         <input
-          type="file"
+          type="text"
           {...register('Image', { required: 'Song Image is required' })}
           className="w-full px-3 py-2 border rounded-md"
         />
@@ -79,7 +80,7 @@ const AddAlbum = () => {
       <div className="mb-4">
         <label className="block text-gray-700">Album Image:</label>
         <input
-          type="file"
+          type="text"
           {...register('AlbumImg', { required: 'Album Image is required' })}
           className="w-full px-3 py-2 border rounded-md"
         />
@@ -97,7 +98,7 @@ const AddAlbum = () => {
       <div className="mb-4">
         <label className="block text-gray-700">Artist Image URL:</label>
         <input
-          type="file"
+          type="text"
           {...register('ArtistImage', { required: 'Artist Image is required' })}
           className="w-full px-3 py-2 border rounded-md"
         />

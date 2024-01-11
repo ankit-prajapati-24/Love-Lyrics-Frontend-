@@ -24,7 +24,7 @@ const AlbumCard = ({ Image, Title, Songs }) => {
 
   return (
     <div
-      className=' w-[200px] h-[200px] bg-gray-900  p-3  rounded-md hover:bg-gray-800  transition-all duration-200  object-contain group flex-col relative items-center justify-center '
+      className=' w-[150px] h-[180px] md:w-[200px] md:h-[200px] lg:w-[200px] lg:h-[200px] lg:bg-gray-900  p-2  rounded-md hover:bg-gray-800  transition-all duration-200  object-contain group flex-col relative items-center justify-center '
       onClick={() => {
         dispatch(setAlbumName(Title));
         dispatch(setAlbumimg(Image));
@@ -32,14 +32,14 @@ const AlbumCard = ({ Image, Title, Songs }) => {
         navigation("/AlbumSongs");
       }}
     >
-      <div className='border rounded-md'>
+      <div className=' w-full md:w-[200px] md:h-[140px] lg:w-[150px] lg:h-[150px]   border shadow-lg mx-auto rounded-md'>
         <img
           src={Image}
           alt='albumimg'
-          className=' rounded-lg w-[200px] h-[140px]  transition-all duration-200'
+          className=' rounded-lg w-full h-full  md:w-[200px] md:h-[140px] lg:w-[150px] lg:h-[150px]  transition-all duration-200'
         />
       </div>
-      <h1 className='font-bold  text-base text-center text-gray-300 mt-2'>{Title}</h1>
+      <h1 className='font-bold text-xs md:text-md lg:text-[15px] text-center text-gray-300 mt-2'>{Title}</h1>
       {/* Additional styling for the play button */}
       <button className='bg-sky-500 rounded-full p-4 opacity-0 group-hover:opacity-100 bottom-[40%] left-[40%] absolute group-hover:-translate-z-full transition-all duration-1000'>
         <FaPlay />

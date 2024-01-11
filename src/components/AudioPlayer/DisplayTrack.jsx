@@ -25,14 +25,14 @@ const DisplayTrack = ({
   useEffect(()=>{},currentTrack,title);
 
   return (
-    <div className=' w-full items-start flex justify-start    ' onClick={() => dispatch(setmobilePlayer(true))}>
+    <div className=' w-full items-start flex justify-start   lg:max-w-[300px]  ' onClick={() => dispatch(setmobilePlayer(true))}>
       {/* <audio
         src={src}
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
         onEnded={()=> dispatch(setNextIndex(1))}
       /> */}
-      <div className=" flex items-center justify-center gap-2 ">
+      <div className=" flex items-center justify-center gap-2   ">
         <div className="audio-image">
           {currentTrack.thumbnail ? (
             <img src={thumbnail} alt="audio avatar" className='w-[45px] h-[40px]  md:w-[60px] md:h-[50px] lg:w-[60px] lg:h-[50px]' />
@@ -45,7 +45,7 @@ const DisplayTrack = ({
           )}
         </div>
         <div className="text-white ml-3">
-          <p className="text-sm  font-medium max-w-[140px] w-full overflow-hidden"> {title}</p>
+          <p className="text-sm  font-medium  lg:w-full overflow-hidden"> {title}</p>
           <p className='text-xs opacity-80'>{author}</p>
         </div>
       </div>

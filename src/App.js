@@ -27,6 +27,8 @@ import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import MiniPlayer from './components/AudioPlayer/MiniPlayer';
 function App() {
+  
+  
 
   const audioRef = useRef();
   const progressBarRef = useRef();

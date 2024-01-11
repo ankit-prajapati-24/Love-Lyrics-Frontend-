@@ -43,7 +43,7 @@ const Controls = ({
   const [muteVolume, setMuteVolume] = useState(false);
   const trackIndex = useSelector((state)=> state.Album.trackIndex);
   const song = useSelector((state)=> state.Album.Songs);
-  const [fav,setFav] = useState(true);
+  const [fav,setFav] = useState(null);
   const trackId = useSelector((state) => state.Player.trackId);
   const userdata = useSelector((state) => state.User.userdata);
   const [windowwidth,setwindowidth] = useState(0);
@@ -138,6 +138,7 @@ const Controls = ({
       dispatch(settrackId(song[trackIndex]._id));
     }
     // setPlay(true);
+    checkFavorite();
     setwindowidth(window.innerWidth);
     console.log("this is index",trackIndex);
   }, [volume, audioRef, muteVolume,trackIndex,window.innerWidth]);

@@ -90,6 +90,7 @@ const Favoritesongs = () => {
       setFavoriteSongs(res.data.songs);
       setLoader(false);
     } catch (err) {
+      setLoader(false);
       console.log('err', err);
     }
   }
