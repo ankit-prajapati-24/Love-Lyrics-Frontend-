@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
-import logo from '../components/assets/real-logo.jpg';
+import logo from '../components/assets/Screenshot_2024-01-12_012146-removebg-preview.png';
 import { setMenu } from '../slices/Navbar'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { setsearch } from '../slices/UserDataSlice';
 import { setToken, setuserdata } from '../slices/UserDataSlice';
 
 const Navbar = () => {
+    const [animate ,setAnimate] = useState(false);
     const query = useSelector((state) => state.User.query);
     const search = useSelector((state) => state.User.search);
     const token = useSelector((state) => state.User.token);
@@ -42,8 +43,18 @@ const Navbar = () => {
             dispatch(setsearch(!search));
         }
         console.log(query);
+        if(animate){
+            setTimeout(() => {
+                setAnimate(!animate);
+            }, 800);
+        }
+        else{
+            setTimeout(() => {
+                setAnimate(!animate);
+            }, 10000);
+        }
         setwindowWidth(window.innerWidth);
-    }, [window.innerWidth, query, token])
+    }, [window.innerWidth, query, token,animate])
 
 
     return (
@@ -57,8 +68,8 @@ const Navbar = () => {
                         menu ? <GiHamburgerMenu style={{ height: 30, width: 30 }} /> : <ImCross style={{ height: 25, width: 25 }} />
                     }
                 </div>
-                <div className='w-full max-w-[100px]'>
-                    <img src={logo} className='rounded-md mix-blend-normal  mix-blend-exclusion'></img>
+                <div className='w-full max-w-[135px] overflow-hidden'>
+                    <img src={logo} className={`rounded-md  w-full h-full   duration-[3s] transition-all  mix-blend-lighten  bg-black ${animate? "animate-ping":"animate-pulse "}`}></img>
                 </div>
                 </div>
 
