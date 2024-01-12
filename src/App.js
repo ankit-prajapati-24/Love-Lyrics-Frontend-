@@ -6,7 +6,7 @@ import { Route, Router, Routes } from 'react-router-dom';
 // import slider from './components/slider';
 import Home from './components/Common/Home';
 import AlbumSlider from './components/AlbumSlider';
-import PlayTrack from './components/PlayTrack';
+// import PlayTrack from './components/PlayTrack';
 import AlbumRoot from './components/Common/AlbumRoot';
 import AlbumSongList from './components/Common/AlbumSongList';
 import Album from './slices/album';

@@ -43,16 +43,7 @@ const Navbar = () => {
             dispatch(setsearch(!search));
         }
         console.log(query);
-        if(animate){
-            setTimeout(() => {
-                setAnimate(!animate);
-            }, 800);
-        }
-        else{
-            setTimeout(() => {
-                setAnimate(!animate);
-            }, 10000);
-        }
+      
         setwindowWidth(window.innerWidth);
     }, [window.innerWidth, query, token,animate])
 
@@ -60,17 +51,26 @@ const Navbar = () => {
     return (
         <div className=' flex justify-between flex-col items-center  p-3 text-white bg-black fixed top-0 z-50  overflow-x-hidden w-full'>
 
-
-            <div className='flex  items-center justify-between w-full self-baseline'>
-                <div className='flex'>
-                <div className='w-full max-w-[50px] flex  md:hidden lg:hidden' onClick={() => dispatch(setMenu(!menu))}>
+           
+                   
+            <div className='flex  items-center justify-between w-full  self-baseline'>
+                <div className='flex items-center justify-center text-white'>
+                <div className='w-full max-w-[50px] flex  text-white  mr-2  lg:hidden'>
                     {
-                        menu ? <GiHamburgerMenu style={{ height: 30, width: 30 }} /> : <ImCross style={{ height: 25, width: 25 }} />
+                        <button className={`hamburger   text-white hamburger--slider ${menu?"":"is-active"}`} type="button" onClick={() => dispatch(setMenu(!menu))}>
+                    <span className="hamburger-box">
+                        <span className="hamburger-inner"></span>
+                    </span>
+                    </button>
+                   
                     }
                 </div>
                 <div className='w-full max-w-[135px] overflow-hidden'>
-                    <img src={logo} className={`rounded-md  w-full h-full   duration-[3s] transition-all  mix-blend-lighten  bg-black ${animate? "animate-ping":"animate-pulse "}`}></img>
-                </div>
+                  <Link to="/">
+                  <img src={logo} className={`rounded-md  w-full h-full   duration-[3s] transition-all  mix-blend-lighten  bg-black animate-pulse }`}></img>
+                
+                  </Link>
+                   </div>
                 </div>
 
                 {
