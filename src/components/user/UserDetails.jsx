@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaCamera } from "react-icons/fa";
+
+import { FaUserCircle } from "react-icons/fa";
 import { Token,setToken,setuserdata } from '../../slices/UserDataSlice';
 const UserDetails = () => {
   const userdata = useSelector((state) => state.User.userdata);
@@ -21,8 +23,13 @@ const UserDetails = () => {
 
   return (
     <div className='bg-black text-white min-h-screen border flex flex-col items-center mx-auto p-2'>
-      <div className='flex rounded-full overflow-hidden mb-4'>
-        <img src={userdata.Image} alt='user' className='w-24 h-24 object-cover' />
+      <div className='flex rounded-full overflow-hidden mb-4 border'>
+        {
+          userdata.Image?
+          <img src={userdata.Image} alt='user' className='w-24 h-24 object-cover' />
+          :
+          <FaUserCircle className='h-5 w-5 text-[#61dafb]' style={{ height: '90px', width: '90px', }} />       
+        }
       </div>
       <div className='mb-4 flex items-center justify-start gap-2 border max-w-[500px] w-full rounded-md p-2 bg-gray-700'>
         <h1 className='text-xl font-bold '>Name:</h1>

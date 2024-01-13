@@ -83,13 +83,6 @@ const AudioPlayer = ({
       console.log(err);
     }
   }
-  useEffect(() => {
-    if (audioRef) {
-      audioRef.current.volume = volume / 100;
-      audioRef.current.muted = muteVolume;
-    }
-    checkFavorite();
-  }, [title, volume, muteVolume]);
 
   async function favHandler() {
 
@@ -112,13 +105,20 @@ const AudioPlayer = ({
     }
   }
   const windowwidth = window.innerWidth;
+  useEffect(() => {
+    if (audioRef) {
+      audioRef.current.volume = volume / 100;
+      audioRef.current.muted = muteVolume;
+    }
+    checkFavorite();
+  }, [title, volume, muteVolume]);
 
 
   return (
     <>
-      <div className=" bg-[#121212] mx-2  w-[380px] md:w-full lg:w-full mb-[4px]  lg:p-2 md:p-2 fixed z-50 bottom-0  rounded-md " >
+      <div className=" bg-[#121212] mx-2  w-full md:w-full lg:w-full   lg:p-2 md:p-2 fixed z-50 bottom-0  rounded-md " >
         {
-          windowwidth < 500 ?
+          windowwidth < 800 ?
             <div className="flex flex-col w-full items-center justify-between ">
               <div className='flex justify-between items-center w-full p-1 '>
                 <DisplayTrack
@@ -151,7 +151,7 @@ const AudioPlayer = ({
               <ProgressBar
                 {...{ progressBarRef, audioRef, timeProgress, duration }}
               />
-              <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
+              <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex '>
 
                 <MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
                 <div className="flex items-center justify-center text-white">
@@ -208,31 +208,34 @@ const AudioPlayer = ({
                   {...{ progressBarRef, audioRef, timeProgress, duration }}
                 />
               </div>
-              <div className='bg-[#121212] p-4  gap-2 items-center justify-center hidden lg:flex md:flex'>
+            {
+              windowwidth > 800 && 
+              <div className={`bg-[#121212] flex p-4  gap-2 items-center justify-center  '`}>
 
-                <MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
-                <div className="flex items-center justify-center text-white">
-                  <button onClick={() => setMuteVolume((prev) => !prev)}>
-                    {muteVolume || volume < 5 ? (
-                      <IoMdVolumeOff style={{ height: 20, width: 20, color: "white" }} />
-                    ) : volume < 40 ? (
-                      <IoMdVolumeLow style={{ height: 20, width: 20 }} />
-                    ) : (
-                      <IoMdVolumeHigh style={{ height: 20, width: 20 }} />
-                    )}
-                  </button>
-                  <input
-                    type="range"
-                    min={0}
-                    max={100}
-                    value={volume}
-                    onChange={(e) => setVolume(e.target.value)}
-                    style={{
-                      background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
-                    }}
-                  />
-                </div>
-              </div>
+<MdFormatListBulletedAdd style={{ color: 'white', height: 20, width: 20 }} />
+<div className="flex items-center justify-center text-white">
+  <button onClick={() => setMuteVolume((prev) => !prev)}>
+    {muteVolume || volume < 5 ? (
+      <IoMdVolumeOff style={{ height: 20, width: 20, color: "white" }} />
+    ) : volume < 40 ? (
+      <IoMdVolumeLow style={{ height: 20, width: 20 }} />
+    ) : (
+      <IoMdVolumeHigh style={{ height: 20, width: 20 }} />
+    )}
+  </button>
+  <input
+    type="range"
+    min={0}
+    max={100}
+    value={volume}
+    onChange={(e) => setVolume(e.target.value)}
+    style={{
+      background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
+    }}
+  />
+</div>
+</div>
+            }
             </div>
         }
 

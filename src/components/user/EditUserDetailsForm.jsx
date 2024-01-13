@@ -13,8 +13,8 @@ const EditUserDetailsForm = () => {
   const userdata = useSelector((state) => state.User.userdata);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [Gender ,setGender] = useState(userdata.Gender);
-  const [Image ,SetImage] = useState(null);
+  const [Gender, setGender] = useState(userdata.Gender);
+  const [Image, SetImage] = useState(null);
 
   const { handleSubmit, register, setValue, formState: { errors }, watch } = useForm({
     defaultValues: {
@@ -25,30 +25,31 @@ const EditUserDetailsForm = () => {
     },
   });
 
-  async function update(data){
+  async function update(data) {
 
-     const loadeid = toast.loading("laoding...");
-        try{
-           const res = await apiConnecter("post","Auth/updateInformation",data);
-           console.log(res);
-           toast.dismiss(loadeid);
-           dispatch(setuserdata(res.data.user));
-           toast.success("Profile Update successfully")
-           navigate("/UserDetails");
-          }
-          catch(err){
-          toast.dismiss(loadeid);
-          
-          toast.error("Try again later")
-          console.log(err);
-        }
+    console.log(data,"here is data");
+    const loadeid = toast.loading("laoding...");
+    try {
+      const res = await apiConnecter("post", "Auth/updateInformation", data);
+      console.log(res.data.user);
+      toast.dismiss(loadeid);
+      dispatch(setuserdata(res.data.user));
+      toast.success("Profile Update successfully")
+      navigate("/UserDetails");
+    }
+    catch (err) {
+      toast.dismiss(loadeid);
+
+      toast.error("Try again later")
+      console.log(err);
+    }
   }
 
   const fileInputRef = useRef(null);
 
   const watchedGender = watch('Gender');
 
-  const formdata =new  FormData();
+  const formdata = new FormData();
   const onSubmit = (data) => {
 
     formdata.append("Gender", Gender)
@@ -56,9 +57,9 @@ const EditUserDetailsForm = () => {
     formdata.append("Country", data.Country);
     formdata.append("Birthday", data.Birthday);
     formdata.append("Image", Image);
-    formdata.append("Email",data.Email);
+    formdata.append("Email", data.Email);
     update(formdata);
-    console.log(formdata,"this is data");
+    console.log(formdata, "this is data");
     // Dispatch an action to update the user details in the Redux store
     // dispatch(setuserdata({  ...data, }));
 
@@ -76,7 +77,7 @@ const EditUserDetailsForm = () => {
   const handleFileChange = (event) => {
     // Handle the selected file
     const selectedFile = event.target.files[0];
-    formdata.append("Image",event.target.files[0]);
+    formdata.append("Image", event.target.files[0]);
     SetImage(selectedFile);
     // Dispatch an action to update the user's image in the Redux store
     // dispatch(setUserImage(selectedFile));
@@ -86,10 +87,11 @@ const EditUserDetailsForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='bg-black text-white min-h-screen border flex flex-col items-center mx-auto p-2'>
-      <div className='flex rounded-full items-center bg-no-repeat object-cover justify-center overflow-hidden mb-4 text-white relative' onClick={handleImageClick}>
-        <img src={userdata.Image} alt='user' className='z-1 w-24 h-24 object-cover cursor-pointer ' />
+      <div className='flex rounded-full items-center bg-no-repeat object-cover justify-center overflow-hidden   mb-4 text-white relative border' onClick={handleImageClick}>
+        <img src={userdata.Image} alt='' className='z-1 w-24 h-24 object-cover cursor-pointer border ' />
+        
         <div className=' absolute z-10 '>
-          <FaCamera style={{ height: 40, width: 40, color: "black" }} />
+          <FaCamera style={{ height: 40, width: 40, color: "white" }} />
         </div>
       </div>
       <input type='file' {...register("Image")} ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
@@ -103,19 +105,32 @@ const EditUserDetailsForm = () => {
         <input type="email" {...register("Email")} placeholder={`${userdata.Email}`} className='border-none outline-none w-full bg-gray-700' />
       </div>
       <div className='mb-4 flex items-center justify-start gap-2 border max-w-[500px] w-full rounded-md p-2 bg-gray-700'>
-        <h1 className='text-xl font-bold '>BirthDay:</h1>
+        <h1 className='text-xl font-bold '>DOB:</h1>
         <input type="date" {...register("Birthday")} placeholder={`${userdata.BirthDay}`} className='border-none outline-none w-full bg-gray-700' />
       </div>
       <div className='mb-4 flex items-center justify-start gap-2 border max-w-[500px] w-full rounded-md p-2 bg-gray-700'>
         <h1 className='text-xl font-bold '>Gender:</h1>
-        <input  onChange={()=> setGender("Male")} type="radio" name='gender' value={'Male'} defaultChecked={watchedGender === 'Male'} />
+        <input onChange={() => setGender("Male")} type="radio" name='gender' value={'Male'} defaultChecked={watchedGender === 'Male'} />
         Male
-        <input  onChange={()=> setGender("FeMale")} type="radio" name='gender' value={'FeMale'} defaultChecked={watchedGender === 'FeMale'} />
+        <input onChange={() => setGender("FeMale")} type="radio" name='gender' value={'FeMale'} defaultChecked={watchedGender === 'FeMale'} />
         Female
       </div>
       <div className='mb-4 flex items-center justify-start gap-2 border max-w-[500px] w-full rounded-md p-2 bg-gray-700'>
         <h1 className='text-xl font-bold '>Country:</h1>
-        <input type="text" {...register("Country")} placeholder={`${userdata.Country}`} className='border-none outline-none w-full bg-gray-700' />
+        {/* <input type="text" {...register("Country")} placeholder={`${userdata.Country}`} className='border-none outline-none w-full bg-gray-700' /> */}
+        <select className='border-none outline-none w-full bg-gray-700 text-white' {...register("Country")} >
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="Australia">Australia</option>
+          <option value="Canada">Canada</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Germany">Germany</option>
+          <option value="Japan">Japan</option>
+          <option value="South Korea">South Korea</option>
+          <option value="Mexico">Mexico</option>
+          <option value="France">France</option>
+
+        </select>
       </div>
       <div className='flex space-x-4'>
         <button className='bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-700'>

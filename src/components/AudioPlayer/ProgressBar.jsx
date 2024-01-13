@@ -33,7 +33,7 @@ const ProgressBar = ({
     };
   
     return (
-      <div className=" hidden lg:flex md:flex  w-full max-w-[550px] items-center justify-center text-white gap-2">
+      <div className=" hidden lg:flex   w-full max-w-[550px] items-center justify-center text-white gap-2">
         <span className="text-xs md:block lg:block hidden opacity-80">{formatTime(timeProgress)}</span>
         <input
           type="range"

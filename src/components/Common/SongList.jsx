@@ -33,10 +33,7 @@ const SongList = ({song,index}) => {
      const userdata = useSelector((state) => state.User.userdata);
     
     //  console.log(name, song.Name);
-     useEffect(() => {
-      // checkFavorite();
-     }, [name,setName])
-
+    
      const formatTime = (time) => {
       if (time && !isNaN(time)) {
         const minutes = Math.floor(time / 60);
@@ -53,7 +50,7 @@ const SongList = ({song,index}) => {
     async function favHandler(){
 
       const dataform = {
-        SongId :trackId,
+        SongId :song._id,
         UserId:userdata._id
       }
        
@@ -73,7 +70,7 @@ const SongList = ({song,index}) => {
 
     async function checkFavorite(){
       const dataform = {
-        SongId :trackId,
+        SongId :song._id,
         UserId:userdata._id
       }
        try{
@@ -91,6 +88,10 @@ const SongList = ({song,index}) => {
       // setDuration(seconds);
       // progressBarRef.current.max = seconds;
     };
+    useEffect(() => {
+      checkFavorite();
+     }, [name,setName])
+
      
   return (
     <div

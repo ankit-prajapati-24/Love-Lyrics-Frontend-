@@ -21,6 +21,7 @@ import { setmobilePlayer } from '../../slices/Control';
 // import Control, { setminiPlayer } from '../../slices/Control';
 import { useNavigate } from 'react-router-dom';
 import MiniControl from './MiniControl';
+import { apiConnecter } from '../../services/apiconnecter';
 // import components
 const MiniPlayer = ({ 
         audioRef,
@@ -40,9 +41,11 @@ const MiniPlayer = ({
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
   const thumbnail = useSelector((state) => state.Player.img);
-  const [fav, setFav] = useState(false);
+  const [fav, setFav] = useState(null);
   const mobilePlayer = useSelector((state) => state.Controls.mobilePlayer);
   const [change,setchange] = useState(false);
+  const trackId = useSelector((state) => state.Player.trackId);
+  const userdata = useSelector((state) => state.User.userdata);
   
   const tracks = [
       {
@@ -90,19 +93,54 @@ const MiniPlayer = ({
     const currentTime = audioRef.current.currentTime;
     setTimeProgress(currentTime);
     progressBarRef.current.value = currentTime;
-    // progressBarRef.current.style.setProperty(
-    //   '--range-progress',
-    //   `${(progressBarRef.current.value / duration) * 100}%`
-    // );
+    progressBarRef.current.style.setProperty(
+      '--range-progress',
+      `${(progressBarRef.current.value / duration) * 100}%`
+    );
 
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat,trackIndex,title]);
+  //   playAnimationRef.current = requestAnimationFrame(repeat);
+  // }, [isPlaying, audioRef, repeat,trackIndex,title]);
 
+  async function checkFavorite() {
+    const dataform = {
+      SongId: trackId,
+      UserId: userdata._id
+    }
+    try {
+      const res = await apiConnecter("POST", "Album/checkFavorite", dataform);
+      console.log(res.data.check);
+      setFav(res.data.check);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function favHandler() {
+
+    const dataform = {
+      SongId: trackId,
+      UserId: userdata._id
+    }
+
+    if (!fav) {
+      const res = await apiConnecter("POST", "Album/AddFavorite", dataform);
+      console.log(res);
+      setFav(!fav);
+      toast.success('Song Added to Favorite')
+    }
+    else {
+      toast.success('Song remove From Favorite')
+      const res = await apiConnecter("POST", "Album/RemoveFavorite", dataform);
+      console.log(res);
+      setFav(!fav);
+    }
+  }
 
   useEffect(()=>{
     const mobileElement = document.querySelector(".mobile");
@@ -122,7 +160,9 @@ const MiniPlayer = ({
       dispatch(setNextIndex(1));
       console.log("gana khatm ho gya");
     }
-  },[title,mobilePlayer,timeProgress]);
+    checkFavorite();
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  },[title,mobilePlayer,isPlaying, audioRef, ,trackIndex,title]);
 
 
   
@@ -212,12 +252,12 @@ const MiniPlayer = ({
           <MdFormatListBulletedAdd style={{ color: 'white', height: 30, width: 30 }} />
           <button
             className='rounded-full  hover:scale-95'
-            onClick={() => setFav(!fav)}
+            onClick={() => favHandler()}
           >
             {fav ? (
-              <FaRegHeart style={{ color: 'pink', height: 30, width: 30 }} />
-            ) : (
               <FaHeart style={{ color: 'pink', height: 30, width: 30 }} />
+            ) : (
+              <FaRegHeart style={{ color: 'pink', height: 30, width: 30 }} />
             )}
           </button>
         </div>

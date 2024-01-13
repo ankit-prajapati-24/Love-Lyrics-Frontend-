@@ -146,15 +146,22 @@ const Controls = ({
   return (
     <div className="controls-wrapper text-white flex      items-center ">
       <div className="flex px-4 gap-3 items-center">
+
+       {
+        windowwidth > 800  && 
         <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setPrevIndex(1))}>
           <IoPlaySkipBackSharp style={{ height: 20, width: 20 }} />
         </button>
+     
+       }
+       {
+        windowwidth > 800  &&   
         <button className='hidden lg:flex md:flex' onClick={skipBackward}>
           <IoPlayBackSharp style={{ height: 20, width: 20 }} />
-        </button>
-
+        </button> 
+       }
       {
-        windowwidth < 500 ?
+        windowwidth < 800 ?
         <button className='rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
           {isPlaying ? <IoPauseSharp style={{ height: 30, width: 30 }}/> : <IoPlaySharp style={{ height: 30, width: 30 }}/>}
         </button>
@@ -163,12 +170,18 @@ const Controls = ({
           {isPlaying ? <IoPauseSharp style={{ height: 15, width: 15 }}/> : <IoPlaySharp style={{ height: 15, width: 15 }}/>}
         </button>
       }
-        <button className='hidden lg:flex md:flex'  onClick={skipForward}>
+     {
+      windowwidth > 800 && 
+      <button className='hidden lg:flex md:flex'  onClick={skipForward}>
           <IoPlayForwardSharp style={{ height: 20, width: 20 }}/>
         </button>
+     }
+     {
+      windowwidth > 800 && 
         <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setNextIndex(1))}>
           <IoPlaySkipForwardSharp style={{ height: 20, width: 20 }}/>
         </button>
+     }
       </div>
       <button
                 className='rounded-full p-4 hover:scale-95'

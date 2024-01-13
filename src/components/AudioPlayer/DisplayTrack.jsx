@@ -25,7 +25,7 @@ const DisplayTrack = ({
   useEffect(()=>{},currentTrack,title);
 
   return (
-    <div className=' w-full items-start flex justify-start   lg:max-w-[300px]  ' onClick={() => dispatch(setmobilePlayer(true))}>
+    <div className=' w-full items-start flex justify-start   md:max-w-[200px] lg:max-w-[300px]  ' onClick={() => dispatch(setmobilePlayer(true))}>
       {/* <audio
         src={src}
         ref={audioRef}
@@ -35,7 +35,7 @@ const DisplayTrack = ({
       <div className=" flex items-center justify-center gap-2   ">
         <div className="audio-image">
           {currentTrack.thumbnail ? (
-            <img src={thumbnail} alt="audio avatar" className='w-[45px] h-[40px]  md:w-[60px] md:h-[50px] lg:w-[60px] lg:h-[50px]' />
+            <img src={thumbnail} alt="audio avatar" className='w-[45px] h-[40px]  md:w-[60px] md:h-[50px] lg:w-[60px] lg:h-[50px] ml-2' />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">

@@ -49,32 +49,32 @@ const Navbar = () => {
 
 
     return (
-        <div className=' flex justify-between flex-col items-center  p-3 text-white bg-black fixed top-0 z-50  overflow-x-hidden w-full'>
+        <div className=' flex justify-between flex-col items-center  p-2 text-white bg-black fixed top-0 z-50  overflow-x-hidden w-full'>
 
            
                    
             <div className='flex  items-center justify-between w-full  self-baseline'>
                 <div className='flex items-center justify-center text-white'>
-                <div className='w-full max-w-[50px] flex  text-white  mr-2  lg:hidden'>
                     {
-                        <button className={`hamburger   text-white hamburger--slider ${menu?"":"is-active"}`} type="button" onClick={() => dispatch(setMenu(!menu))}>
+                        windowWidth < 800 &&
+                <div className='w-full max-w-[50px] flex  text-white  mr-2  lg:hidden'>
+                       <button className={`hamburger   text-white hamburger--slider ${menu?"":"is-active"}`} type="button" onClick={() => dispatch(setMenu(!menu))}>
                     <span className="hamburger-box">
                         <span className="hamburger-inner"></span>
                     </span>
                     </button>
                    
-                    }
                 </div>
+                    }
                 <div className='w-full max-w-[135px] overflow-hidden'>
                   <Link to="/">
                   <img src={logo} className={`rounded-md  w-full h-full   duration-[3s] transition-all  mix-blend-lighten  bg-black animate-pulse }`}></img>
-                
                   </Link>
                    </div>
                 </div>
 
                 {
-                    windowWidth > 500 && <form className=' w-full  max-w-[500px] ' onSubmit={(e) => SubmitHandeler(e)}>
+                    windowWidth > 800 && <form className=' w-full  max-w-[500px] ' onSubmit={(e) => SubmitHandeler(e)}>
                         <label for="default-search" className="mb-2 text-sm font-medium text-white sr-only dark:text-black">Search</label>
                         <div class="relative">
                             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -89,7 +89,7 @@ const Navbar = () => {
 
                 }
                 {
-                    token ? <div className='flex items-center justify-center p-2  max-w-[400px] gap-3'>
+                    token ? <div className='flex items-center justify-center p-2  -mb-1  max-w-[400px] gap-3'>
 
 
 
@@ -116,7 +116,7 @@ const Navbar = () => {
             </div>
 
             {
-                windowWidth < 500 && <form className=' w-full  max-w-[500px] ' onSubmit={(e) => SubmitHandeler(e)}>
+                windowWidth < 800 && <form className=' w-full   ' onSubmit={(e) => SubmitHandeler(e)}>
                     <label for="default-search" className="mb-2 text-sm font-medium text-white sr-only dark:text-black">Search</label>
                     <div class="relative">
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

@@ -22,10 +22,11 @@ import UserDetails from './components/user/UserDetails';
 import EditUserDetailsForm from './components/user/EditUserDetailsForm';
 import Favoritesongs from './components/user/Favoritesongs';
 import RandomAudioPlayer from './components/AudioPlayer/RandomAudioPlayer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import MiniPlayer from './components/AudioPlayer/MiniPlayer';
+import { setMenu } from './slices/Navbar';
 function App() {
   
   
@@ -35,10 +36,12 @@ function App() {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const title = useSelector((state) => state.Player.name);
+  const menu = useSelector((state) => state.Navbar.menu);
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
   const thumbnail = useSelector((state) => state.Player.img);
   const [duration,setDuration] =useState(0);
+  const dispatch = useDispatch();
   
   const onLoadedMetadata = () => {
     const seconds = audioRef.current.duration;
@@ -62,7 +65,13 @@ function App() {
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
-    <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '>
+    <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '
+     onClick={() => {
+      if(!menu){
+        dispatch(setMenu(!menu));  
+      }
+    }}
+    >
         <audio
         src={src}
         ref={audioRef}
@@ -72,7 +81,13 @@ function App() {
     <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
       <LeftSideBar/>
     
-    <div className='rounded-md scroll-smooth overflow-y-hidden overflow-x-hidden z-10 w-full  mb-20  md:ml-[250px] lg:ml-[230px]  '>
+    <div className={`rounded-md scroll-smooth overflow-y-hidden overflow-x-hidden z-10 w-full    ${windowWidth >= 800 ?" ml-[250px]":"" } `}
+    onClick={() => {
+      if(!menu){
+        dispatch(setMenu(!menu));  
+      }
+    }}
+    >
    
        <Routes>
        <Route path='*' element = {<Home></Home>}></Route>
@@ -102,7 +117,7 @@ function App() {
     
     <AudioPlayer {...{audioRef,progressBarRef,duration,setDuration,isPlaying,setIsPlaying}}></AudioPlayer>
   {
-    windowWidth < 500 &&   <MiniPlayer {...{audioRef,duration,setDuration,setIsPlaying,isPlaying}}></MiniPlayer>
+      <MiniPlayer {...{audioRef,duration,setDuration,setIsPlaying,isPlaying}}></MiniPlayer>
   }
     </div>
   );

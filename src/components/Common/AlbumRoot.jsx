@@ -33,15 +33,26 @@ const AlbumRoot = () => {
 
   const updateWindowWidth = () => {
     setWindowWidth(window.innerWidth);
-    if(windowWidth < 500){
-      setCard(5);
-    }
-    else {
-      setCard(3);
-    }
+   
   };
  
   useEffect(() => {
+    if(windowWidth < 300){
+      setCard(2);
+    }
+    else if(windowWidth < 500){
+      setCard(3);
+    }
+    else if(windowWidth < 800){
+      setCard(4);
+    }
+    else if(windowWidth < 1000) {
+      setCard(3);
+    }
+    else if(windowWidth < 1200) {
+      setCard(4);
+    }
+    else setCard(6)
     // Add event listener to update window width on resize
     getAlbums();
     window.addEventListener('resize', updateWindowWidth);
@@ -50,7 +61,7 @@ const AlbumRoot = () => {
     return () => {
       window.removeEventListener('resize', updateWindowWidth);
     };
-  }, []); 
+  }, [card,window.innerWidth]); 
 
   return (
     <>
@@ -69,7 +80,7 @@ const AlbumRoot = () => {
   {
       windowWidth<500 ?
       <Swiper
-        slidesPerView={3}
+        slidesPerView={card}
         spaceBetween={50}
         loop={true}
         freeMode={true}
@@ -87,7 +98,7 @@ const AlbumRoot = () => {
       </Swiper>
       :
       <Swiper
-        slidesPerView={6}
+        slidesPerView={card}
         spaceBetween={20}
         loop={true}
         freeMode={true}
@@ -112,7 +123,7 @@ const AlbumRoot = () => {
   {
       windowWidth<500 ?
       <Swiper
-        slidesPerView={3}
+        slidesPerView={card}
         spaceBetween={24}
         loop={true}
         freeMode={true}
@@ -130,7 +141,7 @@ const AlbumRoot = () => {
       </Swiper>
       :
       <Swiper
-        slidesPerView={6}
+        slidesPerView={card}
         spaceBetween={20}
         loop={true}
         freeMode={true}
@@ -155,7 +166,7 @@ const AlbumRoot = () => {
   {
       windowWidth<500 ?
       <Swiper
-        slidesPerView={3}
+        slidesPerView={card}
         spaceBetween={24}
         loop={true}
         freeMode={true}
@@ -173,7 +184,7 @@ const AlbumRoot = () => {
       </Swiper>
       :
       <Swiper
-        slidesPerView={6}
+        slidesPerView={card}
         spaceBetween={20}
         loop={true}
         freeMode={true}
