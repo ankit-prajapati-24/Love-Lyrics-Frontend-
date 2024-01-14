@@ -34,6 +34,7 @@ const SongList = ({song,index}) => {
     
     //  console.log(name, song.Name);
     
+
      const formatTime = (time) => {
       if (time && !isNaN(time)) {
         const minutes = Math.floor(time / 60);
@@ -88,8 +89,9 @@ const SongList = ({song,index}) => {
       // setDuration(seconds);
       // progressBarRef.current.max = seconds;
     };
+    
     useEffect(() => {
-      checkFavorite();
+      // checkFavorite();
      }, [name,setName])
 
      

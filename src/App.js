@@ -24,6 +24,7 @@ import Favoritesongs from './components/user/Favoritesongs';
 import RandomAudioPlayer from './components/AudioPlayer/RandomAudioPlayer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { setNextIndex } from './slices/album';
 import { useRef } from 'react';
 import MiniPlayer from './components/AudioPlayer/MiniPlayer';
 import { setMenu } from './slices/Navbar';
@@ -62,7 +63,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', updateWindowWidth);
     };
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, [duration]); // Empty dependency array ensures the effect runs only once on mount
 
   return (
     <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '
@@ -76,6 +77,7 @@ function App() {
         src={src}
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
+        onEnded={()=> dispatch(setNextIndex(1))}
       />
     <Navbar></Navbar>
     <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>

@@ -84,14 +84,14 @@ const MiniControl = ({
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
-    checkFavorite();
+    // checkFavorite();
     if (isPlaying) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat,trackIndex,title]);
+    // playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [isPlaying, audioRef,trackIndex,title]);
 
   const skipForward = () => {
     audioRef.current.currentTime += 15;

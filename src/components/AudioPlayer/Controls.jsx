@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { setNextIndex,setPrevIndex } from '../../slices/album';
+import { setNextIndex, setPrevIndex } from '../../slices/album';
 import { apiConnecter } from '../../services/apiconnecter';
 import toast from 'react-hot-toast';
 import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
@@ -36,20 +36,21 @@ const Controls = ({
   setTrackIndex,
   setCurrentTrack,
   isPlaying,
-  setIsPlaying
+  setIsPlaying,
+  setDuration
 }) => {
   const dispatch = useDispatch();
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
-  const trackIndex = useSelector((state)=> state.Album.trackIndex);
-  const song = useSelector((state)=> state.Album.Songs);
-  const [fav,setFav] = useState(null);
+  const trackIndex = useSelector((state) => state.Album.trackIndex);
+  const song = useSelector((state) => state.Album.Songs);
+  const [fav, setFav] = useState(null);
   const trackId = useSelector((state) => state.Player.trackId);
   const userdata = useSelector((state) => state.User.userdata);
-  const [windowwidth,setwindowidth] = useState(0);
-  
+  const [windowwidth, setwindowidth] = useState(0);
+
   const title = useSelector((state) => state.Player.name);
-  
+
 
   const togglePlayPause = () => {
     setIsPlaying((prev) => !prev);
@@ -72,7 +73,7 @@ const Controls = ({
 
 
   const playAnimationRef = useRef();
- 
+
   const repeat = useCallback(() => {
     const currentTime = audioRef.current.currentTime;
     setTimeProgress(currentTime);
@@ -86,14 +87,18 @@ const Controls = ({
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
-    checkFavorite();
     if (isPlaying) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
+    
+    checkFavorite();
+    const seconds = audioRef.current.duration;
+    // setDuration(seconds);
+    progressBarRef.current.max = seconds;
     playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat,trackIndex,title]);
+  }, [isPlaying, audioRef, repeat, trackIndex, title]);
 
   const skipForward = () => {
     audioRef.current.currentTime += 15;
@@ -129,7 +134,7 @@ const Controls = ({
       audioRef.current.volume = volume / 100;
       audioRef.current.muted = muteVolume;
     }
-    if(song && song.length > 0){
+    if (song && song.length > 0) {
 
       dispatch(setImg(song[trackIndex].Image));
       dispatch(setSongUrl(song[trackIndex].Url));
@@ -137,62 +142,60 @@ const Controls = ({
       dispatch(setSinger(song[trackIndex].Artists[0]));
       dispatch(settrackId(song[trackIndex]._id));
     }
-    // setPlay(true);
-    checkFavorite();
     setwindowidth(window.innerWidth);
-    console.log("this is index",trackIndex);
-  }, [volume, audioRef, muteVolume,trackIndex,window.innerWidth]);
+    console.log("this is index", trackIndex);
+  }, [volume, audioRef, muteVolume, trackIndex]);
 
   return (
     <div className="controls-wrapper text-white flex      items-center ">
       <div className="flex px-4 gap-3 items-center">
 
-       {
-        windowwidth > 800  && 
-        <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setPrevIndex(1))}>
-          <IoPlaySkipBackSharp style={{ height: 20, width: 20 }} />
-        </button>
-     
-       }
-       {
-        windowwidth > 800  &&   
-        <button className='hidden lg:flex md:flex' onClick={skipBackward}>
-          <IoPlayBackSharp style={{ height: 20, width: 20 }} />
-        </button> 
-       }
-      {
-        windowwidth < 800 ?
-        <button className='rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
-          {isPlaying ? <IoPauseSharp style={{ height: 30, width: 30 }}/> : <IoPlaySharp style={{ height: 30, width: 30 }}/>}
-        </button>
-        
-        :  <button className='bg-sky-500 rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
-          {isPlaying ? <IoPauseSharp style={{ height: 15, width: 15 }}/> : <IoPlaySharp style={{ height: 15, width: 15 }}/>}
-        </button>
-      }
-     {
-      windowwidth > 800 && 
-      <button className='hidden lg:flex md:flex'  onClick={skipForward}>
-          <IoPlayForwardSharp style={{ height: 20, width: 20 }}/>
-        </button>
-     }
-     {
-      windowwidth > 800 && 
-        <button className='hidden lg:flex md:flex' onClick={()=> dispatch(setNextIndex(1))}>
-          <IoPlaySkipForwardSharp style={{ height: 20, width: 20 }}/>
-        </button>
-     }
+        {
+          windowwidth > 800 &&
+          <button className='hidden lg:flex md:flex' onClick={() => dispatch(setPrevIndex(1))}>
+            <IoPlaySkipBackSharp style={{ height: 20, width: 20 }} />
+          </button>
+
+        }
+        {
+          windowwidth > 800 &&
+          <button className='hidden lg:flex md:flex' onClick={skipBackward}>
+            <IoPlayBackSharp style={{ height: 20, width: 20 }} />
+          </button>
+        }
+        {
+          windowwidth < 800 ?
+            <button className='rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
+              {isPlaying ? <IoPauseSharp style={{ height: 30, width: 30 }} /> : <IoPlaySharp style={{ height: 30, width: 30 }} />}
+            </button>
+
+            : <button className='bg-sky-500 rounded-full p-3 hover:scale-95' onClick={togglePlayPause}>
+              {isPlaying ? <IoPauseSharp style={{ height: 15, width: 15 }} /> : <IoPlaySharp style={{ height: 15, width: 15 }} />}
+            </button>
+        }
+        {
+          windowwidth > 800 &&
+          <button className='hidden lg:flex md:flex' onClick={skipForward}>
+            <IoPlayForwardSharp style={{ height: 20, width: 20 }} />
+          </button>
+        }
+        {
+          windowwidth > 800 &&
+          <button className='hidden lg:flex md:flex' onClick={() => dispatch(setNextIndex(1))}>
+            <IoPlaySkipForwardSharp style={{ height: 20, width: 20 }} />
+          </button>
+        }
       </div>
       <button
-                className='rounded-full p-4 hover:scale-95'
-                onClick={() => favHandler()}
-              >
-                {fav ? (
-                  <FaHeart style={{ color: 'pink', height: 20, width: 20 }} />
-                ) : (
-                  <FaRegHeart style={{ color: 'pink', height: 20, width: 20 }} />
-                )}
-              </button>
+        className='rounded-full p-4 hover:scale-95'
+        onClick={() => favHandler()}
+      >
+        {fav ? (
+          <FaHeart style={{ color: 'pink', height: 20, width: 20 }} />
+        ) : (
+          <FaRegHeart style={{ color: 'pink', height: 20, width: 20 }} />
+        )}
+      </button>
 
       {/* <div className="flex items-center justify-center">
         <button onClick={() => setMuteVolume((prev) => !prev)}>

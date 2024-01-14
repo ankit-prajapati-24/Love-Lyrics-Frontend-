@@ -40,6 +40,25 @@ const AudioPlayer = ({
   const [fav, setFav] = useState(null);
   const dispatch = useDispatch();
 
+  const showNotification = () => {
+    if (Notification.permission === "granted") {
+      new Notification("Now Playing", {
+        body: {title},
+        icon: {thumbnail}, // Add the path to your music image
+      });
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification("Now Playing", {
+            body: {title},
+            icon: {thumbnail},
+          });
+        }
+      });
+    }
+  };
+  
+
   const tracks = [
     {
       title,
@@ -111,6 +130,7 @@ const AudioPlayer = ({
       audioRef.current.muted = muteVolume;
     }
     checkFavorite();
+    showNotification();
   }, [title, volume, muteVolume]);
 
 
@@ -136,6 +156,7 @@ const AudioPlayer = ({
                     audioRef,
                     progressBarRef,
                     duration,
+                    setDuration,
                     setTimeProgress,
                     tracks,
                     trackIndex,

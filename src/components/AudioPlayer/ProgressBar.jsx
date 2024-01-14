@@ -12,12 +12,6 @@ const ProgressBar = ({
       audioRef.current.currentTime = progressBarRef.current.value;
     };
 
-    useEffect(() => {
-      if(timeProgress == duration){
-        dispatch(setNextIndex(1));
-      }
-    }, [timeProgress])
-    
   
     const formatTime = (time) => {
       if (time && !isNaN(time)) {

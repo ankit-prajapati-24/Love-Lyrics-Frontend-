@@ -147,22 +147,16 @@ const MiniPlayer = ({
     if(!mobilePlayer){
       
       document.body.style.overflow = "auto";
-      if (mobileElement) {
-        // mobileElement.style.display = "block";
-      }
     }
     else{
       window.scrollTo(0, 0);
       document.body.style.overflow = "hidden";
     
     }
-    if(timeProgress == duration){
-      dispatch(setNextIndex(1));
-      console.log("gana khatm ho gya");
-    }
     checkFavorite();
+    
     playAnimationRef.current = requestAnimationFrame(repeat);
-  },[title,mobilePlayer,isPlaying, audioRef, ,trackIndex,title]);
+  },[title,mobilePlayer,isPlaying,repeat, audioRef, ,trackIndex]);
 
 
   
