@@ -29,25 +29,37 @@ import { useRef } from 'react';
 import MiniPlayer from './components/AudioPlayer/MiniPlayer';
 import { setMenu } from './slices/Navbar';
 import ArtistCard from './components/Common/ArtistCard';
+import Sheet from 'react-modal-sheet';
+import styled from 'styled-components';
+import { setDuration,setIsPlaying,setTimeProgress } from './slices/Control';
+import { TiMinus } from "react-icons/ti";
 function App() {
   
   
-
+  const [isOpen, setOpen] = useState(false);
+  const [isOpenMore, setOpenmore] = useState(false);
+  
   const audioRef = useRef();
   const progressBarRef = useRef();
+  
+  // const [timeProgress, setTimeProgress] = useState(0);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [duration,setDuration] =useState(0);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const timeProgress = useSelector((state) => state.Controls.timeProgress);
+  const isPlaying = useSelector((state) => state.Controls.isPlaying);
+  const duration = useSelector((state) => state.Controls.duration);
+
   const title = useSelector((state) => state.Player.name);
   const menu = useSelector((state) => state.Navbar.menu);
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
   const thumbnail = useSelector((state) => state.Player.img);
-  const [duration,setDuration] =useState(0);
   const dispatch = useDispatch();
   
   const onLoadedMetadata = () => {
     const seconds = audioRef.current.duration;
-    setDuration(seconds);
+    dispatch(setDuration(seconds))
     progressBarRef.current.max = seconds;
   };
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -61,10 +73,36 @@ function App() {
     window.addEventListener('resize', updateWindowWidth);
 
     // Cleanup the event listener when the component unmounts
+    console.log(timeProgress,"this is time progess      ");
     return () => {
       window.removeEventListener('resize', updateWindowWidth);
     };
   }, [src]); // Empty dependency array ensures the effect runs only once on mount
+
+
+  const CustomSheet = styled(Sheet)`
+  .react-modal-sheet-backdrop {
+    /* custom styles */
+    color: black; /* Add black color here */
+  }
+  .react-modal-sheet-container {
+    /* custom styles */
+    color: black; /* Add black color here */
+  }
+  .react-modal-sheet-header {
+    /* custom styles */
+    color: black; /* Add black color here */
+  }
+  .react-modal-sheet-drag-indicator {
+    /* custom styles */
+    color: black; /* Add black color here */
+  }
+  .react-modal-sheet-content {
+    /* custom styles */
+    color: black; /* Add black color here */
+  }
+`;
+
 
   return (
     <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '
@@ -81,9 +119,9 @@ function App() {
         onEnded={()=> dispatch(setNextIndex(1))}
       />
     <Navbar></Navbar>
-    <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
+      <div className='flex w-full relative ml-1 mt-[108px] md:mt-20 lg:mt-20  '>
       <LeftSideBar/>
-    
+
     <div className={`rounded-md scroll-smooth overflow-y-hidden overflow-x-hidden z-10 w-full    ${windowWidth >= 800 ?" ml-[250px]":"" } `}
     onClick={() => {
       if(!menu){
@@ -101,8 +139,8 @@ function App() {
        <Route path='/Signup' element = {<Signup></Signup>}></Route>
        <Route path='/VerifyOTP' element = {<VerifyOtp></VerifyOtp>}></Route>
        <Route path='/UserDetails' element = {<UserDetails></UserDetails>}></Route>
-       <Route path='/Artist/:ArtistId' element = {<ArtistCard></ArtistCard>}></Route>
-       <Route path='/FavoriteSongs' element = {<Favoritesongs></Favoritesongs>}></Route>
+       <Route path='/Artist/:ArtistId' element = {<ArtistCard ></ArtistCard>}></Route>
+       <Route path='/FavoriteSongs' element = {<Favoritesongs setOpenmore = {setOpenmore}></Favoritesongs>}></Route>
        <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
        {/* <Route path='/miniPlayer' element = {
        <MiniPlayer {...{audioRef,progressBarRef,duration,setDuration}}></MiniPlayer>
@@ -118,10 +156,34 @@ function App() {
      
     </div>   */}
     
-    <AudioPlayer {...{audioRef,progressBarRef,duration,setDuration,isPlaying,setIsPlaying}}></AudioPlayer>
-  {
-      <MiniPlayer {...{audioRef,duration,setDuration,setIsPlaying,isPlaying}}></MiniPlayer>
-  }
+    <AudioPlayer {...{timeProgress,setOpen, setTimeProgress,audioRef,progressBarRef,duration,setDuration,isPlaying,setIsPlaying}}></AudioPlayer>
+
+    <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
+        <Sheet.Container>
+          <Sheet.Header>
+            <div className='bg-[#121212] flex items-center justify-center text-white w-full h-10'>
+              <div className='h-1 w-[30px] rounded-full bg-white'></div>
+            </div>
+          </Sheet.Header>
+          <Sheet.Content>{
+            <MiniPlayer {...{timeProgress, setTimeProgress,audioRef,duration,setDuration,setIsPlaying,isPlaying}}></MiniPlayer>
+            }</Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet>
+
+      <Sheet isOpen={isOpenMore} onClose={() => setOpenmore(false)}>
+        <Sheet.Container>
+          <Sheet.Header>
+            <div className='bg-[#121212] flex items-center justify-center text-white w-full h-10'>
+              <div className='h-1 w-[30px] rounded-full bg-white'></div>
+            </div>
+          </Sheet.Header>
+          <Sheet.Content></Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet>
+      
     </div>
   );
 }

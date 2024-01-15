@@ -5,7 +5,6 @@ import { BsMusicNoteBeamed } from 'react-icons/bs';
 import { setNextIndex,setPrevIndex } from '../../slices/album';
 
 const MobilePlayer = ({
-  currentTrack,
   audioRef,
   setDuration,
   progressBarRef,
@@ -19,27 +18,22 @@ const MobilePlayer = ({
   
   const onLoadedMetadata = () => {
     const seconds = audioRef.current.duration;
-    setDuration(seconds);
+    dispatch( setDuration(seconds));
     progressBarRef.current.max = seconds;
   };
-  useEffect(()=>{},currentTrack,title);
+  useEffect(()=>{},[title]);
 
   return (
-    <div className='  bg-cover bg-no-repeat  rounde rounded-xl shadow-2xl mx-2  ' 
-     style={{ backgroundImage: `url(${thumbnail})` }}
+    <div className='  bg-cover bg-no-repeat   rounded-xl  mx-2  shadow-2xl  ' 
+    //  style={{ backgroundImage: `url(${thumbnail})` }}
     >
-      <audio
-        src={src}
-        ref={audioRef}
-        onLoadedMetadata={onLoadedMetadata}
-        onEnded={()=> dispatch(setNextIndex(1))}
-      />
-      <div className=" flex items-center flex-col justify-center gap-2 w-full h-[400px]  backdrop-blur-sm " 
+
+      <div className=" flex items-center flex-col justify-center gap-2 w-full h-[400px]   " 
       
       >
         <div className="audio-image">
-          {currentTrack.thumbnail ? (
-            <img src={thumbnail} alt="audio avatar" className='max-w-[300px] w-full h-full max-h-[300px]' />
+          {thumbnail ? (
+            <img src={thumbnail} alt="audio avatar" className='max-w-[300px] w-full h-full max-h-[300px] rounded-md shadow-2xl ' />
           ) : (
             <div className="icon-wrapper">
               <span className="audio-icon">

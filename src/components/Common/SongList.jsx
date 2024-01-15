@@ -2,8 +2,12 @@ import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { FaDownload } from 'react-icons/fa6';
 import { PiWaveformFill } from "react-icons/pi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useEffect } from 'react';
+import { MdFormatListBulletedAdd } from 'react-icons/md';
+import { BsMusicNoteList } from 'react-icons/bs';
 
+import { LuShare } from "react-icons/lu";
 import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { BiSolidSkipNextCircle } from 'react-icons/bi';
 import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
@@ -16,7 +20,7 @@ import {
 } from '../../slices/player';
 import toast from 'react-hot-toast';
 import { apiConnecter } from '../../services/apiconnecter';
-
+import Sheet from 'react-modal-sheet';
 const SongList = ({song,index}) => {
     
     const dispatch = useDispatch();
@@ -29,6 +33,8 @@ const SongList = ({song,index}) => {
     const [duration ,setDuration] = useState(null);
      const [play , setPlay] = useState(false);
      const [fav, setFav] = useState(null);
+     
+  const [isOpen, setOpen] = useState(false);
   
      const userdata = useSelector((state) => state.User.userdata);
     
@@ -89,30 +95,43 @@ const SongList = ({song,index}) => {
       // setDuration(seconds);
       // progressBarRef.current.max = seconds;
     };
-    
-    useEffect(() => {
-      // checkFavorite();
-     }, [name,setName])
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    // Add event listener to update window width on resize
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    };
+  }, [name,setName]); // Empty dependency array ensures the effect runs only once on mount
+
+
 
      
   return (
     <div
-    onClick={() => {
+    
+    key={index}
+    className={`flex flex-row items-center justify-between mb-1 duration-200 transition-all rounded-md mx-auto p-3  ${song._id == trackId ?"text-sky-400 shining-text opacity-100":"text-white opacity-80"}`}
+  >
+    <div className=" font-semibold  text-md lg:w-[25%] flex items-center gap-2 mb-2 lg:mb-0">
+    <div >
+    {song._id == trackId ?<PiWaveformFill/>:index+1?index+1:""}
+    </div>
+    <div className='max-w-[250px]'
+     onClick={() => {
       dispatch(setImg(song.Image));
       dispatch(setSongUrl(song.Url));
       dispatch(setName(song.Name));
       dispatch(setSinger(song.Artists[0]));
       dispatch(settrackId(song._id));
       setPlay(true);
-    }}
-    key={index}
-    className={`flex flex-row items-center justify-between mb-1 duration-200 transition-all rounded-md mx-auto p-3  ${song._id == trackId ?"text-sky-400 shining-text opacity-100":"text-white opacity-80"}`}
-  >
-    <div className=" font-semibold  text-md lg:w-[25%] flex items-center gap-2 mb-2 lg:mb-0">
-    <div>
-    {song._id == trackId ?<PiWaveformFill/>:index+1?index+1:""}
-    </div>
-    <div className='max-w-[250px]'>
+    }}>
       {song.Name}
     </div>
 
@@ -120,13 +139,19 @@ const SongList = ({song,index}) => {
     <div className=" font-semibold  hidden lg:block lg:w-[28%] mb-2 lg:mb-0 ">
       {song.Artists[0]}
     </div>
-    <div className=" font-semibold  mr-3  lg:block lg:w-[28%] mb-2 lg:mb-0 " onClick={() => favHandler()}>
+    <div className=" font-semibold  mr-3 hidden  lg:block lg:w-[28%] mb-2 lg:mb-0 " onClick={() => favHandler()}>
     {fav ? (
               <FaHeart style={{ color: 'pink', height: 20, width: 20 }} />
             ) : (
               <FaRegHeart style={{ color: 'pink', height: 20, width: 20 }} />
             )}
     </div>
+   {
+    windowWidth < 800 && 
+    <div onClick={()=> setOpen(true)}>
+      <BsThreeDotsVertical style={{height:25,width:30}}/>
+    </div>
+   }
     <a
       href={song.Url}
       className=" font-semibold  lg:w-[25%] mb-2   hidden lg:block md:block"
@@ -134,6 +159,55 @@ const SongList = ({song,index}) => {
     >
       <FaDownload />
     </a>
+    <Sheet
+        isOpen={isOpen}
+        onClose={() => setOpen(false)}
+        snapPoints={[500,  0]}
+        initialSnap={0}
+        onSnap={snapIndex =>
+          console.log('> Current snap point index:', snapIndex)
+        }
+      >
+        <Sheet.Container>
+          <Sheet.Content>
+          <div className="bg-white py-4 rounded-lg shadow-md">
+      <div className="flex items-center mx-2 p-2  ">
+        <img src={song.Image} alt="song img" className=" w-full h-full max-h-[60px] max-w-[60px]  rounded-lg " />
+        <div className="text-black ml-3">
+          <p className="text-sm font-bold  lg:w-full overflow-hidden">{song.Name}</p>
+          <p className="text-xs opacity-80">{song.Artists[0]}</p>
+        </div>
+      </div>
+      <div className='h-[1px] bg-gray-300 w-full '></div>
+      
+      <div className="text-gray-800 mx-4 flex flex-col gap-7  font-semibold mt-4 cursor-pointer">
+        <div className="flex items-center"
+         onClick={()=>{
+          dispatch(setImg(song.Image));
+          dispatch(setSongUrl(song.Url));
+          dispatch(setName(song.Name));
+          dispatch(setSinger(song.Artists[0]));
+          dispatch(settrackId(song._id));
+          setPlay(true);
+        }}
+        >
+        <FaPlay style={{height:20,width:20}} className="mr-2" /> Play Now</div>
+        <div className="flex items-center" 
+         onClick={()=> favHandler()}
+        > <FaRegHeart style={{height:20,width:20,color:"black"}} className="mr-2" /> Save To Library</div>
+        <div className="flex items-center"><LuShare style={{height:20,width:20}} className="mr-2" /> Share</div>
+        <div className="flex items-center"> <MdFormatListBulletedAdd style={{height:20,width:20}} className="mr-2" /> Add To Playlist</div>
+        <div className="flex items-center"><BsMusicNoteList style={{height:20,width:20}} className="mr-2" /> Song Details</div>
+        <div className="flex items-center"><BsThreeDotsVertical style={{height:20,width:20}} className="mr-2" /> More From {song.Artists[0]}</div>
+      </div>
+      <div className='h-[1px] mt-8 bg-gray-300 w-full '></div>
+      <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer " onClick={()=> setOpen(false)}>
+        <button className="bg-red-500 text-white px-4 py-2 rounded-md">Cancel</button>
+      </div>
+    </div>
+          </Sheet.Content>
+        </Sheet.Container>
+      </Sheet>
   </div>
   )
 }

@@ -7,7 +7,7 @@ import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { setmobilePlayer } from '../../slices/Control';
+import { setmobilePlayer ,setIsPlaying,setDuration,setTimeProgress} from '../../slices/Control';
 import {
   IoMdVolumeHigh,
   IoMdVolumeOff,
@@ -21,13 +21,15 @@ import { apiConnecter } from '../../services/apiconnecter';
 // import components
 const AudioPlayer = ({
   audioRef,
+  setOpen,
   progressBarRef,
-  duration,
-  setDuration,
-  isPlaying,setIsPlaying
 }) => {
   // states
 
+  const timeProgress = useSelector((state) => state.Controls.timeProgress);
+  const isPlaying = useSelector((state) => state.Controls.isPlaying);
+  const duration = useSelector((state) => state.Controls.duration);
+  
   const title = useSelector((state) => state.Player.name);
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
@@ -40,23 +42,6 @@ const AudioPlayer = ({
   const [fav, setFav] = useState(null);
   const dispatch = useDispatch();
 
-  const showNotification = () => {
-    if (Notification.permission === "granted") {
-      new Notification("Now Playing", {
-        body: {title},
-        icon: {thumbnail}, // Add the path to your music image
-      });
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          new Notification("Now Playing", {
-            body: {title},
-            icon: {thumbnail},
-          });
-        }
-      });
-    }
-  };
   
 
   const tracks = [
@@ -72,7 +57,6 @@ const AudioPlayer = ({
   const [currentTrack, setCurrentTrack] = useState(
     tracks[trackIndex]
   );
-  const [timeProgress, setTimeProgress] = useState(0);
   // const [duration, setDuration] = useState(0);
 
   // reference
@@ -130,7 +114,6 @@ const AudioPlayer = ({
       audioRef.current.muted = muteVolume;
     }
     checkFavorite();
-    showNotification();
   }, [title, volume, muteVolume]);
 
 
@@ -148,6 +131,7 @@ const AudioPlayer = ({
                     setDuration,
                     progressBarRef,
                     handleNext,
+                    setOpen,
                   }}
 
                 />
@@ -206,6 +190,7 @@ const AudioPlayer = ({
                   setDuration,
                   progressBarRef,
                   handleNext,
+                  setOpen,
                 }}
               />
               <div className='flex flex-col w-full md:w-[60%] lg:w-[60%]  items-center justify-center '>

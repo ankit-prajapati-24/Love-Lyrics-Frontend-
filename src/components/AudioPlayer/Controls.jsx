@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { setNextIndex, setPrevIndex } from '../../slices/album';
 import { apiConnecter } from '../../services/apiconnecter';
 import toast from 'react-hot-toast';
+
 import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import {
   setName,
@@ -53,7 +54,7 @@ const Controls = ({
 
 
   const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
+    dispatch( setIsPlaying(!isPlaying))
   };
 
   async function checkFavorite() {
@@ -76,7 +77,7 @@ const Controls = ({
 
   const repeat = useCallback(() => {
     const currentTime = audioRef.current.currentTime;
-    setTimeProgress(currentTime);
+    // dispatch(setTimeProgress(currentTime));
     progressBarRef.current.value = currentTime;
     progressBarRef.current.style.setProperty(
       '--range-progress',
@@ -95,7 +96,7 @@ const Controls = ({
     
     checkFavorite();
     const seconds = audioRef.current.duration;
-    // setDuration(seconds);
+    // dispatch(setDuration(seconds));
     progressBarRef.current.max = seconds;
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat, trackIndex, title]);

@@ -1,16 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setNextIndex,setPrevIndex } from '../../slices/album';
 import { useDispatch } from "react-redux";
 const ProgressBar = ({
     progressBarRef,
     audioRef,
-    timeProgress,
+    
     duration,
   }) => {
     const dispatch  = useDispatch();
     const handleProgressChange = () => {
       audioRef.current.currentTime = progressBarRef.current.value;
     };
+
+    const [timeProgress,setTimeProgress] = useState(0);
+
 
   
     const formatTime = (time) => {
@@ -25,6 +28,11 @@ const ProgressBar = ({
       }
       return '00:00';
     };
+
+    useEffect(() => {
+      setTimeProgress(audioRef.current.currentTime);
+    }, [audioRef])
+    
   
     return (
       <div className=" hidden lg:flex   w-full max-w-[550px] items-center justify-center text-white gap-2">

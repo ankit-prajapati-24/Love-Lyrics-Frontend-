@@ -10,6 +10,7 @@ const DisplayTrack = ({
   setDuration,
   progressBarRef,
   handleNext,
+  setOpen
 }) => {
    const dispatch = useDispatch();
     const title = useSelector((state) => state.Player.name);
@@ -25,7 +26,7 @@ const DisplayTrack = ({
   useEffect(()=>{},currentTrack,title);
 
   return (
-    <div className=' w-full items-start flex justify-start   md:max-w-[200px] lg:max-w-[300px]  ' onClick={() => dispatch(setmobilePlayer(true))}>
+    <div className=' w-full items-start flex justify-start   md:max-w-[200px] lg:max-w-[300px]  ' onClick={() => setOpen(true)}>
       {/* <audio
         src={src}
         ref={audioRef}

@@ -239,9 +239,15 @@ const ArtistCard = () => {
                         <div className="font-bold text-lg lg:w-[20%] hidden lg:block mb-2 lg:mb-0">
                             Album
                         </div>
-                        <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+                        <div className="font-bold text-lg hidden lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
                             Favorite
                         </div>
+                        {
+                          windowWidth < 800  && 
+                          <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+                            More
+                            </div>
+                        }
                         <div className="font-bold text-lg hidden lg:w-[25%] md:block">
                             Download
                         </div>

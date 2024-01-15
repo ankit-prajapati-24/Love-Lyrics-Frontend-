@@ -21,7 +21,7 @@ import { apiConnecter } from '../../services/apiconnecter';
 import { useNavigate } from 'react-router-dom';
 
 
-const Favoritesongs = () => {
+const Favoritesongs = ({setOpenmore}) => {
   const dispatch = useDispatch();
   const albumName = useSelector((state) => state.Album.Albumname);
   const albumimg = useSelector((state) => state.Album.Albumimg);
@@ -95,6 +95,11 @@ const Favoritesongs = () => {
     }
   }
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
 
   useEffect(() => {
     getFavoriteSongs();
@@ -103,6 +108,11 @@ const Favoritesongs = () => {
       nevigate("/Login");
     }
     setName(window.location.pathname.slice(1))
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    };
   }, [name, setName, setSongUrl])
 
   return (
@@ -170,12 +180,22 @@ const Favoritesongs = () => {
             <div className="font-bold text-lg w-full lg:w-[22%] mb-2 lg:mb-0">
               Title
             </div>
-            <div className="font-bold text-lg lg:w-[25%] hidden lg:block mb-2 lg:mb-0">
+
+            {
+              windowWidth < 800 && 
+              <div className="font-bold text-lg lg:w-[25%]  lg:block mb-2 lg:mb-0">
+              More
+            </div>
+
+            }
+            <div className="font-bold text-lg  lg:w-[25%] hidden lg:block mb-2 lg:mb-0">
               Album
             </div>
-            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+            <div className="font-bold text-lg hidden lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
               Favorite
             </div>
+
+            
             <div className="font-bold text-lg lg:w-[25%] hidden md:block">
             Download
             </div>
@@ -190,7 +210,7 @@ const Favoritesongs = () => {
           )):<div className="w-full  py-2 group mb-4 lg:mb-[300px]  ">
           {FavoriteSongs &&
             FavoriteSongs.map((song, index) => (
-              <SongList song={song} index={index} />
+              <SongList setOpenmore = {setOpenmore} song={song} index={index} />
             ))}
         </div>
        }
