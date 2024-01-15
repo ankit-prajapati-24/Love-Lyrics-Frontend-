@@ -111,8 +111,6 @@ const SongList = ({song,index}) => {
     <div className=" font-semibold  text-md lg:w-[25%] flex items-center gap-2 mb-2 lg:mb-0">
     <div>
     {song._id == trackId ?<PiWaveformFill/>:index+1?index+1:""}
-    
-    
     </div>
     <div className='max-w-[250px]'>
       {song.Name}
@@ -136,13 +134,6 @@ const SongList = ({song,index}) => {
     >
       <FaDownload />
     </a>
-    {/* <audio
-        src={song.Url}
-        ref={audioRef}
-        onLoadedMetadata={onLoadedMetadata}
-        // onEnded={handleNext}
-      /> */}
-  
   </div>
   )
 }

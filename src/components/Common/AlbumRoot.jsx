@@ -194,7 +194,7 @@ const AlbumRoot = () => {
         modules={[FreeMode, Pagination]}
         className='w-full'
       >
-        {albums.slice(0,15).map((album, index) => (
+        {albums.slice(0).map((album, index) => (
           <SwiperSlide key={index}>
       <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
           </SwiperSlide>

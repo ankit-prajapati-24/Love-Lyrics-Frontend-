@@ -52,6 +52,16 @@ const RandomAudioPlayer = () => {
     >
     <div className="   backdrop-blur-3xl "
       >
+     {/* <div className='w-full p-2 text-white bg-black flex gap-2'>
+  <h1>Filter The Songs</h1>
+  <select className='w-[500px] text-black' >
+    <option value="Darshan Raval">Darshan Raval</option>
+    <option value="Ariji Singh">Arijit Singh</option>
+    <option value="Atif Aslam">Atif Aslam</option>
+    <option value="Armaan Malik">Armaan Malik</option>
+  </select>
+</div> */}
+
        <div className='flex p-2  text-gray-300 border-b border-b-white  bg-gradient-to-b from-black  w-screen'>
             <div className="font-bold text-lg w-full lg:w-[25%] mb-2 lg:mb-0">
               Title

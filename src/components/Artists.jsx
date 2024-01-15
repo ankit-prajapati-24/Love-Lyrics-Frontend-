@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { apiConnecter } from '../services/apiconnecter';
 import { useNavigate } from 'react-router-dom';
 import AlbumCard from './Common/AlbumCard';
-
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -13,6 +12,7 @@ import { setAlbumName, setAlbumimg, setSongs } from '../slices/album';
 const Artists = () => {
     const nevigate = useNavigate();
     const dispatch = useDispatch();
+    
  
   const [loader, setLoader] = useState(false);
   const [artists, setArtists] = useState([]);
@@ -48,11 +48,11 @@ const Artists = () => {
           {artists.map((artist) => (
             <div key={artist._id} className=' flex flex-col gap-2 group relative p-2  lg:gap-4 lg:bg-gray-900  items-center justify-center  min-h-[100px] lg:w-[150px]    lg:h-[150px]  sm:max-h-[125px]  rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
             
-                console.log("clicled");
-                dispatch(setAlbumName(artist.Name));
-                dispatch(setAlbumimg(artist.Image));
-                dispatch(setSongs(artist.Songs));
-                nevigate("/AlbumSongs");
+                console.log("clicked");
+                // dispatch(setAlbumName(artist.Name));
+                // dispatch(setAlbumimg(artist.Image));
+                // dispatch(setSongs(artist.Songs));
+                nevigate(`${artist.Name}`);
             }}>
               {/* Use a common image for all artists, or apply a common styling */}
               <div className='relative   flex  items-center justify-center  rounded-full object- object-center bg-repeat-round  h-[80px] w-[80px] object-contain'  style={{ backgroundImage: `url(${artist.Image})` }}>

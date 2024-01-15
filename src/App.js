@@ -28,6 +28,7 @@ import { setNextIndex } from './slices/album';
 import { useRef } from 'react';
 import MiniPlayer from './components/AudioPlayer/MiniPlayer';
 import { setMenu } from './slices/Navbar';
+import ArtistCard from './components/Common/ArtistCard';
 function App() {
   
   
@@ -63,7 +64,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', updateWindowWidth);
     };
-  }, [duration]); // Empty dependency array ensures the effect runs only once on mount
+  }, [src]); // Empty dependency array ensures the effect runs only once on mount
 
   return (
     <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '
@@ -90,7 +91,6 @@ function App() {
       }
     }}
     >
-   
        <Routes>
        <Route path='*' element = {<Home></Home>}></Route>
        <Route path='/Artist' element = {<Artists></Artists>}></Route>
@@ -101,6 +101,7 @@ function App() {
        <Route path='/Signup' element = {<Signup></Signup>}></Route>
        <Route path='/VerifyOTP' element = {<VerifyOtp></VerifyOtp>}></Route>
        <Route path='/UserDetails' element = {<UserDetails></UserDetails>}></Route>
+       <Route path='/Artist/:ArtistId' element = {<ArtistCard></ArtistCard>}></Route>
        <Route path='/FavoriteSongs' element = {<Favoritesongs></Favoritesongs>}></Route>
        <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
        {/* <Route path='/miniPlayer' element = {

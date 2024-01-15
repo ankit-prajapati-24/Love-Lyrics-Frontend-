@@ -124,7 +124,8 @@ const AlbumSongList = () => {
               {play ? <FaPause /> : <FaPlay />}
             </button>
             <span className='text-sm ml-2 font-bold'>
-              Play All </span>
+              Play All 
+              </span>
           <button
             className='rounded-full p-4 hover:scale-95'
             onClick={() => FavHandler()}
