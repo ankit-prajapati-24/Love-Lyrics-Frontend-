@@ -7,6 +7,7 @@ import 'swiper/css/bundle';
 import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 // import { Navigation, Pagination } from 'swiper/modules';
 import Skeleton from 'react-loading-skeleton';
+
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useHistory } from 'react-router-dom';
 import AlbumRootSkeleton from './AlbumRootSkeleton';
@@ -35,6 +36,9 @@ const AlbumRoot = () => {
     setWindowWidth(window.innerWidth);
    
   };
+ useEffect(() => {
+  getAlbums();
+ }, [])
  
   useEffect(() => {
     if(windowWidth < 300){
@@ -54,14 +58,14 @@ const AlbumRoot = () => {
     }
     else setCard(6)
     // Add event listener to update window width on resize
-    getAlbums();
-    window.addEventListener('resize', updateWindowWidth);
+   
+    // window.addEventListener('resize', updateWindowWidth);
 
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('resize', updateWindowWidth);
-    };
-  }, [card,window.innerWidth]); 
+    // // Cleanup the event listener when the component unmounts
+    // return () => {
+    //   window.removeEventListener('resize', updateWindowWidth);
+    // };
+  }, [card]); 
 
   return (
     <>
@@ -73,7 +77,8 @@ const AlbumRoot = () => {
     <AlbumRootSkeleton></AlbumRootSkeleton>
     </div>
     :<div>
-    <div className=' flex flex-col gap-2'>
+ 
+  <div className='mt-5 flex flex-col gap-2'>
   <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
       {names[0]}
     </h1>
@@ -81,7 +86,7 @@ const AlbumRoot = () => {
       windowWidth<500 ?
       <Swiper
         slidesPerView={card}
-        spaceBetween={50}
+        spaceBetween={24}
         loop={true}
         freeMode={true}
         autoplay={{
@@ -90,7 +95,7 @@ const AlbumRoot = () => {
         modules={[FreeMode, Pagination]}
         className='w-full'
       >
-        {albums.slice(0,5).map((album, index) => (
+        {albums.map((album, index) => (
           <SwiperSlide key={index}>
       <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
           </SwiperSlide>
@@ -108,7 +113,7 @@ const AlbumRoot = () => {
         modules={[FreeMode, Pagination]}
         className='w-full'
       >
-        {albums.slice(0,7).map((album, index) => (
+        {albums.slice(0,15).map((album, index) => (
           <SwiperSlide key={index}>
       <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
           </SwiperSlide>

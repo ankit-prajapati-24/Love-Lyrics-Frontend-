@@ -23,7 +23,7 @@ const DisplayTrack = ({
     setDuration(seconds);
     progressBarRef.current.max = seconds;
   };
-  useEffect(()=>{},currentTrack,title);
+  useEffect(()=>{},[currentTrack,title]);
 
   return (
     <div className=' w-full items-start flex justify-start   md:max-w-[200px] lg:max-w-[300px]  ' onClick={() => setOpen(true)}>

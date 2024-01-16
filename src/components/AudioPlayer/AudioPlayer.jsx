@@ -119,7 +119,7 @@ const AudioPlayer = ({
 
   return (
     <>
-      <div className=" bg-[#121212] mx-2  w-full md:w-full lg:w-full   lg:p-2 md:p-2 fixed z-50 bottom-0  rounded-md " >
+      <div className=" bg-[#121212] mx-2 max-w-[1600px] max-auto  w-full md:w-full lg:w-full   lg:p-2 md:p-2 fixed z-50 bottom-0  rounded-md " >
         {
           windowwidth < 800 ?
             <div className="flex flex-col w-full items-center justify-between ">

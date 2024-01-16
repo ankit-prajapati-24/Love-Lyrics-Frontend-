@@ -24,26 +24,22 @@ const AlbumCard = ({ Image, Title, Songs }) => {
 
   return (
     <div
-      className=' w-[150px] h-[180px] md:w-[200px] md:h-[200px] lg:w-[200px] lg:h-[200px] lg:bg-gray-900  p-2  rounded-md hover:bg-gray-800  transition-all duration-200  object-contain group flex-col relative items-center justify-center '
+      className='  pl-1 max-w-[200px]  rounded-md   transition-all duration-200  object-contain group flex-col relative items-center justify-center '
       onClick={() => {
         dispatch(setAlbumName(Title));
         dispatch(setAlbumimg(Image));
-        dispatch(setSongs(Songs.slice().sort(compareSongs)));
+        dispatch(setSongs(Songs));
         navigation("/AlbumSongs");
       }}
     >
-      <div className=' w-full md:w-[200px] md:h-[140px] lg:w-[150px] lg:h-[150px]   border shadow-lg mx-auto rounded-md'>
-        <img
-          src={Image}
-          alt='albumimg'
-          className=' rounded-lg w-full h-full  md:w-[200px] md:h-[140px] lg:w-[150px] lg:h-[150px]  transition-all duration-200'
-        />
-      </div>
-      <h1 className='font-bold text-xs md:text-md lg:text-[15px] text-center text-gray-300 mt-2'>{Title}</h1>
-      {/* Additional styling for the play button */}
+      <div className='bg-black flex min-h-[100px] min-w-[100px]  text-white flex-col items-center justify-center'>
+      <img src = {Image} className='  rounded-md ' alt='s'/>
+      <div className=" lg:text-sm text-xs  font-medium overflow-hidden text-center mt-2"> {Title}</div>
+          {/* <div className='text-xs opacity-80 text-center'>{song.Artists[0]}</div> */}
       <button className='bg-sky-500 rounded-full p-4 opacity-0 group-hover:opacity-100 bottom-[40%] left-[40%] absolute group-hover:-translate-z-full transition-all duration-1000'>
         <FaPlay />
       </button>
+    </div>
     </div>
   );
 };

@@ -49,7 +49,7 @@ const Navbar = () => {
 
 
     return (
-        <div className=' flex justify-between flex-col items-center  p-2 text-white bg-black fixed top-0 z-50  overflow-x-hidden w-full'>
+        <div className=' flex justify-between flex-col items-center mx-2 max-w-[1600px] max-auto  p-2 text-white bg-black fixed top-0 z-50  overflow-x-hidden w-full'>
 
            
                    

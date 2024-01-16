@@ -7,12 +7,15 @@ import { BiSolidSkipNextCircle } from 'react-icons/bi';
 import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { useEffect } from 'react';
+import { setIsPlaying } from '../../slices/Control';
+
 import {
   setName,
   setSinger,
   setSongUrl,
   setImg,
-  name
+  name,
+  settrackId
 } from '../../slices/player';
 import SongList from './SongList';
 import toast from 'react-hot-toast';
@@ -23,6 +26,7 @@ const AlbumSongList = () => {
   const albumName = useSelector((state) => state.Album.Albumname);
   const albumimg = useSelector((state) => state.Album.Albumimg);
   const songlist = useSelector((state) => state.Album.Songs);
+  const isPlaying = useSelector((state) => state.Controls.isPlaying);
   const Songs = songlist.filter((song, index, self) =>
   index === self.findIndex((s) => s.Name === song.Name)
 );
@@ -46,15 +50,17 @@ const AlbumSongList = () => {
     return 0;
   };
     function PlayallTrack(){
-      setPlay(!play);
+      // setPlay(!play);
       // if(Songs.length > 0){
-        if(!play){
+        // if(!play){
           console.log(Songs.length,Songs[0]);
           dispatch(setSongUrl(Songs[0].Url));
           dispatch(setName(Songs[0].Name));
           dispatch(setSinger(Songs[0].Artists[0]));
           dispatch(setImg(Songs[0].Image));
-        }
+          dispatch(setIsPlaying(true));
+          dispatch(settrackId(Songs[0]._id))
+        // }
       // }
     }
    function FavHandler(){
@@ -136,7 +142,7 @@ const AlbumSongList = () => {
               className='bg-sky-500 rounded-full text-white p-4 hover:scale-95'
               onClick={() => PlayallTrack()}
             >
-              {play ? <FaPause /> : <FaPlay />}
+              { <FaPlay />}
             </button>
             <span className='text-sm ml-2 font-bold'>
               Play All 

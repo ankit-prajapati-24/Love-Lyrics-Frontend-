@@ -41,9 +41,22 @@ const RandomAudioPlayer = () => {
         console.error(err);
     }
    }
+   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+   const updateWindowWidth = () => {
+     setWindowWidth(window.innerWidth);
+   };
+ 
    useEffect(() => {
+     // Add event listener to update window width on resize
+     window.addEventListener('resize', updateWindowWidth);
+ 
     getAllTrack();
-   }, [])
+     return () => {
+       window.removeEventListener('resize', updateWindowWidth);
+     };
+   }, []); // Empty dependency array ensures the effect runs only once on mount
+ 
    
   return (
     <div
@@ -69,9 +82,15 @@ const RandomAudioPlayer = () => {
             <div className="font-bold text-lg lg:w-[23%] hidden lg:block mb-2 lg:mb-0">
               Album
             </div>
-            <div className="font-bold text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+            <div className="font-bold hidden text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
              Favorite
             </div>
+            {
+              windowWidth < 800 && 
+              <div className="font-bold  text-lg lg:w-[25%] mb-2 lg:mb-0  lg:block md:block">
+             More
+            </div>
+            }
             <div className="font-bold text-lg hidden lg:w-[25%] md:block">
               Download
             </div>

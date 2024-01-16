@@ -7,19 +7,22 @@ import { BiSolidSkipNextCircle } from 'react-icons/bi';
 import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import SkeletonLoading from '../Common/SkeletonLoading';
+import { setSongs } from '../../slices/album';
 import { useEffect } from 'react';
 import {
   setName,
   setSinger,
   setSongUrl,
   setImg,
-  name
+  name,
+  settrackId
 } from '../../slices/player';
 import SongList from '../Common/SongList';
 import toast from 'react-hot-toast';
 import { apiConnecter } from '../../services/apiconnecter';
 import { useNavigate } from 'react-router-dom';
 
+import { setIsPlaying } from '../../slices/Control';
 
 const Favoritesongs = ({setOpenmore}) => {
   const dispatch = useDispatch();
@@ -40,6 +43,8 @@ const Favoritesongs = ({setOpenmore}) => {
   const [FavoriteSongs,setFavoriteSongs] = useState([]);
   const [loader,setLoader] = useState(false);
   
+  const isPlaying = useSelector((state) => state.Controls.isPlaying);
+  
    const token = useSelector((state) => state.User.token);
   // toast.loading("loading...")
 
@@ -56,16 +61,15 @@ const Favoritesongs = ({setOpenmore}) => {
     return 0;
   };
     function PlayallTrack(){
-      setPlay(!play);
-      // if(Songs.length > 0){
-        if(!play){
+      
           console.log(Songs.length,Songs[0]);
           dispatch(setSongUrl(Songs[0].Url));
           dispatch(setName(Songs[0].Name));
           dispatch(setSinger(Songs[0].Artists[0]));
           dispatch(setImg(Songs[0].Image));
-        }
-      // }
+          dispatch(settrackId(Songs[0]._id));
+          dispatch(setIsPlaying(true));
+  
     }
    function FavHandler(){
      if(fav){
@@ -87,7 +91,7 @@ const Favoritesongs = ({setOpenmore}) => {
       setLoader(true);
       const res = await apiConnecter('post', 'Album/GetFavoriteSongs',{UserId:userdata._id});
       console.log(res);
-      setFavoriteSongs(res.data.songs);
+      dispatch(setSongs(res.data.songs))
       setLoader(false);
     } catch (err) {
       setLoader(false);
@@ -143,7 +147,7 @@ const Favoritesongs = ({setOpenmore}) => {
             {userdata.Name ?`${ userdata.Name.split(' ')[0]}'s` :"My"} Favorite Songs
           </span>
           <span className="bg-clip-text  mt-4 lg:text-sm text-xs  text-white font-extrabold  ">
-            Total Track : {FavoriteSongs && FavoriteSongs.length}
+            Total Track : {Songs && Songs.length}
           </span>
           <span className="bg-clip-text mt-4 lg:text-sm text-xs  text-white font-extrabold  ">
             Artists : Arijit Singh , Atif aslam, kk and more ...
@@ -159,7 +163,7 @@ const Favoritesongs = ({setOpenmore}) => {
               className='bg-sky-500 rounded-full text-white p-4 hover:scale-95'
               onClick={() => PlayallTrack()}
             >
-              {play ? <FaPause /> : <FaPlay />}
+               <FaPlay />
             </button>
             <span className='text-sm ml-2 font-bold'>
               Play All </span>
@@ -208,8 +212,8 @@ const Favoritesongs = ({setOpenmore}) => {
         ?  [...Array(7)].map((_, index) => (
        <SkeletonLoading/>
           )):<div className="w-full  py-2 group mb-4 lg:mb-[300px]  ">
-          {FavoriteSongs &&
-            FavoriteSongs.map((song, index) => (
+          {Songs &&
+            Songs.map((song, index) => (
               <SongList setOpenmore = {setOpenmore} song={song} index={index} />
             ))}
         </div>

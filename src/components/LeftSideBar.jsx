@@ -10,11 +10,13 @@ import { FaHeartbeat } from 'react-icons/fa';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { useSelector,useDispatch } from 'react-redux';
 import { setMenu } from '../slices/Navbar';
+import { BsSearchHeart } from "react-icons/bs";
 const links = [
   { to: '/Home', icon: <IoHomeSharp  />, text: 'Home' },
   { to: '/Artist', icon: <CgUserlane />, text: 'Artist' },
   { to: '/miniPlayer', icon: <FaGripfire />, text: 'Trending' },
   { to: '/mixSongs', icon: <IoMusicalNotes />, text: 'mix Songs' },
+  { to: '/SearchResult', icon: <BsSearchHeart />, text: 'Search Songs' },
   { to: '', icon: " ", text: 'Library' },
   { to: '/NewPlaylist', icon: <MdFormatListBulletedAdd />, text: 'New Playlist' },
   { to: '/FavoriteSongs', icon: <FaHeartbeat />, text: 'Favorite' },

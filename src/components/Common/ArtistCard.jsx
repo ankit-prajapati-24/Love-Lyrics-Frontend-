@@ -8,18 +8,20 @@ import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { setAlbumName, setAlbumimg, setSongs } from '../../slices/album';
 import { MdVerified } from "react-icons/md";
-
+import {  setIsPlaying } from '../../slices/Control';
 import { useEffect } from 'react';
 import {
     setName,
     setSinger,
     setSongUrl,
     setImg,
-    name
+    name,
+    settrackId
 } from '../../slices/player';
 import SongList from './SongList';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
+import { isPlain } from '@reduxjs/toolkit';
 
 
 const ArtistCard = () => {
@@ -55,6 +57,7 @@ const ArtistCard = () => {
             dispatch(setAlbumimg(data.Image));
             dispatch(setSongs(data.Songs));
 
+
             console.log(res);
         } catch (e) {
             console.error(e);
@@ -75,15 +78,15 @@ const ArtistCard = () => {
         return 0;
     };
     function PlayallTrack() {
-        setPlay(!play);
-        // if(Songs.length > 0){
-        if (!play) {
+      
             console.log(Songs.length, Songs[0]);
             dispatch(setSongUrl(Songs[0].Url));
             dispatch(setName(Songs[0].Name));
             dispatch(setSinger(Songs[0].Artists[0]));
             dispatch(setImg(Songs[0].Image));
-        }
+            dispatch(settrackId(Songs[0]._id));
+            dispatch(setIsPlaying(true));
+      
         // }
     }
     function FavHandler() {
@@ -148,7 +151,7 @@ const ArtistCard = () => {
               className='bg-sky-500 rounded-full text-white p-4 hover:scale-95'
               onClick={() => PlayallTrack()}
             >
-              {play ? <FaPause /> : <FaPlay />}
+              <FaPlay />
             </button>
             <span className='text-sm ml-2 font-bold'>
               Play All 

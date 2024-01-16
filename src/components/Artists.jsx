@@ -46,16 +46,13 @@ const Artists = () => {
       ) : (
         <div className='flex p-2 lg:gap-3 mx-auto  items-center justify-center flex-wrap  '>
           {artists.map((artist) => (
-            <div key={artist._id} className=' flex flex-col gap-2 group relative p-2  lg:gap-4 lg:bg-gray-900  items-center justify-center  min-h-[100px] lg:w-[150px]    lg:h-[150px]  sm:max-h-[125px]  rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
+            <div key={artist._id} className=' flex flex-col gap-2 group relative p-2  lg:gap-4 lg:bg-gray-900  items-center justify-center  rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
             
                 console.log("clicked");
-                // dispatch(setAlbumName(artist.Name));
-                // dispatch(setAlbumimg(artist.Image));
-                // dispatch(setSongs(artist.Songs));
                 nevigate(`${artist.Name}`);
             }}>
               {/* Use a common image for all artists, or apply a common styling */}
-              <div className='relative   flex  items-center justify-center  rounded-full object- object-center bg-repeat-round  h-[80px] w-[80px] object-contain'  style={{ backgroundImage: `url(${artist.Image})` }}>
+              <div className='relative   flex  items-center justify-center  rounded-full object- object-center bg-repeat-round  h-[100px] w-[100px] object-contain'  style={{ backgroundImage: `url(${artist.Image})` }}>
                 
               {/* <img src={artist.Image} alt='Artist' className='max-w-[100px] h-full max-h-[100px]  rounded-full ' /> */}
               <button className='bg-sky-500 rounded-full p-3  group-hover:opacity-100 opacity-0 absolute  group-hover:-translate-Z-full transition-all duration-1000'>

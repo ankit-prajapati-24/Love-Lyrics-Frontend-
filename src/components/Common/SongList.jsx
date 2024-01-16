@@ -6,7 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useEffect } from 'react';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { BsMusicNoteList } from 'react-icons/bs';
-
+import { FaChevronDown } from "react-icons/fa";
 import { LuShare } from "react-icons/lu";
 import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { BiSolidSkipNextCircle } from 'react-icons/bi';
@@ -21,9 +21,13 @@ import {
 import toast from 'react-hot-toast';
 import { apiConnecter } from '../../services/apiconnecter';
 import Sheet from 'react-modal-sheet';
+import { useInView } from 'react-spring';
+import { useNavigate } from 'react-router-dom';
+import { setIsPlaying } from '../../slices/Control';
 const SongList = ({song,index}) => {
     
     const dispatch = useDispatch();
+    const nevigate = useNavigate();
     const audioRef = useRef();
     const albumName = useSelector((state) => state.Album.Albumname);
     const albumimg = useSelector((state) => state.Album.Albumimg);
@@ -89,6 +93,7 @@ const SongList = ({song,index}) => {
           console.log(err);
        }
     }
+    console.log(song);
     const onLoadedMetadata = () => {
       const seconds = audioRef.current.duration;
       setDuration(formatTime(seconds));
@@ -131,13 +136,14 @@ const SongList = ({song,index}) => {
       dispatch(setSinger(song.Artists[0]));
       dispatch(settrackId(song._id));
       setPlay(true);
+      dispatch(setIsPlaying(true));
     }}>
       {song.Name}
     </div>
 
     </div>
     <div className=" font-semibold  hidden lg:block lg:w-[28%] mb-2 lg:mb-0 ">
-      {song.Artists[0]}
+      {/* {song.Artists[0]} */}
     </div>
     <div className=" font-semibold  mr-3 hidden  lg:block lg:w-[28%] mb-2 lg:mb-0 " onClick={() => favHandler()}>
     {fav ? (
@@ -170,17 +176,20 @@ const SongList = ({song,index}) => {
       >
         <Sheet.Container>
           <Sheet.Content>
-          <div className="bg-white py-4 rounded-lg shadow-md">
+          <div className="bg-[#121212] flex flex-col  text-white py-4 rounded-lg shadow-md">
+          <div className='mx-auto '>
+          <FaChevronDown style={{height:20,width:20}}/>
+          </div>
       <div className="flex items-center mx-2 p-2  ">
-        <img src={song.Image} alt="song img" className=" w-full h-full max-h-[60px] max-w-[60px]  rounded-lg " />
-        <div className="text-black ml-3">
+        <img src={song && song.Image} alt="song img" className=" w-full h-full max-h-[60px] max-w-[60px]  rounded-lg " />
+        <div className="text-white ml-3">
           <p className="text-sm font-bold  lg:w-full overflow-hidden">{song.Name}</p>
           <p className="text-xs opacity-80">{song.Artists[0]}</p>
         </div>
       </div>
       <div className='h-[1px] bg-gray-300 w-full '></div>
       
-      <div className="text-gray-800 mx-4 flex flex-col gap-7  font-semibold mt-4 cursor-pointer">
+      <div className="text-white mx-4 flex flex-col gap-7  font-semibold mt-4 cursor-pointer">
         <div className="flex items-center"
          onClick={()=>{
           dispatch(setImg(song.Image));
@@ -189,16 +198,21 @@ const SongList = ({song,index}) => {
           dispatch(setSinger(song.Artists[0]));
           dispatch(settrackId(song._id));
           setPlay(true);
+          dispatch(setIsPlaying(true));
         }}
         >
-        <FaPlay style={{height:20,width:20}} className="mr-2" /> Play Now</div>
+        <FaPlay style={{height:20,width:20,color:"white"}} className="mr-2" /> Play Now</div>
         <div className="flex items-center" 
          onClick={()=> favHandler()}
-        > <FaRegHeart style={{height:20,width:20,color:"black"}} className="mr-2" /> Save To Library</div>
+        > <FaRegHeart style={{height:20,width:20,color:"skyblue"}} className="mr-2" /> Save To Library</div>
         <div className="flex items-center"><LuShare style={{height:20,width:20}} className="mr-2" /> Share</div>
         <div className="flex items-center"> <MdFormatListBulletedAdd style={{height:20,width:20}} className="mr-2" /> Add To Playlist</div>
         <div className="flex items-center"><BsMusicNoteList style={{height:20,width:20}} className="mr-2" /> Song Details</div>
-        <div className="flex items-center"><BsThreeDotsVertical style={{height:20,width:20}} className="mr-2" /> More From {song.Artists[0]}</div>
+        <div className="flex items-center"
+        onClick={()=>{
+          nevigate(`/Artist/${song.Artists[0]}`)
+        }}
+        ><BsThreeDotsVertical style={{height:20,width:20}} className="mr-2" /> More From {song.Artists[0]}</div>
       </div>
       <div className='h-[1px] mt-8 bg-gray-300 w-full '></div>
       <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer " onClick={()=> setOpen(false)}>

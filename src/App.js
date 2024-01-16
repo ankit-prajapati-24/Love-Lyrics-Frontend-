@@ -105,7 +105,7 @@ function App() {
 
 
   return (
-    <div className='flex flex-col w-screen    bg-transparent mx-auto items-center justify-center   '
+    <div className='flex flex-col w-screen    bg-transparent  items-center justify-center max-w-[1600px] mx-auto  '
      onClick={() => {
       if(!menu){
         dispatch(setMenu(!menu));  
