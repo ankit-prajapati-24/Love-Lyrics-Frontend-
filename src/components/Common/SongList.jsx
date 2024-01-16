@@ -22,12 +22,16 @@ import toast from 'react-hot-toast';
 import { apiConnecter } from '../../services/apiconnecter';
 import Sheet from 'react-modal-sheet';
 import { useInView } from 'react-spring';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setIsPlaying } from '../../slices/Control';
+import PlaylistSmallCard from '../user/PlaylistSmallCard';
 const SongList = ({song,index}) => {
     
     const dispatch = useDispatch();
     const nevigate = useNavigate();
+    const [Playlist,setPlaylist] = useState([]);
+    const [loader,setLoader] = useState(false);
+   
     const audioRef = useRef();
     const albumName = useSelector((state) => state.Album.Albumname);
     const albumimg = useSelector((state) => state.Album.Albumimg);
@@ -37,8 +41,11 @@ const SongList = ({song,index}) => {
     const [duration ,setDuration] = useState(null);
      const [play , setPlay] = useState(false);
      const [fav, setFav] = useState(null);
+     const  [selectedPlaylist,setSelectedPlaylist] = useState([]);
      
   const [isOpen, setOpen] = useState(false);
+  const [isOpen2, setOpen2] = useState(false);
+
   
      const userdata = useSelector((state) => state.User.userdata);
     
@@ -79,6 +86,7 @@ const SongList = ({song,index}) => {
       }
     }
 
+    console.log(selectedPlaylist,"slected playlist");
     async function checkFavorite(){
       const dataform = {
         SongId :song._id,
@@ -105,8 +113,48 @@ const SongList = ({song,index}) => {
   const updateWindowWidth = () => {
     setWindowWidth(window.innerWidth);
   };
+  const fetchPlaylist = async()  => {
+
+    try{
+        setLoader(true);
+        const res = await apiConnecter("post","Playlist/getPlaylists",{id:userdata._id});
+        console.log(res);
+        setPlaylist(res.data.playlists);
+        setLoader(false);
+        setOpen2(false);
+    }
+    catch(err){
+        console.error(err);
+    }
+} 
+
+const addTrackToPlaylist = async() => {
+   
+    const data = {
+      playlistId : selectedPlaylist,
+      trackId : song._id,
+      id: userdata._id
+    }
+    const toastid = toast.loading("Adding......");
+    try{
+      const res = await apiConnecter("post","Playlist/addTracksToPlaylist",data);
+      console.log(res);
+      toast.dismiss(toastid);
+      toast.success("Track Added Succesfully");
+
+    }
+    catch(err){
+      toast.error("Try Again Leter");
+      toast.dismiss(toastid);
+          console.error(err);
+    }
+  
+}
+
+
 
   useEffect(() => {
+    fetchPlaylist();
     // Add event listener to update window width on resize
     window.addEventListener('resize', updateWindowWidth);
 
@@ -116,19 +164,19 @@ const SongList = ({song,index}) => {
   }, [name,setName]); // Empty dependency array ensures the effect runs only once on mount
 
 
-
+ 
      
   return (
     <div
     
     key={index}
-    className={`flex flex-row items-center justify-between mb-1 duration-200 transition-all rounded-md mx-auto p-3  ${song._id == trackId ?"text-sky-400 shining-text opacity-100":"text-white opacity-80"}`}
+    className={`hover:bg-[#121212] transition-all duration-600 hover:animate-pulse flex flex-row items-center justify-between mb-1  rounded-md mx-auto p-3  ${song._id == trackId ?"text-sky-400 shining-text animate-pulse opacity-100":"text-white opacity-80"}`}
   >
     <div className=" font-semibold  text-md lg:w-[25%] flex items-center gap-2 mb-2 lg:mb-0">
     <div >
     {song._id == trackId ?<PiWaveformFill/>:index+1?index+1:""}
     </div>
-    <div className='max-w-[250px]'
+    <div className='max-w-[250px] flex items-center justify-center'
      onClick={() => {
       dispatch(setImg(song.Image));
       dispatch(setSongUrl(song.Url));
@@ -138,13 +186,15 @@ const SongList = ({song,index}) => {
       setPlay(true);
       dispatch(setIsPlaying(true));
     }}>
+      <img src={song.Image} className='w-[30px] h-[30px] mr-1' />
       {song.Name}
     </div>
 
     </div>
-    <div className=" font-semibold  hidden lg:block lg:w-[28%] mb-2 lg:mb-0 ">
-      {/* {song.Artists[0]} */}
-    </div>
+    <Link to={`/Artist/${song.Artists[0]}`} className=" font-semibold  hidden lg:block lg:w-[28%] mb-2 lg:mb-0">
+   
+      {song.Artists[0]}
+    </Link>
     <div className=" font-semibold  mr-3 hidden  lg:block lg:w-[28%] mb-2 lg:mb-0 " onClick={() => favHandler()}>
     {fav ? (
               <FaHeart style={{ color: 'pink', height: 20, width: 20 }} />
@@ -206,7 +256,12 @@ const SongList = ({song,index}) => {
          onClick={()=> favHandler()}
         > <FaRegHeart style={{height:20,width:20,color:"skyblue"}} className="mr-2" /> Save To Library</div>
         <div className="flex items-center"><LuShare style={{height:20,width:20}} className="mr-2" /> Share</div>
-        <div className="flex items-center"> <MdFormatListBulletedAdd style={{height:20,width:20}} className="mr-2" /> Add To Playlist</div>
+        <div className="flex items-center"
+         onClick={() => {
+            setOpen(false);
+            setOpen2(true);
+          }}
+        > <MdFormatListBulletedAdd style={{height:20,width:20}} className="mr-2" /> Add To Playlist</div>
         <div className="flex items-center"><BsMusicNoteList style={{height:20,width:20}} className="mr-2" /> Song Details</div>
         <div className="flex items-center"
         onClick={()=>{
@@ -217,6 +272,44 @@ const SongList = ({song,index}) => {
       <div className='h-[1px] mt-8 bg-gray-300 w-full '></div>
       <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer " onClick={()=> setOpen(false)}>
         <button className="bg-red-500 text-white px-4 py-2 rounded-md">Cancel</button>
+      </div>
+    </div>
+          </Sheet.Content>
+        </Sheet.Container>
+      </Sheet>
+    <Sheet
+        isOpen={isOpen2}
+        onClose={() => setOpen2(false)}
+        snapPoints={[500,  0]}
+        initialSnap={0}
+        onSnap={snapIndex =>
+          console.log('> Current snap point index:', snapIndex)
+        }
+      >
+        <Sheet.Container>
+          <Sheet.Content>
+          <div className="bg-[#121212] flex flex-col h-full text-white py-4 rounded-lg shadow-md">
+          <div className='mx-auto '>
+          <FaChevronDown style={{height:20,width:20}}/>
+          </div>
+      <div className="flex items-center mx-2 p-2  ">
+        <img src={song && song.Image} alt="song img" className=" w-full h-full max-h-[60px] max-w-[60px]  rounded-lg " />
+        <div className="text-white ml-3">
+          <p className="text-sm font-bold  lg:w-full overflow-hidden">{song.Name}</p>
+          <p className="text-xs opacity-80" 
+
+          >{song.Artists[0]}</p>
+        </div>
+      </div>
+      <div className='h-[1px] bg-gray-300 w-full '></div>
+      {
+        Playlist && Playlist.slice(0,5).map((playlist,index) =>(
+          <PlaylistSmallCard playlist={playlist} setSelectedPlaylist = {setSelectedPlaylist}/>
+        ) )
+      }
+      <div className='h-[1px] mt-3 bg-gray-300 w-full '></div>
+      <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer " onClick={()=> {addTrackToPlaylist()}}>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
       </div>
     </div>
           </Sheet.Content>

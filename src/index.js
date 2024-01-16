@@ -9,10 +9,13 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'react-hot-toast';
+import Modal from 'react-modal';
+
 const id = "25830659239-085c4n7pb1jgksvu7i04jih6k035h462.apps.googleusercontent.com";
 const SECRET_KEY = "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";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Modal.setAppElement(root);
 const store = configureStore({
   reducer:rootReducer
 })

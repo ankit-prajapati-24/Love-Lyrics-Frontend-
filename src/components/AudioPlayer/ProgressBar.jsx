@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { setNextIndex,setPrevIndex } from '../../slices/album';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const ProgressBar = ({
     progressBarRef,
     audioRef,
@@ -11,8 +11,8 @@ const ProgressBar = ({
     const handleProgressChange = () => {
       audioRef.current.currentTime = progressBarRef.current.value;
     };
-
-    const [timeProgress,setTimeProgress] = useState(0);
+  
+    const timeProgress = useSelector((state) => state.Controls.timeProgress);
 
 
   
@@ -30,7 +30,7 @@ const ProgressBar = ({
     };
 
     useEffect(() => {
-      setTimeProgress(audioRef.current.currentTime);
+      // setTimeProgress(audioRef.current.currentTime);
     }, [audioRef])
     
   

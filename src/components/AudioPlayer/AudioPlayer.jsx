@@ -62,7 +62,7 @@ const AudioPlayer = ({
   // reference
   // const audioRef = useRef();
   // const progressBarRef = useRef();
-
+console.log(trackId);
   const handleNext = () => {
     if (trackIndex >= tracks.length - 1) {
       setTrackIndex(0);

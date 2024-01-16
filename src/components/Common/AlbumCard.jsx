@@ -5,7 +5,7 @@ import { setAlbumName, setAlbumimg, setSongs } from '../../slices/album';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const AlbumCard = ({ Image, Title, Songs }) => {
+const AlbumCard = ({ Image, Title, Songs,border }) => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -24,7 +24,7 @@ const AlbumCard = ({ Image, Title, Songs }) => {
 
   return (
     <div
-      className='  pl-1 max-w-[200px]  rounded-md   transition-all duration-200  object-contain group flex-col relative items-center justify-center '
+      className= {`  pl-1 max-w-[200px]  rounded-md   transition-all duration-200  object-contain group flex-col relative items-center justify-center `}
       onClick={() => {
         dispatch(setAlbumName(Title));
         dispatch(setAlbumimg(Image));
@@ -33,7 +33,7 @@ const AlbumCard = ({ Image, Title, Songs }) => {
       }}
     >
       <div className='bg-black flex min-h-[100px] min-w-[100px]  text-white flex-col items-center justify-center'>
-      <img src = {Image} className='  rounded-md ' alt='s'/>
+      <img src = {Image} className={`${border&&"border rounded-md"}`} alt='s'/>
       <div className=" lg:text-sm text-xs  font-medium overflow-hidden text-center mt-2"> {Title}</div>
           {/* <div className='text-xs opacity-80 text-center'>{song.Artists[0]}</div> */}
       <button className='bg-sky-500 rounded-full p-4 opacity-0 group-hover:opacity-100 bottom-[40%] left-[40%] absolute group-hover:-translate-z-full transition-all duration-1000'>

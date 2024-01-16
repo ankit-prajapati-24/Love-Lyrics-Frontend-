@@ -33,6 +33,8 @@ import Sheet from 'react-modal-sheet';
 import styled from 'styled-components';
 import { setDuration,setIsPlaying,setTimeProgress } from './slices/Control';
 import { TiMinus } from "react-icons/ti";
+import NewPlaylist from './components/user/NewPlaylist';
+import MyPlaylist from './components/user/MyPlaylist';
 function App() {
   
   
@@ -142,6 +144,8 @@ function App() {
        <Route path='/Artist/:ArtistId' element = {<ArtistCard ></ArtistCard>}></Route>
        <Route path='/FavoriteSongs' element = {<Favoritesongs setOpenmore = {setOpenmore}></Favoritesongs>}></Route>
        <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
+       <Route path='/NewPlaylist' element = {<NewPlaylist></NewPlaylist>}></Route>
+       <Route path='/MyPlaylist' element = {<MyPlaylist></MyPlaylist>}></Route>
        {/* <Route path='/miniPlayer' element = {
        <MiniPlayer {...{audioRef,progressBarRef,duration,setDuration}}></MiniPlayer>
        }></Route> */}
