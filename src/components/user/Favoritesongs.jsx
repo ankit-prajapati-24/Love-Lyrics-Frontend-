@@ -30,7 +30,7 @@ const Favoritesongs = ({setOpenmore}) => {
   const albumimg = useSelector((state) => state.Album.Albumimg);
   const songlist = useSelector((state) => state.Album.Songs);
   const userdata = useSelector((state) => state.User.userdata);
-  console.log(userdata);
+  //console.log(userdata);
   const Songs = songlist.filter((song, index, self) =>
   index === self.findIndex((s) => s.Name === song.Name)
 );
@@ -62,7 +62,7 @@ const Favoritesongs = ({setOpenmore}) => {
   };
     function PlayallTrack(){
       
-          console.log(Songs.length,Songs[0]);
+          //console.log(Songs.length,Songs[0]);
           dispatch(setSongUrl(Songs[0].Url));
           dispatch(setName(Songs[0].Name));
           dispatch(setSinger(Songs[0].Artists[0]));
@@ -86,16 +86,16 @@ const Favoritesongs = ({setOpenmore}) => {
      }
    }
    async function getFavoriteSongs() {
-    console.log("calling....");
+    //console.log("calling....");
     try {
       setLoader(true);
       const res = await apiConnecter('post', 'Album/GetFavoriteSongs',{UserId:userdata._id});
-      console.log(res);
+      //console.log(res);
       dispatch(setSongs(res.data.songs))
       setLoader(false);
     } catch (err) {
       setLoader(false);
-      console.log('err', err);
+      //console.log('err', err);
     }
   }
 

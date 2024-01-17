@@ -75,7 +75,7 @@ function App() {
     window.addEventListener('resize', updateWindowWidth);
 
     // Cleanup the event listener when the component unmounts
-    console.log(timeProgress,"this is time progess      ");
+    //console.log(timeProgress,"this is time progess      ");
     return () => {
       window.removeEventListener('resize', updateWindowWidth);
     };

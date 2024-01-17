@@ -11,7 +11,6 @@ import SongList from './SongList';
 import SkeletonLoading from './SkeletonLoading';
 
 import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
-
 import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 import AlbumRootSkeleton from './AlbumRootSkeleton';
 import AlbumCard from './AlbumCard';
@@ -35,7 +34,7 @@ const SearchResult = () => {
     try {
       setLoader(true);
       const res = await apiConnecter("POST", "tracks/getTrack", formdata);
-      console.log(res, "this is result");
+      //console.log(res, "this is result");
       const songlist = res.data.tracks;
       const Songs = songlist.filter((song, index, self) =>
         index === self.findIndex((s) => s.Name === song.Name)
@@ -44,10 +43,10 @@ const SearchResult = () => {
       setArtist(res.data.Artist);
       setAlbum(res.data.Albums);
       setLoader(false);
-      console.log(tracks[0]);
+      //console.log(tracks[0]);
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
   useEffect(() => {
@@ -179,7 +178,7 @@ const SearchResult = () => {
                     <SwiperSlide key={index}>
                       <div key={artist._id} className=' flex flex-col gap-2 group relative p-2    items-center justify-center  min-h-[100px] lg:w-[200px]    lg:h-[200px]  sm:max-h-[125px]  rounded-md  hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={() => {
 
-                        console.log("clicked");
+                        //console.log("clicked");
                         nevigate(`/Artist/${artist.Name}`);
                       }}>
                         {/* Use a common image for all artists, or apply a common styling */}
@@ -211,7 +210,7 @@ const SearchResult = () => {
                     <SwiperSlide key={index}>
                       <div key={artist._id} className=' flex flex-col gap-2 group relative p-2    items-center justify-center    rounded-md  hover:scale-105 transition-all duration-200 shadow-md   ' onClick={() => {
 
-                        console.log("clicked");
+                        //console.log("clicked");
                         nevigate(`/Artist/${artist.Name}`);
                       }}>
                         {/* Use a common image for all artists, or apply a common styling */}

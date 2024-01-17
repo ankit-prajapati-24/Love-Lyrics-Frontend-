@@ -24,13 +24,13 @@ function NewPlaylist() {
     formdata.append('id', userdata._id);
     formdata.append('privacy', isPublic);
     formdata.append('Image', thumbnail);
-     console.log(formdata);
+     //console.log(formdata);
      const toastid = toast.loading("Creating..");
     try {
       // Make API request using your apiConnecter service
       const response = await apiConnecter("post",'Playlist/CreatePlaylist', formdata);
       // Handle the response as needed
-      console.log(response.data);
+      //console.log(response.data);
       toast.dismiss(toastid);
       toast.success("Playlist created successfully");
       nevigate("/MyPlaylist");
@@ -39,7 +39,7 @@ function NewPlaylist() {
       // Handle errors
       toast.dismiss(toastid);
       toast.error("Playlist Could Not Create");
-      console.error('Error creating playlist:', error);
+      //console.error('Error creating playlist:', error);
     }
   };
 

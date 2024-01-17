@@ -32,10 +32,10 @@ const AlbumCard = ({ Image, Title, Songs,border }) => {
         navigation("/AlbumSongs");
       }}
     >
-      <div className='bg-black flex min-h-[100px] min-w-[100px]  text-white flex-col items-center justify-center'>
-      <img src = {Image} className={`${border&&"border rounded-md"}`} alt='s'/>
+      <div className=' flex min-h-[100px] min-w-[100px]  text-white flex-col items-center justify-center'>
+      <img src = {Image} className={`${border&&"border rounded-md"} rounded-md bg-black` } alt='s'/>
       <div className=" lg:text-sm text-xs  font-medium overflow-hidden text-center mt-2"> {Title}</div>
-          {/* <div className='text-xs opacity-80 text-center'>{song.Artists[0]}</div> */}
+
       <button className='bg-sky-500 rounded-full p-4 opacity-0 group-hover:opacity-100 bottom-[40%] left-[40%] absolute group-hover:-translate-z-full transition-all duration-1000'>
         <FaPlay />
       </button>

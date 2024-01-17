@@ -39,7 +39,7 @@ function Signup() {
         return ;
       }
       const res = await apiConnecter("POST", "Auth/Sendotp", formData);
-      console.log(res);
+      //console.log(res);
       if(res.status == 201){
         toast.error("user already exist");
         return;
@@ -50,7 +50,7 @@ function Signup() {
      }
      else{
       const res = await apiConnecter("POST", "Auth/Signup", formData);
-      console.log(res);
+      //console.log(res);
       if(res.data.user.Name){
         toast.success(`Login successful`);
         }
@@ -65,7 +65,7 @@ function Signup() {
       // if (res.data.success) {
       
     } catch (err) {
-      console.error(err, "Error sending OTP");
+      //console.error(err, "Error sending OTP");
       toast.error("Error sending OTP. Please try again.");
     } finally {
       toast.dismiss(toastid);
@@ -74,7 +74,7 @@ function Signup() {
   };
   const login = useGoogleLogin({
     onSuccess: async tokenResponse => {
-      console.log(tokenResponse);
+      //console.log(tokenResponse);
       // fetching userinfo can be done on the client or the server
       const userInfo = await axios
         .get('https://www.googleapis.com/oauth2/v3/userinfo', {

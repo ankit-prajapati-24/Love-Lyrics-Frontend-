@@ -27,11 +27,11 @@ const EditUserDetailsForm = () => {
 
   async function update(data) {
 
-    console.log(data,"here is data");
+    //console.log(data,"here is data");
     const loadeid = toast.loading("laoding...");
     try {
       const res = await apiConnecter("post", "Auth/updateInformation", data);
-      console.log(res.data.user);
+      //console.log(res.data.user);
       toast.dismiss(loadeid);
       dispatch(setuserdata(res.data.user));
       toast.success("Profile Update successfully")
@@ -41,7 +41,7 @@ const EditUserDetailsForm = () => {
       toast.dismiss(loadeid);
 
       toast.error("Try again later")
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -59,7 +59,7 @@ const EditUserDetailsForm = () => {
     formdata.append("Image", Image);
     formdata.append("Email", data.Email);
     update(formdata);
-    console.log(formdata, "this is data");
+    //console.log(formdata, "this is data");
     // Dispatch an action to update the user details in the Redux store
     // dispatch(setuserdata({  ...data, }));
 

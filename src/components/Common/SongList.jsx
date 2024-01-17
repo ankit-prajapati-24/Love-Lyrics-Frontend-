@@ -49,7 +49,7 @@ const SongList = ({song,index}) => {
   
      const userdata = useSelector((state) => state.User.userdata);
     
-    //  console.log(name, song.Name);
+    //  //console.log(name, song.Name);
     
 
      const formatTime = (time) => {
@@ -74,19 +74,19 @@ const SongList = ({song,index}) => {
        
       if(!fav){
         const res = await apiConnecter("POST","Album/AddFavorite",dataform);
-        console.log(res);
+        //console.log(res);
         setFav(!fav);
         toast.success('Song Added to Favorite')
       }
       else{
         toast.success('Song remove From Favorite')
         const res = await apiConnecter("POST","Album/RemoveFavorite",dataform);
-        console.log(res);
+        //console.log(res);
         setFav(!fav);
       }
     }
 
-    console.log(selectedPlaylist,"slected playlist");
+    // //console.log(selectedPlaylist,"slected playlist");
     async function checkFavorite(){
       const dataform = {
         SongId :song._id,
@@ -94,14 +94,14 @@ const SongList = ({song,index}) => {
       }
        try{
         const res = await apiConnecter("POST","Album/checkFavorite",dataform);
-        console.log(res.data.check);
+        // //console.log(res.data.check);
         setFav(res.data.check);
        }
        catch(err){
-          console.log(err);
+          //console.log(err);
        }
     }
-    console.log(song);
+    //console.log(song);
     const onLoadedMetadata = () => {
       const seconds = audioRef.current.duration;
       setDuration(formatTime(seconds));
@@ -118,13 +118,13 @@ const SongList = ({song,index}) => {
     try{
         setLoader(true);
         const res = await apiConnecter("post","Playlist/getPlaylists",{id:userdata._id});
-        console.log(res);
+        //console.log(res);
         setPlaylist(res.data.playlists);
         setLoader(false);
         setOpen2(false);
     }
     catch(err){
-        console.error(err);
+        //console.error(err);
     }
 } 
 
@@ -138,7 +138,7 @@ const addTrackToPlaylist = async() => {
     const toastid = toast.loading("Adding......");
     try{
       const res = await apiConnecter("post","Playlist/addTracksToPlaylist",data);
-      console.log(res);
+      //console.log(res);
       toast.dismiss(toastid);
       toast.success("Track Added Succesfully");
 
@@ -146,7 +146,7 @@ const addTrackToPlaylist = async() => {
     catch(err){
       toast.error("Try Again Leter");
       toast.dismiss(toastid);
-          console.error(err);
+          //console.error(err);
     }
   
 }
@@ -307,8 +307,8 @@ const addTrackToPlaylist = async() => {
           <PlaylistSmallCard playlist={playlist} setSelectedPlaylist = {setSelectedPlaylist}/>
         ) )
       }
-      <div className='h-[1px] mt-3 bg-gray-300 w-full '></div>
-      <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer " onClick={()=> {addTrackToPlaylist()}}>
+      {/* <div className='h-[1px] mt-3 bg-gray-300 w-full   '></div> */}
+      <div className=" mx-2 mt-2 text-center  p-2 shadow-sm w-full cursor-pointer  absolute bottom-0" onClick={()=> {addTrackToPlaylist()}}>
         <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
       </div>
     </div>

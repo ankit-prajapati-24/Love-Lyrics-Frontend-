@@ -4,7 +4,7 @@ const PlaylistSmallCard = ({playlist,setSelectedPlaylist}) => {
     const [check ,setcheck] = useState(false);
     const changeHandler = () =>{
         setcheck(!check);
-        // (e) => {console.log(e.target.value);
+        // (e) => {//console.log(e.target.value);
         if(!check){
             //push id 
         setSelectedPlaylist((prev) => [...prev,playlist._id])

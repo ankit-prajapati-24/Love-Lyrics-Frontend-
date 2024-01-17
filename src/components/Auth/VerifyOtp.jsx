@@ -22,7 +22,7 @@ const VerifyOtp = () => {
           ref.current.continuousStart(); // Start the loading animation
       }
         const res = await apiConnecter("POST","Auth/Signup",{Password,Email,Otp:otp});
-        // console.log(res);
+        // //console.log(res);
         if (ref.current) {
           ref.current.complete(); // Complete the loading animation
         }
@@ -35,10 +35,10 @@ const VerifyOtp = () => {
           ref.current.complete(); // Complete the loading animation
         }
         toast.error("Please Try Again Leter");
-        console.log(err);
+        //console.log(err);
       }
       };
-      //  console.log(userform);
+      //  //console.log(userform);
       //  const url = "";
 
     return (

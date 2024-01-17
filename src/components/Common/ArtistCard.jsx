@@ -49,7 +49,7 @@ const ArtistCard = () => {
                 ArtistId: encodedArtistName,
             };
             const queryString = new URLSearchParams(params).toString();
-            console.log(encodedArtistName);
+            //console.log(encodedArtistName);
 
             const res = await apiConnecter("get", `tracks/getArtistsData?${queryString}`);
             const data = res.data.data;
@@ -58,9 +58,9 @@ const ArtistCard = () => {
             dispatch(setSongs(data.Songs));
 
 
-            console.log(res);
+            //console.log(res);
         } catch (e) {
-            console.error(e);
+            //console.error(e);
         }
     };
 
@@ -79,7 +79,7 @@ const ArtistCard = () => {
     };
     function PlayallTrack() {
       
-            console.log(Songs.length, Songs[0]);
+            //console.log(Songs.length, Songs[0]);
             dispatch(setSongUrl(Songs[0].Url));
             dispatch(setName(Songs[0].Name));
             dispatch(setSinger(Songs[0].Artists[0]));

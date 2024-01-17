@@ -7,9 +7,9 @@ import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 const SongCard = ({song}) => {
   const trackId = useSelector((state) => state.Player.trackId);
   const isPlaying = useSelector((state) => state.Controls.isPlaying);
-  // console.log(trackId);
+  // //console.log(trackId);
   const dispatch = useDispatch();
-  // console.log(song)
+  // //console.log(song)
   return (
     <div className='bg-black flex min-h-[100px] min-w-[100px]  group text-white flex-col items-center justify-cente relative' 
      onClick={()=> {

@@ -31,7 +31,7 @@ function Signup() {
     try {
 
       const res = await apiConnecter("POST", "Auth/Login", formData);
-      console.log(res);
+      //console.log(res);
       if(!formData.Email){
         dispatch(setToken(res.data.token));
         dispatch(setuserdata(res.data.user));
@@ -54,7 +54,7 @@ function Signup() {
         toast.error("Password is incorrect");
         return;
       }
-      console.log(res);
+      //console.log(res);
 
         dispatch(setToken(res.data.token));
         dispatch(setuserdata(res.data.user));
@@ -67,7 +67,7 @@ function Signup() {
       navigate("/")
       // }
     } catch (err) {
-      console.error(err, "Error sending OTP");
+      //console.error(err, "Error sending OTP");
       toast.error("Error sending OTP. Please try again.");
     } finally {
       toast.dismiss(toastid);
@@ -76,7 +76,7 @@ function Signup() {
   };
   const login = useGoogleLogin({
     onSuccess: async tokenResponse => {
-      console.log(tokenResponse);
+      //console.log(tokenResponse);
       // fetching userinfo can be done on the client or the server
       const userInfo = await axios
         .get('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -159,7 +159,7 @@ function Signup() {
         onSubmit(credentialResponse);
       }}
       onError={() => {
-        console.log('Login Failed');
+        //console.log('Login Failed');
       }}
       useOneTap
     />;

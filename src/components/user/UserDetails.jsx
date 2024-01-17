@@ -13,12 +13,12 @@ const UserDetails = () => {
   const dispatch = useDispatch();
   const handleEdit = () => {
     // Add logic to handle user details editing
-    console.log('Edit button clicked');
+    //console.log('Edit button clicked');
   };
 
   const handleSignOut = () => {
     // Add logic to handle user sign-out
-    console.log('Sign Out button clicked');
+    //console.log('Sign Out button clicked');
   };
 
   return (

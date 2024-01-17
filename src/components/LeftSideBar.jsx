@@ -31,12 +31,12 @@ const LeftSideBar = () => {
   const nevigate = useNavigate();
   const [windowWidth,setwindowWidth] = useState(0);
   const [path,setpath] = useState('');
-  console.log(windowWidth);
+  //console.log(windowWidth);
   useEffect(() => {
     setwindowWidth(window.innerWidth);
     const location = window.location.pathname;
     setpath(location);
-    console.log("this is location",location);
+    //console.log("this is location",location);
   
   }, [window.innerWidth,window.location.pathname])
   

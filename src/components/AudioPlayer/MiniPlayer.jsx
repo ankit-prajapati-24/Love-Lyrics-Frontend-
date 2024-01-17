@@ -91,11 +91,11 @@ const MiniPlayer = ({
     }
     try {
       const res = await apiConnecter("POST", "Album/checkFavorite", dataform);
-      console.log(res.data.check);
+      //console.log(res.data.check);
       setFav(res.data.check);
     }
     catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -108,14 +108,14 @@ const MiniPlayer = ({
 
     if (!fav) {
       const res = await apiConnecter("POST", "Album/AddFavorite", dataform);
-      console.log(res);
+      //console.log(res);
       setFav(!fav);
       toast.success('Song Added to Favorite')
     }
     else {
       toast.success('Song remove From Favorite')
       const res = await apiConnecter("POST", "Album/RemoveFavorite", dataform);
-      console.log(res);
+      //console.log(res);
       setFav(!fav);
     }
   }

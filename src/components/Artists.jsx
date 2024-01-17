@@ -20,11 +20,11 @@ const Artists = () => {
     try {
       setLoader(true);
       const res = await apiConnecter('POST', 'tracks/getArtists');
-      console.log(res);
+      //console.log(res);
       setArtists(res.data.data);
       setLoader(false);
     } catch (err) {
-      console.error(err);
+      //console.error(err);
     }
   }
 
@@ -48,7 +48,7 @@ const Artists = () => {
           {artists.map((artist) => (
             <div key={artist._id} className=' flex flex-col gap-2 group relative p-2  lg:gap-4 lg:bg-gray-900  items-center justify-center  rounded-md hover:bg-gray-800 hover:scale-105 transition-all duration-200 shadow-md   w-[125px] ' onClick={()=> {
             
-                console.log("clicked");
+                //console.log("clicked");
                 nevigate(`${artist.Name}`);
             }}>
               {/* Use a common image for all artists, or apply a common styling */}

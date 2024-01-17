@@ -23,11 +23,11 @@ const AlbumRoot = () => {
     try {
       setLoader(true);
       const res = await apiConnecter('post', 'Album/GetAllAlbum');
-      console.log(res.data.Data);
+      //console.log(res.data.Data);
       setAlbums(res.data.Data);
       setLoader(false);
     } catch (err) {
-      console.log('err', err);
+      //console.log('err', err);
     }
   }
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);

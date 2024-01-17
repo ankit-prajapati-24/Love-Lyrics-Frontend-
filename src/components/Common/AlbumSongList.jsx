@@ -53,7 +53,7 @@ const AlbumSongList = () => {
       // setPlay(!play);
       // if(Songs.length > 0){
         // if(!play){
-          console.log(Songs.length,Songs[0]);
+          //console.log(Songs.length,Songs[0]);
           dispatch(setSongUrl(Songs[0].Url));
           dispatch(setName(Songs[0].Name));
           dispatch(setSinger(Songs[0].Artists[0]));

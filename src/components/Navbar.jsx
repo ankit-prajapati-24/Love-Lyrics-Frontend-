@@ -22,13 +22,13 @@ const Navbar = () => {
     const userdata = useSelector((state) => state.User.userdata);
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.Navbar.menu);
-    console.log(token, "this is token");
-    console.log(userdata, "this is userdata");
+    //console.log(token, "this is token");
+    //console.log(userdata, "this is userdata");
     const [windowWidth, setwindowWidth] = useState(0);
     const nevigate = useNavigate();
     function SubmitHandeler(event) {
         event.preventDefault();
-        console.log(query, "this is query");
+        //console.log(query, "this is query");
         // nevigate("/SearchResult")
     }
     function logout() {
@@ -42,7 +42,7 @@ const Navbar = () => {
             nevigate("/SearchResult")
             dispatch(setsearch(!search));
         }
-        console.log(query);
+        //console.log(query);
       
         setwindowWidth(window.innerWidth);
     }, [window.innerWidth, query, token,animate])
