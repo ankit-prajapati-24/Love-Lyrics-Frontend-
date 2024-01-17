@@ -38,7 +38,7 @@ function Signup() {
         toast.error("Password does not match")
         return ;
       }
-      const res = await apiConnecter("POST", "Auth/Sendotp", formData);
+      const res = await apiConnecter("post", "Auth/Sendotp", formData);
       //console.log(res);
       if(res.status == 201){
         toast.error("user already exist");
@@ -49,7 +49,7 @@ function Signup() {
       navigate('/VerifyOTP');
      }
      else{
-      const res = await apiConnecter("POST", "Auth/Signup", formData);
+      const res = await apiConnecter("post", "Auth/Signup", formData);
       //console.log(res);
       if(res.data.user.Name){
         toast.success(`Login successful`);

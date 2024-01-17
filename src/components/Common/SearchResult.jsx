@@ -33,7 +33,7 @@ const SearchResult = () => {
   async function searchQuery() {
     try {
       setLoader(true);
-      const res = await apiConnecter("POST", "tracks/getTrack", formdata);
+      const res = await apiConnecter("post", "tracks/getTrack", formdata);
       //console.log(res, "this is result");
       const songlist = res.data.tracks;
       const Songs = songlist.filter((song, index, self) =>

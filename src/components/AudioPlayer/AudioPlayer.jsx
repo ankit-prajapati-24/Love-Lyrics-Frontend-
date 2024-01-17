@@ -7,7 +7,7 @@ import { IoPlaySkipBackCircleSharp } from 'react-icons/io5';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { setmobilePlayer ,setIsPlaying,setDuration,setTimeProgress} from '../../slices/Control';
+import { setmobilePlayer ,setIsPlaying,setDuration} from '../../slices/Control';
 import {
   IoMdVolumeHigh,
   IoMdVolumeOff,
@@ -22,11 +22,13 @@ import { apiConnecter } from '../../services/apiconnecter';
 const AudioPlayer = ({
   audioRef,
   setOpen,
+  setTimeProgress,
   progressBarRef,
+  timeProgress
 }) => {
   // states
 
-  const timeProgress = useSelector((state) => state.Controls.timeProgress);
+  // const timeProgress = useSelector((state) => state.Controls.timeProgress);
   const isPlaying = useSelector((state) => state.Controls.isPlaying);
   const duration = useSelector((state) => state.Controls.duration);
   
@@ -78,7 +80,7 @@ const AudioPlayer = ({
       UserId: userdata._id
     }
     try {
-      const res = await apiConnecter("POST", "Album/checkFavorite", dataform);
+      const res = await apiConnecter("post", "Album/checkFavorite", dataform);
       //console.log(res.data.check);
       setFav(res.data.check);
     }
@@ -95,14 +97,14 @@ const AudioPlayer = ({
     }
 
     if (!fav) {
-      const res = await apiConnecter("POST", "Album/AddFavorite", dataform);
+      const res = await apiConnecter("post", "Album/AddFavorite", dataform);
       //console.log(res);
       setFav(!fav);
       toast.success('Song Added to Favorite')
     }
     else {
       toast.success('Song remove From Favorite')
-      const res = await apiConnecter("POST", "Album/RemoveFavorite", dataform);
+      const res = await apiConnecter("post", "Album/RemoveFavorite", dataform);
       //console.log(res);
       setFav(!fav);
     }

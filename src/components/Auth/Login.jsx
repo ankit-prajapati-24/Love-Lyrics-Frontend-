@@ -30,7 +30,7 @@ function Signup() {
     const toastid = toast.loading("Loading...");
     try {
 
-      const res = await apiConnecter("POST", "Auth/Login", formData);
+      const res = await apiConnecter("post", "Auth/Login", formData);
       //console.log(res);
       if(!formData.Email){
         dispatch(setToken(res.data.token));

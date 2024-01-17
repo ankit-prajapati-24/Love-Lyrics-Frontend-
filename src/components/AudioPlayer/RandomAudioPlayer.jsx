@@ -21,6 +21,7 @@ const RandomAudioPlayer = () => {
   const [loader, setLoader] = useState(false);
   const [tracks, seTracks] = useState([]);
   const [isOpen, setOpen] = useState(false);
+  const [AllTracks ,setAlltracks] = useState([]);
   const title = useSelector((state) => state.Player.name);
   const author = useSelector((state) => state.Player.singer);
   const src = useSelector((state) => state.Player.songurl);
@@ -36,6 +37,7 @@ const RandomAudioPlayer = () => {
 
       // //console.log(res.data.tracks);
       seTracks(res.data.tracks);
+      setAlltracks(res.data.tracks);
       const SongList = res.data.tracks;
       const shuffledList = [...SongList].sort(() => Math.random() - 0.5);
       seTracks(shuffledList);
@@ -50,7 +52,7 @@ const RandomAudioPlayer = () => {
   async function getArtists() {
     try {
       // setLoader(true);
-      const res = await apiConnecter('POST', 'tracks/getArtists');
+      const res = await apiConnecter('post', 'tracks/getArtists');
       //console.log(res);
       setArtists(res.data.data);
       // setLoader(false);
@@ -79,10 +81,10 @@ const RandomAudioPlayer = () => {
 
   return (
     <div
-      className={` w-full h-screen backdrop-blur-3xl  justify-center  items-center mb-4 bg-cover bg-no-repeat relative overflow-x-hidden bg-[#838996]  `}
+      className={` w-full h-screen backdrop-blur-3xl   justify-center  items-center mb-4 bg-cover bg-no-repeat relative overflow-x-hidden bg-[#838996]  `}
       style={{ backgroundImage: `url(${thumbnail})` }}
     >
-      <div className="   backdrop-blur-3xl "
+      <div className="    backdrop-blur-3xl "
       >
         <div className='w-full p-2 text-white bg-black flex gap-2 items-center justify-center ' onClick={() => setOpen(true)}>
           <button className='p-2 bg-sky-500 text-white rounded-md font-bold w-full'>Filter The Songs</button>
@@ -142,21 +144,33 @@ const RandomAudioPlayer = () => {
                   <div className='flex gap-1 flex-wrap'>
                     {
                       artists && artists.map((artist) => (
-                        <FilterArtist artist={artist} setSelectedArtist={setSelectedArtist} />
+                        <FilterArtist artist={artist} setSelectedArtist={setSelectedArtist} selectedArtist = {selectedArtist}/>
                       ))
                     }
                   </div>
                   <button
   className="bg-blue-500 text-white px-4 py-2 rounded-md mb-3"
   onClick={() => {
-    seTracks((prev) => {
-      return prev.filter((track) =>
-        selectedArtist.includes(track.Artists[0]._id)
-      );
+    if(selectedArtist.length == 0) return;
+    console.log('Selected Artists:', selectedArtist);
+    console.log('Original Tracks:', tracks);
+
+    const filteredSongs = AllTracks.filter((track) => {
+        console.log('Checking Track:', track);
+        const isArtistIncluded = selectedArtist.includes(track.Artists[0]);
+        console.log('Is Artist Included?', isArtistIncluded);
+        return isArtistIncluded;
     });
-    dispatch(setSongs(tracks));
+    
+    const shuffledList = [...filteredSongs].sort(() => Math.random() - 0.5);
+
+    console.log('Filtered Songs:', filteredSongs);
+
+    seTracks(shuffledList);
+    dispatch(setSongs(shuffledList));
     setOpen(false);
-  }}
+}}
+
 >
   Save
 </button>

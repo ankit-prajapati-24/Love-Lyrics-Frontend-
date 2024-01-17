@@ -24,7 +24,7 @@ const AddAlbum = () => {
 
     const loaderId = toast.loading('Loading...');
     try {
-      const res = await apiConnecter('POST', 'tracks/CreateAlbum', formData);
+      const res = await apiConnecter('post', 'tracks/CreateAlbum', formData);
       //console.log(res);
       toast.success("Album Added successfully")
       toast.dismiss(loaderId);

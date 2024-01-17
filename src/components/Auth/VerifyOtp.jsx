@@ -21,7 +21,7 @@ const VerifyOtp = () => {
         if (ref.current) {
           ref.current.continuousStart(); // Start the loading animation
       }
-        const res = await apiConnecter("POST","Auth/Signup",{Password,Email,Otp:otp});
+        const res = await apiConnecter("post","Auth/Signup",{Password,Email,Otp:otp});
         // //console.log(res);
         if (ref.current) {
           ref.current.complete(); // Complete the loading animation

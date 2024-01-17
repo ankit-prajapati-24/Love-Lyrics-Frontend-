@@ -31,7 +31,7 @@ import { setMenu } from './slices/Navbar';
 import ArtistCard from './components/Common/ArtistCard';
 import Sheet from 'react-modal-sheet';
 import styled from 'styled-components';
-import { setDuration,setIsPlaying,setTimeProgress } from './slices/Control';
+import { setDuration,setIsPlaying } from './slices/Control';
 import { TiMinus } from "react-icons/ti";
 import NewPlaylist from './components/user/NewPlaylist';
 import MyPlaylist from './components/user/MyPlaylist';
@@ -44,11 +44,11 @@ function App() {
   const audioRef = useRef();
   const progressBarRef = useRef();
   
-  // const [timeProgress, setTimeProgress] = useState(0);
+  const [timeProgress, setTimeProgress] = useState(0);
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [duration,setDuration] =useState(0);
 
-  const timeProgress = useSelector((state) => state.Controls.timeProgress);
+  // const timeProgress = useSelector((state) => state.Controls.timeProgress);
   const isPlaying = useSelector((state) => state.Controls.isPlaying);
   const duration = useSelector((state) => state.Controls.duration);
 

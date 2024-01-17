@@ -19,7 +19,7 @@ const Artists = () => {
   async function getArtists() {
     try {
       setLoader(true);
-      const res = await apiConnecter('POST', 'tracks/getArtists');
+      const res = await apiConnecter('post', 'tracks/getArtists');
       //console.log(res);
       setArtists(res.data.data);
       setLoader(false);

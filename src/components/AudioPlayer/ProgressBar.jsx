@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 const ProgressBar = ({
     progressBarRef,
     audioRef,
-    
+    timeProgress,
     duration,
   }) => {
     const dispatch  = useDispatch();
@@ -12,7 +12,7 @@ const ProgressBar = ({
       audioRef.current.currentTime = progressBarRef.current.value;
     };
   
-    const timeProgress = useSelector((state) => state.Controls.timeProgress);
+    // const timeProgress = useSelector((state) => state.Controls.timeProgress);
 
 
   

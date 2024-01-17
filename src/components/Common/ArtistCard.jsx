@@ -64,7 +64,6 @@ const ArtistCard = () => {
         }
     };
 
-
     const compareSongs = (song1, song2) => {
         const name1 = song1.Name.toLowerCase();
         const name2 = song2.Name.toLowerCase();

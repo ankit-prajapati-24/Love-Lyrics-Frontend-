@@ -15,7 +15,7 @@ import { setNextIndex } from '../../slices/album';
 import { FaChevronDown } from "react-icons/fa";
 import { useCallback } from 'react';
 import src  from '../assets/Dil_Jhoom(128k) (1).m4a'
-import { setDuration, setIsPlaying, setTimeProgress } from '../../slices/Control';
+import { setDuration, setIsPlaying } from '../../slices/Control';
 import { setmobilePlayer } from '../../slices/Control';
 import { useNavigate } from 'react-router-dom';
 import MiniControl from './MiniControl';
@@ -23,11 +23,13 @@ import { apiConnecter } from '../../services/apiconnecter';
 
 // // import components
 const MiniPlayer = ({ 
-        audioRef
+        audioRef,
+        timeProgress,
+        setTimeProgress
       }) => {
   // states
   
-  const timeProgress = useSelector((state) => state.Controls.timeProgress);
+  // const timeProgress = useSelector((state) => state.Controls.timeProgress);
   const isPlaying = useSelector((state) => state.Controls.isPlaying);
   const duration = useSelector((state) => state.Controls.duration);
   
@@ -68,7 +70,7 @@ const MiniPlayer = ({
  
   const repeat = useCallback(() => {
     const currentTime = audioRef.current.currentTime;
-    dispatch( setTimeProgress(currentTime))
+     setTimeProgress(currentTime)
     if(currentTime && progressBarRef.current){
       progressBarRef.current.value = currentTime;
     }
@@ -90,7 +92,7 @@ const MiniPlayer = ({
       UserId: userdata._id
     }
     try {
-      const res = await apiConnecter("POST", "Album/checkFavorite", dataform);
+      const res = await apiConnecter("post", "Album/checkFavorite", dataform);
       //console.log(res.data.check);
       setFav(res.data.check);
     }
@@ -107,14 +109,14 @@ const MiniPlayer = ({
     }
 
     if (!fav) {
-      const res = await apiConnecter("POST", "Album/AddFavorite", dataform);
+      const res = await apiConnecter("post", "Album/AddFavorite", dataform);
       //console.log(res);
       setFav(!fav);
       toast.success('Song Added to Favorite')
     }
     else {
       toast.success('Song remove From Favorite')
-      const res = await apiConnecter("POST", "Album/RemoveFavorite", dataform);
+      const res = await apiConnecter("post", "Album/RemoveFavorite", dataform);
       //console.log(res);
       setFav(!fav);
     }
@@ -123,7 +125,7 @@ const MiniPlayer = ({
   useEffect(()=>{
     checkFavorite();
     const seconds = audioRef.current.duration;
-    dispatch(setDuration(seconds))
+    // dispatch(setDuration(seconds))
     progressBarRef.current.max = seconds;
     playAnimationRef.current = requestAnimationFrame(repeat);
   },[title,mobilePlayer,isPlaying,repeat, audioRef, ,trackIndex]);

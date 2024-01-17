@@ -73,14 +73,14 @@ const SongList = ({song,index}) => {
       }
        
       if(!fav){
-        const res = await apiConnecter("POST","Album/AddFavorite",dataform);
+        const res = await apiConnecter("post","Album/AddFavorite",dataform);
         //console.log(res);
         setFav(!fav);
         toast.success('Song Added to Favorite')
       }
       else{
         toast.success('Song remove From Favorite')
-        const res = await apiConnecter("POST","Album/RemoveFavorite",dataform);
+        const res = await apiConnecter("post","Album/RemoveFavorite",dataform);
         //console.log(res);
         setFav(!fav);
       }
@@ -93,7 +93,7 @@ const SongList = ({song,index}) => {
         UserId:userdata._id
       }
        try{
-        const res = await apiConnecter("POST","Album/checkFavorite",dataform);
+        const res = await apiConnecter("post","Album/checkFavorite",dataform);
         // //console.log(res.data.check);
         setFav(res.data.check);
        }
