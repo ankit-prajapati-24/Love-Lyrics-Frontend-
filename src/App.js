@@ -35,6 +35,7 @@ import { setDuration,setIsPlaying } from './slices/Control';
 import { TiMinus } from "react-icons/ti";
 import NewPlaylist from './components/user/NewPlaylist';
 import MyPlaylist from './components/user/MyPlaylist';
+import GoPro from './components/user/GoPro';
 function App() {
   
   
@@ -146,6 +147,7 @@ function App() {
        <Route path='/mixSongs' element = {<RandomAudioPlayer></RandomAudioPlayer>}></Route>
        <Route path='/NewPlaylist' element = {<NewPlaylist></NewPlaylist>}></Route>
        <Route path='/MyPlaylist' element = {<MyPlaylist></MyPlaylist>}></Route>
+       <Route path='/GoPro' element = {<GoPro></GoPro>}></Route>
        {/* <Route path='/miniPlayer' element = {
        <MiniPlayer {...{audioRef,progressBarRef,duration,setDuration}}></MiniPlayer>
        }></Route> */}

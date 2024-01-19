@@ -91,8 +91,11 @@ const Navbar = () => {
                 {
                     token ? <div className='flex items-center justify-center p-2  -mb-1  max-w-[400px] gap-3'>
 
-
-
+                 {
+                    !userdata.SubsriptionToken  &&  <Link to={"/GoPro"} className='px-3 py-2 text-sm border text-white rounded-md'>
+                     Go Pro
+                   </Link>
+                 }
                       <Link to={"/UserDetails"}>
                       {
                             userdata.Image 
