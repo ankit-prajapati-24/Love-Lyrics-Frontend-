@@ -5,9 +5,11 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { FaTwitter } from 'react-icons/fa';
 import { FaInstagram } from 'react-icons/fa';
 
+// import './Footer.css'; // Import your custom CSS file
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-950 text-white py-8">
+    <footer className="bg-[#121212] text-white py-8 w-full">
       <div className="container mx-auto flex flex-col md:flex-row justify-evenly items-center">
         <div className="max-w-[200px] text-center md:mr-8 md:mb-0 mb-8">
           <h3 className="text-2xl font-semibold text-gray-200">About Us</h3>

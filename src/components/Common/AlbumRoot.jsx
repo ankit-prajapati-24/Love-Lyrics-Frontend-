@@ -11,12 +11,14 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useHistory } from 'react-router-dom';
 import AlbumRootSkeleton from './AlbumRootSkeleton';
+import { MdNewReleases } from 'react-icons/md';
+import NewRelease from './NewRelease';
 
 const AlbumRoot = () => {
   const [loader, setLoader] = useState(false);
   const [albums, setAlbums] = useState([]);
-  const [card ,setCard] = useState(0);
-  const names = ["Top Best Albums","India's Best","Top Playlist"];
+  const [card, setCard] = useState(0);
+  const names = ["Top Best Albums", "India's Best", "Top Playlist"];
   // const history = useHistory(); // Import useHistory for navigation
 
   async function getAlbums() {
@@ -34,181 +36,175 @@ const AlbumRoot = () => {
 
   const updateWindowWidth = () => {
     setWindowWidth(window.innerWidth);
-   
+
   };
- useEffect(() => {
-  getAlbums();
- }, [])
- 
   useEffect(() => {
-    if(windowWidth < 300){
+    getAlbums();
+  }, [])
+
+  useEffect(() => {
+    if (windowWidth < 300) {
       setCard(2);
     }
-    else if(windowWidth < 500){
+    else if (windowWidth < 500) {
       setCard(3);
     }
-    else if(windowWidth < 800){
+    else if (windowWidth < 800) {
       setCard(4);
     }
-    else if(windowWidth < 1000) {
+    else if (windowWidth < 1000) {
       setCard(3);
     }
-    else if(windowWidth < 1200) {
+    else if (windowWidth < 1200) {
       setCard(4);
     }
     else setCard(6)
-    // Add event listener to update window width on resize
-   
-    // window.addEventListener('resize', updateWindowWidth);
-
-    // // Cleanup the event listener when the component unmounts
-    // return () => {
-    //   window.removeEventListener('resize', updateWindowWidth);
     // };
-  }, [card]); 
+  }, [card]);
 
   return (
     <>
-    {loader?
-    <div className='flex flex-col'>
-      
-    <AlbumRootSkeleton></AlbumRootSkeleton>
-    <AlbumRootSkeleton></AlbumRootSkeleton>
-    <AlbumRootSkeleton></AlbumRootSkeleton>
-    </div>
-    :<div>
- 
-  <div className='mt-5 flex flex-col gap-2'>
-  <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
-      {names[0]}
-    </h1>
-  {
-      windowWidth<500 ?
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={24}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      :
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={20}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.slice(0,15).map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-     }
-  </div>
-  <div className='mt-5 flex flex-col gap-2'>
-  <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
-      {names[1]}
-    </h1>
-  {
-      windowWidth<500 ?
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={24}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.slice(5,10).map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      :
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={20}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.slice(6,15).map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-     }
-  </div>
-  <div className='mt-5 flex flex-col gap-2'>
-  <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
-      {names[2]}
-    </h1>
-  {
-      windowWidth<500 ?
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={24}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.slice(10,15).map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      :
-      <Swiper
-        slidesPerView={card}
-        spaceBetween={20}
-        loop={true}
-        freeMode={true}
-        autoplay={{
-          delay: 2500,
-        }}
-        modules={[FreeMode, Pagination]}
-        className='w-full'
-      >
-        {albums.slice(0).map((album, index) => (
-          <SwiperSlide key={index}>
-      <AlbumCard Image = {album.Image}  Title = {album.Name}  Songs = {album.Songs} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-     }
-  </div>
-    </div>
-    }
+      {loader ?
+        <div className='flex flex-col'>
+
+          <AlbumRootSkeleton></AlbumRootSkeleton>
+          <AlbumRootSkeleton></AlbumRootSkeleton>
+          <AlbumRootSkeleton></AlbumRootSkeleton>
+        </div>
+        : <div>
+        <NewRelease/>
+
+          <div className='mt-5 flex flex-col gap-2'>
+            <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
+              {names[0]}
+            </h1>
+            {
+              windowWidth < 500 ?
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={24}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                :
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={20}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.slice(0, 15).map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+            }
+          </div>
+          <div className='mt-5 flex flex-col gap-2'>
+            <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
+              {names[1]}
+            </h1>
+            {
+              windowWidth < 500 ?
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={24}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.slice(5, 10).map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                :
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={20}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.slice(6, 15).map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+            }
+          </div>
+          <div className='mt-5 flex flex-col gap-2'>
+            <h1 className='text-gray-300  mt-2 ml-2 text-xl font-bold   '>
+              {names[2]}
+            </h1>
+            {
+              windowWidth < 500 ?
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={24}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.slice(10, 15).map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                :
+                <Swiper
+                  slidesPerView={card}
+                  spaceBetween={20}
+                  loop={true}
+                  freeMode={true}
+                  autoplay={{
+                    delay: 2500,
+                  }}
+                  modules={[FreeMode, Pagination]}
+                  className='w-full'
+                >
+                  {albums.slice(0).map((album, index) => (
+                    <SwiperSlide key={index}>
+                      <AlbumCard Image={album.Image} Title={album.Name} Songs={album.Songs} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+            }
+          </div>
+        </div>
+      }
 
     </>
   );

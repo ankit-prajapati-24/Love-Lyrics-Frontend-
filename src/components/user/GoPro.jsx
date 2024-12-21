@@ -47,7 +47,7 @@ async function verifyPayment(bodyData, navigate) {
           throw new Error(response.data.message);
       }
       console.log(response);
-      dispatch(setuserdata(response.data.user));
+      // dispatch(setuserdata(response.data.user));
       toast.success("Payment Successful");
       nevigate("/Home");
       // dispatch(resetCart());
@@ -116,7 +116,7 @@ async function verifyPayment(bodyData, navigate) {
       </p>
       <div className='flex  flex-wrap md:flex-none lg:flex-none justify-center h h-[700px] items-center gap-4    '>
         
-   <SubscribeCard  color ={ "bg-gradient-to-b from-pink-500 to-sky-500"} price = {99 } time = {" 1 Month"}  subscribe ={subscribe}  />
+   <SubscribeCard  color ={ "bg-gradient-to-b from-pink-500 to-sky-500"} price = {1 } time = {" 1 Month"}  subscribe ={subscribe}  />
    <SubscribeCard  color ={ "bg-gradient-to-b from-red-500 to-sky-500"} price = {999} time = {" 1 Year"} subscribe= {subscribe}  etc= {"*Limited Period Offer"}   />
       </div>
     </div>

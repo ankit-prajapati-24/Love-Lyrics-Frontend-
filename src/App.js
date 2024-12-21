@@ -12,6 +12,7 @@ import AlbumSongList from './components/Common/AlbumSongList';
 import Album from './slices/album';
 import Artists from './components/Artists';
 import Footer from './components/Common/Footer';
+
 import AudioPlayer from './components/AudioPlayer/AudioPlayer';
 import SearchResult from './components/Common/SearchResult';
 import AddAlbum from './components/Auth/AddAlbum';
@@ -163,7 +164,8 @@ function App() {
     </div>   */}
     
     <AudioPlayer {...{timeProgress,setOpen, setTimeProgress,audioRef,progressBarRef,duration,setDuration,isPlaying,setIsPlaying}}></AudioPlayer>
-
+  {/* <Footer></Footer> */}
+  
     <Sheet isOpen={isOpen} onClose={() => setOpen(false)}>
         <Sheet.Container>
           <Sheet.Header>
